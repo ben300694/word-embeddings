@@ -1,6 +1,14 @@
-# word-embeddings
-Repository for the seminar "Word Embedding Spaces" which is run at HHU in the summer term 2022.
-(This might be developed into a full lecture course with exercises in the next winter term)
+---
+title: "Word embedding spaces"
+subtitle: "First session: Introduction"
+author: "Benjamin Ruppik"
+date: "`r Sys.Date()`"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
 
 ## Syllabus
 
@@ -12,3 +20,19 @@ Repository for the seminar "Word Embedding Spaces" which is run at HHU in the su
     * Evaluation, geometry of the embedding space, bias, sentiment, multilingual embeddings
 * Topological data analysis
     * Hyperbolic embeddings, singularities and topological polysemy
+
+## Static word embeddings
+
+TODO
+
+## Contextual word embeddings
+
+TODO
+
+## Additional topics
+
+TODO
+
+## Topological data analysis
+
+TODO
