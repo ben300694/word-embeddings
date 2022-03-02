@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Word embedding spaces</title>
+  <title>Natural Language Processing</title>
 
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
@@ -20,8 +20,8 @@
     var SLIDE_CONFIG = {
       // Slide settings
       settings: {
-                title: 'Word embedding spaces',
-                        subtitle: 'First session: Introduction',
+                title: 'Natural Language Processing',
+                        subtitle: 'Common tasks and glossary',
                 useBuilds: true,
         usePrettify: true,
         enableSlideAreas: true,
@@ -3146,44 +3146,45 @@ slide:not(.current) .plotly.html-widget{
           </hgroup>
   </slide>
 
-<slide class=""><hgroup><h2>Syllabus</h2></hgroup><article  id="syllabus">
+<slide class=""><hgroup><h2>NLP tasks</h2></hgroup><article  id="nlp-tasks">
 
 <ul>
-<li>Static word embeddings
+<li>Word-sense induction (WSI) or word-sense discrimination: identification of the senses/meanings of a word
 
 <ul>
-<li>Frequency based methods, word2vec, GloVe, fastText</li>
+<li>output: clustering of contexts of the target word, or a clustering of words related to the target word</li>
 </ul></li>
-<li>Contextual word embeddings
-
-<ul>
-<li>ELMo, <strong>Transformers</strong> and attention, BERT, sentence embeddings, contrastive learning</li>
-</ul></li>
-<li>Additional topics
-
-<ul>
-<li>Evaluation, geometry of the embedding space, bias, sentiment, multilingual embeddings</li>
-</ul></li>
-<li>Topological data analysis
-
-<ul>
-<li>Hyperbolic embeddings, singularities and topological polysemy</li>
-</ul></li>
+<li>Word-sense disambiguation (WSD): relies on a predefined sense inventory, and the task is to solve the ambiguity in the context, i.e. identifying which sense of a word is used in a sentence</li>
 </ul>
 
-</article></slide><slide class=""><hgroup><h2>Static word embeddings</h2></hgroup><article  id="static-word-embeddings">
+<p>TODO</p>
+
+</article></slide><slide class=""><hgroup><h2>Word-sense disambiguation</h2></hgroup><article  id="word-sense-disambiguation">
+
+<ul>
+<li>WordNet as a reference sense inventory for English language</li>
+<li>WordNet encodes concepts as synonym sets</li>
+</ul>
 
 <p>TODO</p>
 
-</article></slide><slide class=""><hgroup><h2>Contextual word embeddings</h2></hgroup><article  id="contextual-word-embeddings">
+</article></slide><slide class=""><hgroup><h2>Part-of-speech tagging</h2></hgroup><article  id="part-of-speech-tagging">
 
-<p>TODO</p>
+<ul>
+<li>grammatical tagging: decide which part of speech (noun, verb, article, adjective, preposition, pronoun, adverb, conjunction, and interjection) in a text/corpus belongs to</li>
+<li>this might depend both on the definition of the word and its context, and in language a large portion of word-forms are ambiguous
 
-</article></slide><slide class=""><hgroup><h2>Additional topics</h2></hgroup><article  id="additional-topics">
+<ul>
+<li>Example from wikipedia: &ldquo;dogs&rdquo; usually is a plural noun, but can also be a verb as in the sentence &ldquo;The sailor dogs the hatch.&rdquo;</li>
+</ul></li>
+<li>sub-categories:
 
-<p>TODO</p>
-
-</article></slide><slide class=""><hgroup><h2>Topological data analysis</h2></hgroup><article  id="topological-data-analysis">
+<ul>
+<li>for nouns, the plural, possessive, and singular forms can be distinguished.</li>
+<li>&ldquo;case&rdquo; (role as subject, object, etc.), grammatical gender, and so on</li>
+<li>while verbs are marked for tense, aspect, and other things</li>
+</ul></li>
+</ul>
 
 <p>TODO</p></article></slide>
 

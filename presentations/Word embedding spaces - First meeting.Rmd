@@ -3,7 +3,9 @@ title: "Word embedding spaces"
 subtitle: "First session: Introduction"
 author: "Benjamin Ruppik"
 date: "`r Sys.Date()`"
-output: ioslides_presentation
+output:
+  ioslides_presentation:
+    widescreen: true
 ---
 
 ```{r setup, include=FALSE}
