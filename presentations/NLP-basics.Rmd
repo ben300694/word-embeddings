@@ -26,6 +26,9 @@ TODO
 * WordNet as a reference sense inventory for English language
 * WordNet encodes concepts as synonym sets
 
+* SemEval: international word sense disambiguation competition
+* approaches: knowledge-based, supervised, and unsupervised
+
 TODO
 
 ## Part-of-speech tagging
@@ -43,3 +46,25 @@ a large portion of word-forms are ambiguous
   * while verbs are marked for tense, aspect, and other things
 
 TODO
+
+## Hidden Markov Models
+
+* Hidden Markov Models
+* Viterbi algorithm
+* POS tagging with transformers
+
+## WordNet
+
+* sense inventory
+
+TODO
+
+## Benchmarks
+
+* General Language Understanding Evaluation [(GLUE)](https://gluebenchmark.com/)
+ benchmark
+
+## Exercises
+
+* Exploring WordNet
+* [Fine-tuning huggingface transformers for POS in French](https://signal.onepointltd.com/post/102gbbr/training-an-nlp-model-with-hugging-face-transformers)

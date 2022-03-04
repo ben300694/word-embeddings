@@ -1,0 +1,81 @@
+---
+title: "Contextualized embeddings"
+subtitle: "ElMo, Transformers, BERT, ..."
+author: "Benjamin Ruppik"
+date: "`r Sys.Date()`"
+output:
+  ioslides_presentation:
+    widescreen: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+## WordPiece tokenization and embeddings
+
+TODO
+
+# BERT model
+
+## BERT overview
+
+* BERT model masks 15% of the WordPiece tokens in each sequence at random
+* final hidden vectors of the output layer corresponding to the masked tokens
+can be fed into an output softmax layer over the vocabulary
+
+TODO
+
+## BERT pre-training
+
+* Task 1: Masked langugage modeling (MLM)
+* Task 2: Next Sentence Prediction (NSP)
+
+* pre-training corpus is combination of
+  * BooksCorpus (800M words) (Zhu et al., 2015)
+  * English Wikipedia (2500M words).
+
+## Task 1: Masked language models (MLM)
+
+* Also called *Cloze* task in the literature
+
+TODO
+
+* mismatch between pre-training and fine-tuning:
+  * in pre-training the [MASK] token appears, but not in the fine-tuning phase
+* solution: when a token position is chosen in a sequence
+(this is happens with 15% propability overall) then
+  * replace with [MASK] token in 80% of the time
+  * replace with a random word in 10% of the time
+  * keep unchanged in 10% of the time
+
+## Task 2: Next sentence prediction (NSP)
+
+* chose sentences $A$ and $B$ for each pre-training example, where
+  * the sentence $B$ follows sentence $A$ in the training corpus 50% of the time
+  * the sentence $B$ is a random sentence in 50% of the time
+  
+* use the final hidden vector $C \in \mathbb{R}^{H}$ of the special [CLS] token
+to train on the label IsNext or NotNext
+
+* Unfortunately, the vector $C$ is not a meaningful representation of the whole
+sentence on its own (probably because it was trained on the Next Sentence Predection task)
+  * to get sentence embedding, we have to fine-tune the model for this task;
+  we will talk about sentence embeddings is a later lecture
+
+TODO
+
+## BERT fine-tuning
+
+* General Language Understanding Evaluation (GLUE)
+* Stanford Question Answering Dataset (SQuAD v1.1)
+
+TODO
+
+## Exercises
+
+* [Huggingface transformers](https://huggingface.co/docs/transformers/index)
+
+
+TODO

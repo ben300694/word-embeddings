@@ -1,0 +1,31 @@
+---
+title: "Topological Data Analysis"
+subtitle: "... and some applications to word embeddings"
+author: "Benjamin Ruppik"
+date: "`r Sys.Date()`"
+output:
+  ioslides_presentation:
+    widescreen: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+# Topological Data Analysis (TDA)
+
+## The shape of data
+
+TODO
+
+## Persistent homology
+
+* Capture the features of a space at various scales
+
+TODO
+
+# Hyperbolic embeddings
+
+## Hyperbolic space
+
+TODO
