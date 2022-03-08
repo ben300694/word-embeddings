@@ -23,6 +23,26 @@ knitr::opts_chunk$set(echo = FALSE)
 * Topological data analysis
     * Hyperbolic embeddings, singularities and topological polysemy
 
+## Motivation
+
+* Winograd schemas
+  * The city councilmen refused the demonstrators a permit because they feared violence.
+  * The city councilmen refused the demonstrators a permit because they advocated violence.
+  
+  * The trophy doesn’t fit into the brown suitcase because it’s too large.
+  * The trophy doesn’t fit into the brown suitcase because it’s too small.
+  
+## Motivation
+
+* Garden-path sentences
+  * The old man the boat.
+  * The complex houses married and single soldiers and their families.
+  * The horse raced past the barn fell.
+  
+## Applications of word embeddings
+
+TODO
+
 ## Static word embeddings
 
 TODO
