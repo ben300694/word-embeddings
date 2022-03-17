@@ -1,6 +1,3 @@
-# TODO Idea: Movie review classifier using tf-idf
-# https://www.analyticsvidhya.com/blog/2021/09/creating-a-movie-reviews-classifier-using-tf-idf-in-python/
-
 # Using scikit learn
 # https://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.text.TfidfVectorizer.html
 
@@ -13,7 +10,13 @@ corpus = [
     'And this is the third one.',
     'Is this the first document?',
 ]
+
 vectorizer = TfidfVectorizer()
+# for word-level n-grams
+# vectorizer = TfidfVectorizer(analyzer='word', ngram_range=(1,2))
+# for character-level n-grams
+# vectorizer = TfidfVectorizer(analyzer='char', ngram_range=(3,5))
+
 X = vectorizer.fit_transform(corpus)
 
 print(X.shape)
@@ -23,3 +26,8 @@ feature_names = vectorizer.get_feature_names_out()
 corpus_index = [n for n in corpus]
 df = pd.DataFrame(X.T.todense(), index=feature_names, columns=corpus_index)
 print(df)
+
+
+
+# TODO Idea for exercise: Movie review classifier using tf-idf
+# https://www.analyticsvidhya.com/blog/2021/09/creating-a-movie-reviews-classifier-using-tf-idf-in-python/

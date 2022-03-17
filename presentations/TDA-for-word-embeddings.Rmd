@@ -16,11 +16,15 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## The shape of data
 
+* Usually, the data we are interested in is not randomly distributed in space,
+but rather sampled from a lower-dimensional submanifold
+
 TODO
 
 ## Persistent homology
 
 * Capture the features of a space at various scales
+
 
 TODO
 

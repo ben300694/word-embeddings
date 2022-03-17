@@ -63,6 +63,8 @@ TODO
 
 * General Language Understanding Evaluation [(GLUE)](https://gluebenchmark.com/)
  benchmark
+* Winograd schema challenge (WSC)
+  * "The city councilmen refused the demonstrators a permit because they [feared/advocated] violence."
 
 ## Exercises
 
