@@ -66,6 +66,74 @@ TODO
 * Winograd schema challenge (WSC)
   * "The city councilmen refused the demonstrators a permit because they [feared/advocated] violence."
 
+
+# Text classification
+
+## Training and Cross-Entropy Loss
+
+* $p^{\ast}$ target probability distribution, $p$ predicted probability distribution
+* *cross-entropy loss*: $\operatorname{Loss}(p^{\ast}, p) = - \sum_{i=1}^{K} p_{i}^{\ast} \log(p_{i})$
+* minimizing cross-entropy is equivalent to maximizing data likelihood
+
+TODO
+
+## Get vector representations for input text of different length
+
+* Bag of Embeddings (BoE): sum of embeddings
+  * Weighted Bag of Embeddings
+
+* Bag of Words (BoW): sum of one-hot vectors
+
+TODO
+
+## Term frequency - inverse document frequency
+
+* word $w$
+* text $d$
+* corpus $D$
+
+$\operatorname{tf-idf}(w, d, D) = \operatorname{tf}(w, d) \cdot \operatorname{idf}(w, D)
+= N(w, d) \cdot \frac{\abs{D}}{\abs{d \in D \mid w \in D}}$
+
+TODO
+
+# Recurrent methods
+
+* RNN
+* LSTM
+* GRU
+
+TODO
+
+## RNN cell
+
+* input vector
+* hidden vector: previous networt state
+
+Problems: vanishing and exploding gradients
+
+TODO
+
+## Recurrent networks for text classification
+
+* Take final state or
+* Use multiple layers or
+* use Bidirectional architecture
+
+TODO: Explain bidirectional in more detail
+
+# Convolutional (CNN)
+
+## Motivation: Convolution for images
+
+* translation invariance
+
+TODO
+
+## Convolution for text
+
+TODO
+
 ## Exercises
 
 * Exploring WordNet

@@ -5,7 +5,14 @@ author: "Benjamin Ruppik"
 date: "`r Sys.Date()`"
 output:
   ioslides_presentation:
-    widescreen: true
+    widescreen: yes
+    transition: faster
+  beamer_presentation: default
+  slidy_presentation: default
+bibliography: 02_references.bib
+header-includes:
+- \DeclareMathOperator*{\argmin}{argmin}
+- \DeclareMathOperator*{\argmax}{argmax}
 ---
 
 ```{r setup, include=FALSE}
@@ -25,7 +32,7 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## Motivation
 
-* Winograd schemas
+* *Winograd schemas*
   * The city councilmen refused the demonstrators a permit because they feared violence.
   * The city councilmen refused the demonstrators a permit because they advocated violence.
   
@@ -34,7 +41,7 @@ knitr::opts_chunk$set(echo = FALSE)
   
 ## Motivation
 
-* Garden-path sentences
+* *Garden-path sentences*
   * The old man the boat.
   * The complex houses married and single soldiers and their families.
   * The horse raced past the barn fell.
@@ -43,6 +50,35 @@ knitr::opts_chunk$set(echo = FALSE)
 
 TODO
 
+## Text classification
+
+* Document classification: spam / not spam
+* Review classification: positive / negative
+* Sentiment
+
+* single-label classification / multi-label classification
+
+## Generative and Discriminative Models
+
+* Generative models:
+  * learn undelying data distribution
+  $P(x, y) = P(x | y) \cdot P(y)$
+  * prediction: given an input $x$, pick a class with the highest joint probability
+  $y = \argmax_{k} P(x | y = k) \cdot P(y = k)$
+    * maximum a posteriori (MAP) estimate
+  
+* Discriminative models:
+  * learn the boundaries between classes (i.e. learn how to use the features)
+  * prediction: given an input $x$, pick a class with the highest conditions
+  probability $y = \argmax_{k} P(y = k | y)$
+    * Maximum Likelihood Estimate (MLE) of parameters
+
+TODO: How to do prediction
+
+---
+
+*Bag of Words (BoW) assumption*: word order does not matter
+
 ## Static word embeddings
 
 TODO
@@ -50,6 +86,9 @@ TODO
 ## Contextual word embeddings
 
 TODO
+
+* Sentence-BERT
+  * sentence-pair regression tasks like semantic textual similarity (STS)
 
 ## Additional topics
 
