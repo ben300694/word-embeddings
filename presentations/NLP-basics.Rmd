@@ -116,8 +116,8 @@ TODO
 
 ## Recurrent networks for text classification
 
-* Take final state or
-* Use multiple layers or
+* Take final state *or*
+* Use multiple layers *or*
 * use Bidirectional architecture
 
 TODO: Explain bidirectional in more detail
@@ -134,7 +134,21 @@ TODO
 
 TODO
 
-## Exercises
+# Language Models
+
+* Markov Property: Independence assumption
+  * Counting to estimate probabilities does not work well:
+  many of the possible fragments do not appear in the corpus
+  $\leadsto$ get assigned zero probability
+  * Assumption: The probability of a word only depends on a fixed number of preceding words
+
+* smoothing: redistribute probability mass
+
+TODO
+
+# Exercises
+
+## Exercises for WSI and WSD
 
 * Exploring WordNet
 * [Fine-tuning huggingface transformers for POS in French](https://signal.onepointltd.com/post/102gbbr/training-an-nlp-model-with-hugging-face-transformers)

@@ -46,7 +46,34 @@ knitr::opts_chunk$set(echo = FALSE)
   * The complex houses married and single soldiers and their families.
   * The horse raced past the barn fell.
   
+## Methods
+
+"You shall know a word by the company it keeps." (J. R. Firth, 1957)
+
+
+  
 ## Applications of word embeddings
+
+* Word-sense induction (WSI) or word-sense discrimination: identification of the senses/meanings of a word
+  * output: clustering of contexts of the target word, or a clustering of words related to the target word
+* Word-sense disambiguation (WSD): relies on a predefined sense inventory,
+and the task is to solve the ambiguity in the context, i.e. identifying which sense of a word is used in a sentence
+
+
+Part-of-speech tagging
+
+* grammatical tagging: decide which part of speech
+(noun, verb, article, adjective, preposition, pronoun, adverb, conjunction, and interjection)
+in a text/corpus belongs to
+* this might depend both on the definition of the word and its context, and in language
+a large portion of word-forms are ambiguous
+  * Example from wikipedia: "dogs" usually is a plural noun, but can also be a verb as in the sentence
+  "The sailor dogs the hatch."
+* sub-categories:
+  * for nouns, the plural, possessive, and singular forms can be distinguished.
+  * "case" (role as subject, object, etc.), grammatical gender, and so on
+  * while verbs are marked for tense, aspect, and other things
+
 
 TODO
 
