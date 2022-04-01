@@ -134,6 +134,10 @@ TODO
 
 TODO
 
+## CNN for language modeling
+
+TODO See later (??) (After introducing Language Models?)
+
 # Language Models
 
 * Markov Property: Independence assumption
@@ -145,6 +149,36 @@ TODO
 * smoothing: redistribute probability mass
 
 TODO
+
+## One layer RNNs
+
+TODO
+
+## Multi-layer RNNs
+
+* feed the hidden states from one RNN to the next one
+  * lower layers catch local phenomena
+  * higher layers catch longer dependencies
+
+TODO
+
+## Generation strategies in Language Models
+
+* Sample tokens from the predicted probability distribution for the next word
+  * sample until EOS (End Of Sentence) token is generated
+* We want
+  * coherence: the generated text should make sense
+  * diversity: the model should be able to produce very different samples
+  
+* Standard sampling: use distributions of model without modification
+* Sample with temperature: Change final softmax ba dividing through temperature $\tau$
+* Top-$K$ sampling
+* Top-$p$ or Nucleus sampling
+  * take top-$p$% of the probability mass
+
+TODO
+
+
 
 # Exercises
 

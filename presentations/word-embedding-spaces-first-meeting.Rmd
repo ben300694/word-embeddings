@@ -74,6 +74,10 @@ a large portion of word-forms are ambiguous
   * "case" (role as subject, object, etc.), grammatical gender, and so on
   * while verbs are marked for tense, aspect, and other things
 
+* Example where order matters:
+  * "can of fish"
+  * "we can fish"
+
 
 TODO
 
