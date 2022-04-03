@@ -63,25 +63,38 @@ slides > slide:not(.nobackground):after {
   
 ## Motivation: Garden-path sentences
 
-> * The old man the boat.
-> * The complex houses married and single soldiers and their families.
-> * The horse raced past the barn fell.
+* The old man the boat.
+
+---
+
+* The complex houses married and single soldiers and their families.
+* The horse raced past the barn fell.
   
 ## Methods
 
 "You shall know a word by the company it keeps." (J. R. Firth, 1957)
 
+<center>
+
+![](ongchoi_slide_1.png){width=90%}
+
+![](ongchoi_slide_2.png){width=90%}
 
 [@jurafsky2009speech]
+(https://web.stanford.edu/~jurafsky/slp3/)
+
+</center>
 
 ---
 
 <iframe src="text8_fasttext_2D_tSNE_1000_vectors_plotly.html"></iframe>
 
+Some of the word vectors from a 100 dimensional fastText embedding trained
+on a Wikipedia corpus; projected to 2 dimensions using t-SNE.
 
 ## Applications of word embeddings
 
-* *Word-sense induction* (WSI) or word-sense discrimination: task is the identification of the senses/meanings of a word
+* *Word-sense induction* (WSI) or *word-sense discrimination*: task is the identification of the senses/meanings of a word
 * Output: clustering of contexts of the target word, or a clustering of words related to the target word
 
 **Example:**
@@ -92,38 +105,64 @@ slides > slide:not(.nobackground):after {
   * “The weather is cold.”
   * "The ice cream is cold."
   
+**Output:** ?
+  
 ---
   
 * *Word-sense disambiguation* (WSD): relies on a predefined sense inventory, and the task is to solve the ambiguity in the context
 * Output: identifying which sense of a word is used in a sentence
 
+<center>
+
+![](synsets_jam_lesk_examples.png){width=90%}
+
+</center>
 
 ## Part-of-speech tagging
 
 * grammatical tagging: decide which part of speech
 (noun, verb, article, adjective, preposition, pronoun, adverb, conjunction, and interjection)
-in a text/corpus belongs to
-* this might depend both on the definition of the word and its context, and in language
-a large portion of word-forms are ambiguous
-  * Example from wikipedia: "dogs" usually is a plural noun, but can also be a verb as in the sentence
+a word in a text corpus belongs to
+
+<center>
+
+![](pos_tagging_nltk.png){width=90%}
+
+</center>
+
+PoS might depend both on definition of the word and its context
+
+* in language a large portion of word-forms are ambiguous
+* example from Wikipedia:
+  * "dogs" usually is a plural noun,
+  * but can also be a verb as in the sentence
   "The sailor dogs the hatch."
+  
+* example where order matters:
+  * "can of fish"
+  * "we can fish"
 
 ---
 
-* sub-categories for PoS tagging:
-  * for nouns, the plural, possessive, and singular forms can be distinguished.
-  * "case" (role as subject, object, etc.), grammatical gender, and so on
-  * verbs are marked for tense, aspect, and other things
+Sub-categories for PoS tagging:
 
-* Example where order matters:
-  * "can of fish"
-  * "we can fish"
+* for nouns, the plural, possessive, and singular forms can be distinguished.
+* "case" (role as subject, object, etc.), grammatical gender, and so on
+* verbs are marked for tense, aspect, and other things
+
+Other tagging tasks:
+
+<center>
+
+![](pos_tagging_xml-roberta.png){width=70%}
+
+</center>
 
 ## Text classification
 
 * Document classification: spam / not spam
 * Review classification: positive / negative
-* Sentiment
+* Sentiment: positive / neutral / negative
 
 * single-label classification / multi-label classification
 
@@ -148,6 +187,8 @@ TODO: How to do prediction
 
 *Bag of Words (BoW) assumption*: word order does not matter
 
+TODO
+
 ## Static word embeddings
 
 TODO
@@ -166,7 +207,21 @@ word2vec:
 * I'm going to the <span style="color: blue;">bank</span> to withdraw some money.
 * We're sitting on the river <span style="color: blue;">bank</span> with some friends.
 
+<center>
+
+![](synsets_bank.png){width=90%}
+
+</center>
+
 ## Recurrent methods: ELMo
+
+<center>
+
+![](elmo-forward-backward-language-model-embedding.png){width=95%}
+
+(https://jalammar.github.io/illustrated-bert/)
+
+</center>
 
 ## **Transformers**
 
@@ -188,11 +243,16 @@ TODO
 
 </center>
 
-TODO
 
 ## Huggingface transformers
 
-https://huggingface.co/distilbert-base-uncased
+<center>
+
+![](bert_huggingface_page.png){width=95%}
+
+(https://huggingface.co/distilbert-base-uncased)
+
+</center>
 
 ## Sentence embeddings
 
@@ -203,15 +263,15 @@ https://huggingface.co/distilbert-base-uncased
 
 TODO
 
-## bias
+## Bias
 
 TODO
 
-## sentiment
+## Sentiment
 
 TODO
 
-## multilingual embeddings
+## Multilingual embeddings
 
 TODO
 
