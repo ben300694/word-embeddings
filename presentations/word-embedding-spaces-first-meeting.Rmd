@@ -9,7 +9,7 @@ output:
     transition: faster
   beamer_presentation: default
   slidy_presentation: default
-bibliography: 02_references.bib
+bibliography: word_embeddings_references.bib
 header-includes:
 - \DeclareMathOperator*{\argmin}{argmin}
 - \DeclareMathOperator*{\argmax}{argmax}
@@ -19,48 +19,86 @@ header-includes:
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
+<style>
+slides > slide { overflow: scroll; }
+slides > slide:not(.nobackground):after {
+  content: '';
+}
+</style>
+
 ## Syllabus
 
 * Static word embeddings
-    * Frequency based methods, word2vec, GloVe, fastText
+    * Frequency based methods, word2vec, GloVe, fastText, evaluation of embeddings
 * Contextual word embeddings
-    * ELMo, **Transformers** and attention, BERT, sentence embeddings, contrastive learning 
+    * ELMo, **Transformers** and attention, BERT, sentence embeddings, contrastive learning
 * Additional topics
-    * Evaluation, geometry of the embedding space, bias, sentiment, multilingual embeddings
+    * Geometry of the embedding space, bias, sentiment, multilingual embeddings
 * Topological data analysis
     * Hyperbolic embeddings, singularities and topological polysemy
 
-## Motivation
+## Motivation: Winograd schemas
 
-* *Winograd schemas*
-  * The city councilmen refused the demonstrators a permit because they feared violence.
-  * The city councilmen refused the demonstrators a permit because they advocated violence.
-  
-  * The trophy doesn’t fit into the brown suitcase because it’s too large.
-  * The trophy doesn’t fit into the brown suitcase because it’s too small.
-  
-## Motivation
+* The trophy doesn’t fit into the brown suitcase because it’s too <span style="color: blue;">large</span>.
+* The trophy doesn’t fit into the brown suitcase because it’s too <span style="color: blue;">small</span>.
 
-* *Garden-path sentences*
-  * The old man the boat.
-  * The complex houses married and single soldiers and their families.
-  * The horse raced past the barn fell.
+*Task:* Co-reference resolution
+
+## Motivation: Winograd schemas
+
+* The city councilmen refused the demonstrators a permit because they <span style="color: blue;">feared</span> violence.
+* The city councilmen refused the demonstrators a permit because they <span style="color: blue;">advocated</span> violence.
+
+*Task:* Co-reference resolution
+
+* easy for humans to solve
+* difficult for computers
+  * solution relies on real-world knowledge and common sense reasoning
+
+## Motivation: Winograd schemas
+
+* I put the cake away in the refrigerator. It has a lot of <span style="color: blue;">butter</span> in it.
+* I put the cake away in the refrigerator. It has a lot of <span style="color: blue;">leftovers</span> in it.
+
+  
+## Motivation: Garden-path sentences
+
+> * The old man the boat.
+> * The complex houses married and single soldiers and their families.
+> * The horse raced past the barn fell.
   
 ## Methods
 
 "You shall know a word by the company it keeps." (J. R. Firth, 1957)
 
 
-  
+[@jurafsky2009speech]
+
+---
+
+<iframe src="text8_fasttext_2D_tSNE_1000_vectors_plotly.html"></iframe>
+
+
 ## Applications of word embeddings
 
-* Word-sense induction (WSI) or word-sense discrimination: identification of the senses/meanings of a word
-  * output: clustering of contexts of the target word, or a clustering of words related to the target word
-* Word-sense disambiguation (WSD): relies on a predefined sense inventory,
-and the task is to solve the ambiguity in the context, i.e. identifying which sense of a word is used in a sentence
+* *Word-sense induction* (WSI) or word-sense discrimination: task is the identification of the senses/meanings of a word
+* Output: clustering of contexts of the target word, or a clustering of words related to the target word
+
+**Example:**
+
+* target word “cold”
+* collection of sentences:
+  * “I caught a cold.”
+  * “The weather is cold.”
+  * "The ice cream is cold."
+  
+---
+  
+* *Word-sense disambiguation* (WSD): relies on a predefined sense inventory, and the task is to solve the ambiguity in the context
+* Output: identifying which sense of a word is used in a sentence
 
 
-Part-of-speech tagging
+## Part-of-speech tagging
 
 * grammatical tagging: decide which part of speech
 (noun, verb, article, adjective, preposition, pronoun, adverb, conjunction, and interjection)
@@ -69,17 +107,17 @@ in a text/corpus belongs to
 a large portion of word-forms are ambiguous
   * Example from wikipedia: "dogs" usually is a plural noun, but can also be a verb as in the sentence
   "The sailor dogs the hatch."
-* sub-categories:
+
+---
+
+* sub-categories for PoS tagging:
   * for nouns, the plural, possessive, and singular forms can be distinguished.
   * "case" (role as subject, object, etc.), grammatical gender, and so on
-  * while verbs are marked for tense, aspect, and other things
+  * verbs are marked for tense, aspect, and other things
 
 * Example where order matters:
   * "can of fish"
   * "we can fish"
-
-
-TODO
 
 ## Text classification
 
@@ -114,17 +152,94 @@ TODO: How to do prediction
 
 TODO
 
-## Contextual word embeddings
+## Frequency based methods
 
 TODO
+
+## word2vec, GloVe, fastText
+
+word2vec:
+[@DBLP:journals/corr/abs-1301-3781;@DBLP:journals/corr/MikolovSCCD13]
+
+## Contextual word embeddings
+
+* I'm going to the <span style="color: blue;">bank</span> to withdraw some money.
+* We're sitting on the river <span style="color: blue;">bank</span> with some friends.
+
+## Recurrent methods: ELMo
+
+## **Transformers**
+
+* attention
+
+TODO
+
+## Bidirectional Encoder Representations from Transformers (BERT)
+
+<center>
+
+![https://jalammar.github.io/illustrated-bert/](bert_mlm_task_jalammar.png){width=90%}
+
+</center>
+
+<center>
+
+![[@DBLP:journals/corr/abs-1810-04805]](bert_schematic_comparison_original_article.png){width=95%}
+
+</center>
+
+TODO
+
+## Huggingface transformers
+
+https://huggingface.co/distilbert-base-uncased
+
+## Sentence embeddings
 
 * Sentence-BERT
   * sentence-pair regression tasks like semantic textual similarity (STS)
 
-## Additional topics
+## Geometry of the embedding space
+
+TODO
+
+## bias
+
+TODO
+
+## sentiment
+
+TODO
+
+## multilingual embeddings
 
 TODO
 
 ## Topological data analysis
 
 TODO
+
+## Hyperbolic embeddings
+
+TODO
+
+## Singularities
+
+TODO
+
+* the *manifold hypothesis* does not hold at all points of certain static word embeddings
+
+[@jakubowski2020topology]
+
+# Thank you!
+
+## Organisation
+
+* Schedule: See [Google sheet](https://docs.google.com/spreadsheets/d/1s-pxSBL0pK5RN5ny5IiSsXUL9i8nQM7iIx_j_euDf08/edit?usp=sharing)
+* Each week talks by students (1 or 2 speakers per session, 70 minutes in total)
+  * there should be enough time for questions and a discussion
+* Guest lecture ?
+* The final grade is based on your presentation
+* Hand in your extended abstract (ideally .tex, .bib files and compiled .pdf; **maximum** 2 pages with references) via ILIAS
+
+## References

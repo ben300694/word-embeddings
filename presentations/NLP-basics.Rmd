@@ -178,7 +178,21 @@ TODO
 
 TODO
 
+# Evaluating Language Models (and embeddings)
 
+## Cross-Entropy and Perplexity
+
+* a good language model should assign a high probability to real text
+
+* perplexity
+
+TODO
+
+
+## Tricks for language models
+
+* weight tying:
+  * use the same parameters for input and output word embeddings
 
 # Exercises
 
