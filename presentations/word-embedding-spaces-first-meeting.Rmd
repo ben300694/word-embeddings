@@ -225,9 +225,15 @@ word2vec:
 
 ## **Transformers**
 
-* attention
+<center>
 
-TODO
+![](Transformer-model-architecture-described-in-Attention-Is-All-You-Need.pbm){width=40%}
+
+[@DBLP:journals/corr/VaswaniSPUJGKP17]
+
+![](transformer_attention_visualization.png){width=90%}
+
+</center>
 
 ## Bidirectional Encoder Representations from Transformers (BERT)
 
@@ -256,6 +262,8 @@ TODO
 
 ## Sentence embeddings
 
+TODO
+
 * Sentence-BERT
   * sentence-pair regression tasks like semantic textual similarity (STS)
 
@@ -265,31 +273,93 @@ TODO
 
 ## Bias
 
-TODO
+<center>
+
+![](debiasing_word_embeddings_abstract.png){width=70%}
+
+[@DBLP:journals/corr/BolukbasiCZSK16a]
+
+![](bias_gender_direction.png){width=90%}
+
+</center>
 
 ## Sentiment
 
-TODO
+<center>
+
+![](imdb_movie_reviews.png){width=60%}
+
+(https://www.kaggle.com/datasets/lakshmi25npathi/imdb-dataset-of-50k-movie-reviews)
+
+</center>
+
+---
+
+<center>
+
+![](sentiment_word2vec_good_neighbors.png){width=50%}
+
+![](sentiment_nearest_neighbor_ranking.png){width=50%}
+
+![](sentiment_word_vector_refinement.png){width=75%}
+
+[@yu-etal-2017-refining]
+
+</center>
 
 ## Multilingual embeddings
 
-TODO
+<center>
 
-## Topological data analysis
+![](Bilingual_Word_Representations_with_Monolingual_Quality_in_Mind_embedding_example.jpeg){width=80%}
 
-TODO
+[@Luong-etal:naacl15:bivec], (https://nlp.stanford.edu/~lmthang/bivec/)
+
+![](Word_Translation_without_Parallel_Data_method_screenshot.png){width=90%}
+
+[@DBLP:journals/corr/abs-1710-04087], (https://github.com/facebookresearch/MUSE)
+
+</center>
 
 ## Hyperbolic embeddings
 
-TODO
+<center>
 
-## Singularities
+![](hyperbolic_hierarchical_representations_mammals.png){width=70%}
 
-TODO
+[@DBLP:journals/corr/NickelK17]
 
-* the *manifold hypothesis* does not hold at all points of certain static word embeddings
+</center>
+
+* Poincaré GloVe [@DBLP:journals/corr/abs-1810-06546]
+
+<center>
+
+![](hyperbolic_image_embedding_MNIST.png){width=75%}
+
+Hyperbolic image embeddings [@DBLP:journals/corr/abs-1904-02239]
+
+</center>
+
+## Singularities and Topological Data Analysis (TDA)
+
+* *manifold hypothesis* does not hold at all points of certain static word embeddings
+
+<center>
+
+![](TDA_word_space_pinched_manifold.png){width=55%}
 
 [@jakubowski2020topology]
+
+</center>
+
+* *topological polysemy*: count the number of "meanings" around a singularity
+
+<center>
+
+![](TDA_persistence_diagram_example.png){width=90%}
+
+</center>
 
 # Thank you!
 
