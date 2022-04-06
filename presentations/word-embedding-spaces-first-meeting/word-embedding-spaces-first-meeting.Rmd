@@ -36,18 +36,24 @@ slides > slide:not(.nobackground):after {
     * Geometry of the embedding space, bias, sentiment, multilingual embeddings
 * Topological data analysis
     * Hyperbolic embeddings, singularities and topological polysemy
+    
+# Motivation & Methods
 
 ## Motivation: Winograd schemas
 
-* The trophy doesn’t fit into the brown suitcase because it’s too <span style="color: blue;">large</span>.
-* The trophy doesn’t fit into the brown suitcase because it’s too <span style="color: blue;">small</span>.
+* The trophy doesn’t fit into the brown suitcase because <span style="color: red;">it</span>'s too <span style="color: blue;">large</span>.
+* The trophy doesn’t fit into the brown suitcase because <span style="color: red;">it</span>'s too <span style="color: blue;">small</span>.
+
+<br>
 
 *Task:* Co-reference resolution
 
 ## Motivation: Winograd schemas
 
-* The city councilmen refused the demonstrators a permit because they <span style="color: blue;">feared</span> violence.
-* The city councilmen refused the demonstrators a permit because they <span style="color: blue;">advocated</span> violence.
+* The city councilmen refused the demonstrators a permit because <span style="color: red;">they</span> <span style="color: blue;">feared</span> violence.
+* The city councilmen refused the demonstrators a permit because <span style="color: red;">they</span> <span style="color: blue;">advocated</span> violence.
+
+<br>
 
 *Task:* Co-reference resolution
 
@@ -57,17 +63,20 @@ slides > slide:not(.nobackground):after {
 
 ## Motivation: Winograd schemas
 
-* I put the cake away in the refrigerator. It has a lot of <span style="color: blue;">butter</span> in it.
-* I put the cake away in the refrigerator. It has a lot of <span style="color: blue;">leftovers</span> in it.
+* I put the cake away in the refrigerator. <span style="color: red;">It</span> has a lot of <span style="color: blue;">butter</span> in it.
+* I put the cake away in the refrigerator. <span style="color: red;">It</span> has a lot of <span style="color: blue;">leftovers</span> in it.
 
   
 ## Motivation: Garden-path sentences
 
 * The old man the boat.
 
----
+## Motivation: Garden-path sentences
 
 * The complex houses married and single soldiers and their families.
+
+## Motivation: Garden-path sentences
+
 * The horse raced past the barn fell.
   
 ## Methods
@@ -187,7 +196,7 @@ Other tagging tasks:
   * learn the boundaries between classes (i.e. learn how to use the features)
   * prediction: given an input $x$, pick a class with the highest conditions
   probability $y = \argmax_{k} P(y = k | y)$
-    * Maximum Likelihood Estimate (MLE) of parameters
+    * maximum likelihood estimate (MLE) of parameters
 
 ---
 
@@ -200,6 +209,8 @@ Other tagging tasks:
 ![](imdb_review_bag_of_words.png){width=65%}
 
 </center>
+
+# Plan
 
 ## Static word embeddings
 
@@ -219,11 +230,19 @@ Other tagging tasks:
 
 </center>
 
-*term-document matrix:* each document is represented by a vector of word counts
+*term-document matrix:*
+
+* each document is represented by a vector of word counts
     
-*term frequency -- inverse document frequency (tf-idf)* sparse vectors, words are represented as a simple function of the counts of neighbors
+*term frequency -- inverse document frequency (tf-idf)*:
+
+* sparse vectors
+* words are represented as a simple function of the counts of neighbors
 
 ---
+
+*word2vec*
+[@DBLP:journals/corr/abs-1301-3781;@DBLP:journals/corr/MikolovSCCD13]
 
 <center>
 
@@ -233,10 +252,8 @@ Other tagging tasks:
 
 </center>
 
-*word2vec*
-[@DBLP:journals/corr/abs-1301-3781;@DBLP:journals/corr/MikolovSCCD13]
-
 *GloVe*
+[@pennington-etal-2014-glove]
 
 <center>
 
@@ -317,6 +334,8 @@ Other tagging tasks:
 
 </center>
 
+* train on sentence-pair regression tasks like *semantic textual similarity (STS)*
+
 <center>
 
 ![](sentence_BERT_siamese_architecture.png){width=90%}
@@ -326,8 +345,6 @@ Sentence-BERT [@DBLP:journals/corr/abs-1908-10084]
 (https://www.sbert.net/)
 
 </center>
-
-* train on sentence-pair regression tasks like *semantic textual similarity (STS)*
 
 ## Geometry of the embedding space
 
@@ -393,6 +410,8 @@ Sentence-BERT [@DBLP:journals/corr/abs-1908-10084]
 
 </center>
 
+# Manifolds and topology
+
 ## Hyperbolic embeddings
 
 <center>
@@ -437,10 +456,13 @@ Hyperbolic image embeddings [@DBLP:journals/corr/abs-1904-02239]
 
 ## Organisation
 
-* Schedule: See [Google sheet](https://docs.google.com/spreadsheets/d/1s-pxSBL0pK5RN5ny5IiSsXUL9i8nQM7iIx_j_euDf08/edit?usp=sharing)
+* Schedule:
+  * [Google sheet](https://docs.google.com/spreadsheets/d/1s-pxSBL0pK5RN5ny5IiSsXUL9i8nQM7iIx_j_euDf08/edit?usp=sharing) with dates
+  * [Detailed program](https://uni-bonn.sciebo.de/s/85JJKyPUmVHojyx	)
+* Gebäude 25.12 / 2512.02.33 (& live stream available online)
 * Each week talks by students (1 or 2 speakers per session, 70 minutes in total)
   * there should be enough time for questions and a discussion
-* Guest lecture ?
+* Guest lecture "Multilingual embeddings" on 2022-06-30
 * The final grade is based on your presentation
 * Hand in your extended abstract (ideally .tex, .bib files and compiled .pdf; **maximum** 2 pages with references) via ILIAS
 
