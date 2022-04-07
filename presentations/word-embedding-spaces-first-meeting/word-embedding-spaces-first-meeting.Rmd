@@ -465,5 +465,6 @@ Hyperbolic image embeddings [@DBLP:journals/corr/abs-1904-02239]
 * Guest lecture "Multilingual embeddings" on 2022-06-30
 * The final grade is based on your presentation
 * Hand in your extended abstract (ideally .tex, .bib files and compiled .pdf; **maximum** 2 pages with references) via ILIAS
+  * [ACL template on Overleaf](https://www.overleaf.com/latex/templates/acl-2020-proceedings-template/zsrkcwjptpcd)
 
 ## References
