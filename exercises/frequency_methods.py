@@ -9,6 +9,7 @@ corpus = [
     'This document is the second document.',
     'And this is the third one.',
     'Is this the first document?',
+    'This is life. This is my dream. I like it here. My feet are cold.'
 ]
 
 vectorizer = TfidfVectorizer()
