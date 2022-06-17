@@ -1,3 +1,4 @@
+% !TeX spellcheck = en_US
 \documentclass[11pt, a4paper]{amsart}
 
 \usepackage[T1]{fontenc}
@@ -15,7 +16,7 @@
 \input{commands}
 
 
-\title{Seminar on Word Embedding Spaces}
+\title{Representations in Natural Language Processing}
 
 % % % % % % % % % % % % %
 % Contact information
@@ -78,27 +79,23 @@
 \begin{document}
 
 \begin{abstract}
-    This is the program for the seminar on ``Word Embedding Spaces'', HHU D{\"u}sseldorf, Summer Term 2022.
+    Extended notes for the lecture ``Representations in Natural Language Processing'', HHU D{\"u}sseldorf, Winter Term 2022/2023.
 \end{abstract}
 
 \maketitle
 
 \begin{itemize}
-    \item \textbf{Time:} Thursdays, 14:30 - 16:00
-    \item \textbf{Location:} Building 25.12 - 2512.02.33;
-    hybrid (live stream on WebEx will be available for registered participants)
-    \item \textbf{Tentative schedule:}
-    \href{https://docs.google.com/spreadsheets/d/1s-pxSBL0pK5RN5ny5IiSsXUL9i8nQM7iIx_j_euDf08/edit?usp=sharing}{Link to Google Sheets}
+    \item \textbf{Lecture:} Wednesdays, 12:30 - 14:00, Building 25.22 / 2522.HS 5G
+    \item \textbf{Exercise:} Thursdays, 08:30 - 10:00, Building 25.22 / 2522.U1.52
+    \item live stream on WebEx might be available for registered participants
     \item \textbf{Requirements for credit points:}
     \begin{itemize}
-        \item Prepare a 70-min talk on one of the topics below.
-        If there is enough interest, we can assign teams of two students which will share a talk (i.e., 35 min per speaker).
-        The sessions are scheduled for 90 min each, so there will be ample time for questions.
-        \item Please make an appointment with me to discuss your talk, at least a week before the actual date.
-        \item Additionally, please submit the \LaTeX-file of an extended abstract (maximum 2 pages, \href{https://www.overleaf.com/latex/templates/acl-2020-proceedings-template/zsrkcwjptpcd}{ACL Overleaf template}, please include references) for your talk, which we will collect to produce a small summary of this seminar.
+        \item Successful participation in the exercises.
+        \item Submission of a  \LaTeX-file of a final report (2000 words, \href{https://www.overleaf.com/latex/templates/acl-2020-proceedings-template/zsrkcwjptpcd}{ACL Overleaf template}, please include references) 
     \end{itemize}
     \item \textbf{Prerequisites:}
-    Ideally some background in natural language processing; basics in machine learning; linear algebra.
+    Ideally some background in deep learning,
+    linear algebra.
 \end{itemize}
 
 \clearpage
@@ -131,7 +128,7 @@ distributed means that the representation is vector based.
 The task of finding good word embeddings becomes hard because there are many subtleties in the usage of words in natural language.
 Words (or \emph{lemmas}) like `mole' can have multiple meanings, which are its \emph{word senses}; a word which has multiple meanings is \emph{polysemous}.
 The embedding should also be able to capture concepts such as \emph{synonyms} (words have the same meaning in many or all contexts) and \emph{antonyms} (the word senses are opposites with respect to one feature of the meaning), \emph{similarity}, \emph{relatedness}, \emph{connotation} or \emph{sentiment}.
-There is usually a \emph{super-subordinate} relation (also called \emph{hyperonymy}, \emph{hyponymy} or ISA relation).
+There is usually a \emph{super-subordinate} relation (also called \emph{hyperonymy}, \emph{hyponymy} or ``is-a'' relation).
 On the other hand, \emph{stop words} like `a', `the', `is', `are', `and' are so commonly used that they carry very little useful information.
 
 There is a big difference between \emph{static} and \emph{contextualized} embeddings:
@@ -141,16 +138,16 @@ In a \emph{contextual embedding} (\Cref{sec:contextual_word_embeddings}) the vec
 We will also talk about how one can try to evaluate the quality of a word embedding.
 In \emph{extrinsic evaluation} in a downstream task, we use a word embedding for a specific task and measure whether it increases performance; \emph{intrinsic evaluation} is a harder challenge.
 
-% % % % % % 
+% % % % % % % % % % % % % % % % % % %
 \subsection{General References and Links}
 \label{sec:general_references}
 
 \begin{itemize}
-    \item For a general introduction see the book \cite{jurafsky2009speech}, but take a look at the draft of the 3rd edition available at \url{https://web.stanford.edu/~jurafsky/slp3/}, in particular Chapter 6 on ``Vector Semantics and Embeddings''.
+    \item For a general introduction see the book \cite{jurafsky2009speech}, but take a look at the \href{https://web.stanford.edu/~jurafsky/slp3/}{draft of the 3rd edition}, in particular Chapter 6 on ``Vector Semantics and Embeddings''.
     There are corresponding \href{https://web.stanford.edu/~jurafsky/slp3/slides/6_Vector_Apr18_2021.pdf}{slides} as well.
 
     \item \cite[Chp.~14]{eisenstein2019introduction} on ``Distributional and Distributed Semantics'';
-    draft available from \url{https://github.com/jacobeisenstein/gt-nlp-class/blob/master/notes/eisenstein-nlp-notes.pdf}.
+    draft available \href{https://github.com/jacobeisenstein/gt-nlp-class/blob/master/notes/eisenstein-nlp-notes.pdf}{here}.
 
     \item \href{https://www.cs.hhu.de/fileadmin/redaktion/Fakultaeten/Mathematisch-Naturwissenschaftliche_Fakultaet/Informatik/Dialog_Systems_and_Machine_Learning/20190705_word_embeddings.pdf}{Michael Heck's slides on the Space of Word Embeddings}.
     
@@ -161,115 +158,175 @@ In \emph{extrinsic evaluation} in a downstream task, we use a word embedding for
     \item \href{https://www.youtube.com/c/aicoffeebreak}{AI Coffee Break with Letitia} YouTube channel.
 \end{itemize}
 
-%~~~~~~~~~~~~~~~~~~~~~~~~%
-\section{List of Talks}
-%~~~~~~~~~~~~~~~~~~~~~~~~%
+% % % % % % % % % % % % % % % %
+\subsubsection{Acknowledgments}
 
-Below is a rough outline of the topics which could be included in each of the talks.
-I personally think it is better to take enough time to explain something well than to rush through too many topics in too little time.
-So please understand this list only as a guideline of what could be included in your presentation, and not as a strict requirement!
+The content of this lecture is based on the seminar ``Word embedding spaces'' run at HHU Düsseldorf in the Summer Term 2022.
+I am grateful for the suggestions and feedback collected during the sessions. \\
+Thank you to Milica Gašić, Chris Geishauser, Michael Heck for additional input. \\
+Sections of this write-up are based on the final reports written by the students after their talks:
+\begin{itemize}
+	\item Nick Rucks: fastText and GloVe
+\end{itemize}
 
-% % % % % % % % % % % % % % % % % % % % % % % % % %
-\subsection{Background and Static Word Embeddings}
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%
+\section{Background and Static Word Embeddings}
 \label{sec:static_word_embeddings}
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%
 
-\begin{enumerate}
-    \item \underline{Frequency based methods:}
-    \newline
-    Co-occurence counts;
-    term-document matrix: each document is represented by a vector of word counts;
-    \textbf{t}erm \textbf{f}requency -- \textbf{i}nverse \textbf{d}ocument \textbf{f}requency (tf-idf):
-    sparse vectors, words are represented as a simple function of the counts of neighbors;
-    \textbf{p}ointwise \textbf{p}ositive \textbf{m}utual \textbf{i}nformation (PPMI):
-    $\operatorname{PMI}(w_{1}, w_{2}) = \log \frac{p(w_{1}, w_{2})}{p(w_{1}) \cdot p(w_{2})}$;
-    dense versus sparse embeddings;
-    Latent semantic analysis:
-    singular value decomposition applied to term-document matrix (weighted by log frequency and normalized by entropy);
-    cosine similarity.
-    \newline
-    \textbf{References:}
-    \begin{itemize}
-        \item General references in \Cref{sec:general_references};
-        \item Using ``tricks'' from word2vec to improve count-based models \cite{levy-etal-2015-improving};
-        \item Skip-gram with negative-sampling (SGNS, see word2vec below) implicitly factorizes the shifted pointwise mutual information (PMI) matrix \cite{NIPS2014_feab05aa}.
-    \end{itemize}
-    
-    \item \underline{word2vec:}
-    \newline
-    static embedding;
-    \textbf{s}kip-\textbf{g}ram with \textbf{n}egative \textbf{s}ampling (SGNS);
-    Idea: train a classifier to a prediction task `the word $w$ is likely to show up near the word $c$';
-    self-supervision: can use the next word in a corpus of running text as the supervision signal
-    \begin{itemize}
-        \item get positive examples from taking a target word $w$ and its neighboring context words (have to choose a context window size $L$, these notes \cite{DBLP:journals/corr/Goldberg15c} discuss the effect of the window size).
-        \item randomly sample other words to get negative examples (based on the empirical distribution of words, but usually modified to sample less frequent words more often).
-        \item train a classifier (for example by logistic regression, i.e.\ the probability score is given as the sigmoid of the dot product) to distinguish the two cases;
-        skip-gram makes simplifying assumption that all context words are independent.
-        \item the learned weights of the classifier give the embedding of the word $w$:
-        target embedding in matrix $W$ and context embedding in matrix $C$.
-    \end{itemize}
-    Variations of word2vec training methods:
-    \begin{itemize}
-        \item Skip-Gram:
-        predict context words given the central word.
-        \item \textbf{C}ontinuous \textbf{B}ag-\textbf{o}f-\textbf{W}ords (CBOW):
-        predict the central word from the sum of context words (this sum is called the ``bag of words'').
-        \item Simple, but powerful approach:
-        Represent a sentence with the average of its word embeddings.
-        Hybrid: word embeddings are computed distributionally, and the sentence embedding computed by composition.
-    \end{itemize}
-    \textbf{References:}
-    The original sources are
-    \cite{DBLP:journals/corr/abs-1301-3781},
-    \cite{DBLP:journals/corr/MikolovSCCD13}.
-    The survey \cite{DBLP:journals/corr/Rong14} has a detailed explanation of the parameter update equations in word2vec.
-    \newline
-    \underline{Evaluating word embeddings:}
-    \newline
-    \emph{Intrinsic evaluation} measures how well the word vectors capture meaning, for example by evaluating on word similarity and word analogy tasks;
-    \emph{extrinsic evaluation} is performed by looking at the performance of a downstream task.
-    Linear structure in the embedding space can be observed from word analogies, such as that the vector of
-    \[
-        v_{\textup{king}} - v_{\textup{man}} + v_{\textup{woman}} \text{ is close to } v_{\textup{queen}}.
-    \]
-    \begin{itemize}
-        \item \cite{DBLP:journals/corr/abs-1901-09813} try to find a theoretical explanation for these linear relations.
-        \item Similarities across languages can be detected in the embeddings \cite{DBLP:journals/corr/MikolovLS13}, which allows constructions of mappings between semantic spaces even without having parallel data \cite{DBLP:journals/corr/abs-1710-04087}.
-        \item Such an analysis can lead to ideas for improving the embeddings, as in \cite{DBLP:journals/corr/MuBV17} (they subtract the mean from the word vectors and eliminate top PCA components).
-        \item \href{https://gluebenchmark.com/}{General Language Understanding Evaluation (GLUE) benchmark}, \href{https://super.gluebenchmark.com/}{SuperGLUE}
-    \end{itemize}
-    
-    \item \underline{Further static word embedding methods:}
-    \newline
-    \textbf{Glo}bal \textbf{Ve}ctors (GloVe):
-    \newline
-    static embedding;
-    captures global corpus statistics (so it considers global context), based on ratios of probabilities from word-word co-occurence matrix $X_{ij}$;
-    these counts are used to define the loss function, which leads to minimization of a sum of squares
-    \begin{equation*}
-        J = \sum_{i, j} \frac{X_{ij}}{X_{\textup{max}}}
-        (w_{i} \widetilde{w_{j}}^{T} - \log X_{ij})^{2}
-    \end{equation*}
-    $w_{i}$ is the word vector and $\widetilde{w_{j}}$ the context vector;
-    can add in a weighting function to penalize rare events and not over-weight frequent events, and add in bias terms for each weight vector;
-    does not handle out of vocabulary (OOV) words;
-    \newline
-    \textbf{References:}
-    Original source \cite{pennington-etal-2014-glove},
-    \href{https://nlp.stanford.edu/projects/glove/}{GloVe project page}.
-    \newline
-    fastText:
-    \newline
-    static embedding;
-    deals better with unknown words and word sparsity;
-    uses subword models, where we represent a word by itself plus a bag of constituent $n$-grams, add special boundary symbols < and > to the word,
-    example for $n=3$ and the word `where':
-    <where> and <wh, whe, her, ere, re>;
-    learn skip-gram embedding for each constituent $n$-gram, word is represented by the sum of all the embeddings of the constituent $n$-grams;
-    \newline
-    \textbf{References:}
-    Original source \cite{DBLP:journals/corr/BojanowskiGJM16}.
-\end{enumerate}
+
+% % % % % % % % % % % % % % % % % % %
+\subsection{Frequency based methods}
+
+Co-occurence counts;
+term-document matrix: each document is represented by a vector of word counts;
+\textbf{t}erm \textbf{f}requency -- \textbf{i}nverse \textbf{d}ocument \textbf{f}requency (tf-idf):
+sparse vectors, words are represented as a simple function of the counts of neighbors;
+\textbf{p}ointwise \textbf{p}ositive \textbf{m}utual \textbf{i}nformation (PPMI):
+$\operatorname{PMI}(w_{1}, w_{2}) = \log \frac{p(w_{1}, w_{2})}{p(w_{1}) \cdot p(w_{2})}$;
+dense versus sparse embeddings;
+Latent semantic analysis:
+singular value decomposition applied to term-document matrix (weighted by log frequency and normalized by entropy);
+cosine similarity.
+\newline
+\textbf{References:}
+\begin{itemize}
+    \item General references in \Cref{sec:general_references};
+    \item Using ``tricks'' from word2vec to improve count-based models \cite{levy-etal-2015-improving};
+    \item Skip-gram with negative-sampling (SGNS, see word2vec below) implicitly factorizes the shifted pointwise mutual information (PMI) matrix \cite{NIPS2014_feab05aa}.
+\end{itemize}
+
+% % % % % % % % % % % % % % % % % % %
+\subsection{word2vec:}
+
+static embedding;
+\textbf{s}kip-\textbf{g}ram with \textbf{n}egative \textbf{s}ampling (SGNS);
+Idea: train a classifier to a prediction task `the word $w$ is likely to show up near the word $c$';
+self-supervision: can use the next word in a corpus of running text as the supervision signal
+\begin{itemize}
+    \item get positive examples from taking a target word $w$ and its neighboring context words (have to choose a context window size $L$, these notes \cite{DBLP:journals/corr/Goldberg15c} discuss the effect of the window size).
+    \item randomly sample other words to get negative examples (based on the empirical distribution of words, but usually modified to sample less frequent words more often).
+    \item train a classifier (for example by logistic regression, i.e.\ the probability score is given as the sigmoid of the dot product) to distinguish the two cases;
+    skip-gram makes simplifying assumption that all context words are independent.
+    \item the learned weights of the classifier give the embedding of the word $w$:
+    target embedding in matrix $W$ and context embedding in matrix $C$.
+\end{itemize}
+Variations of word2vec training methods:
+\begin{itemize}
+    \item Skip-Gram:
+    predict context words given the central word.
+    \item \textbf{C}ontinuous \textbf{B}ag-\textbf{o}f-\textbf{W}ords (CBOW):
+    predict the central word from the sum of context words (this sum is called the ``bag of words'').
+    \item Simple, but powerful approach:
+    Represent a sentence with the average of its word embeddings.
+    Hybrid: word embeddings are computed distributionally, and the sentence embedding computed by composition.
+\end{itemize}
+
+Evaluating word embeddings:
+\emph{Intrinsic evaluation} measures how well the word vectors capture meaning, for example by evaluating on word similarity and word analogy tasks;
+\emph{extrinsic evaluation} is performed by looking at the performance of a downstream task.
+Linear structure in the embedding space can be observed from word analogies, such as that the vector of
+\[
+    v_{\textup{king}} - v_{\textup{man}} + v_{\textup{woman}} \text{ is close to } v_{\textup{queen}}.
+\]
+
+\textbf{References:}
+\begin{itemize}
+	\item The original sources are
+	\cite{DBLP:journals/corr/abs-1301-3781},
+	\cite{DBLP:journals/corr/MikolovSCCD13}.
+	\item The survey \cite{DBLP:journals/corr/Rong14} has a detailed explanation of the parameter update equations in word2vec.
+    \item \cite{DBLP:journals/corr/abs-1901-09813} try to find a theoretical explanation for these linear relations.
+    \item Similarities across languages can be detected in the embeddings \cite{DBLP:journals/corr/MikolovLS13}, which allows constructions of mappings between semantic spaces even without having parallel data \cite{DBLP:journals/corr/abs-1710-04087}.
+    \item Such an analysis can lead to ideas for improving the embeddings, as in \cite{DBLP:journals/corr/MuBV17} (they subtract the mean from the word vectors and eliminate top PCA components).
+    \item \href{https://gluebenchmark.com/}{General Language Understanding Evaluation (GLUE) benchmark}, \href{https://super.gluebenchmark.com/}{SuperGLUE}
+\end{itemize}
+
+% % % % % % % % % % % % % % % % % % %
+\subsection{GloVe}
+
+GloVe~\cite{pennington-etal-2014-glove} stands for ``global vectors'', which refers to the fact that the model captures the global corpus statistics directly. This is similar to most matrix factorization methods but GloVe additionally provides dense vector representations and has a linear substructure in the vector space. Therefore, it combines the advantages of global factorization methods and local context window methods. On the other hand, it cannot handle OOV words. However, by efficiently training on huge corpora, it can at least decrease the occurence probability for OOV words. \\
+
+Starting point for learning the GloVe embeddings are the ratios of co-occurrence probabilities
+\begin{equation}
+	\frac{P_{ik}}{P_{jk}},
+\end{equation}
+where $P_{ik}$ is the probability that word $k$ appears in the context of word $i$. Further the probability is defined by
+\begin{equation}
+	P_{ij} = \frac{X_{ij}}{\sum_{k} X_{ik}},
+\end{equation}
+
+where $X_{ij}$ is the frequency that word $j$ occurs in the context of word $i$ while $\sum_{k} X_{ik}$ is the sum of co-occurence frequencies of all words $k$ in the context of word $i$.
+The ratios from Equation (2) are able to discriminate relevant from irrelevant words in the corpus. Hence from these ratios, the authors derive a weighted least squares objective to learn the GloVe embeddings, i.e., they optimize
+\begin{equation}
+	\mathcal{J} = \sum_{i,j = 1}^V f(X_{ij})(w_i^\top\widetilde{w}_j + b_i + \widetilde{b}_j - \log X_{ij})^2
+\end{equation}
+where $w_i$ and $\widetilde{w}_j$ are the randomly initialized vector representations for the target word $i$ and context word $j$ while $b_i$ and $\tilde{b}_j$ are bias terms that are learned together with the embeddings. The loss imposes that the inner product of the word vectors $w_i^\top\widetilde{w}_j$ should be approximately equal to their log co-occurrence counts $\log X_{ij}$. Hence, GloVe can be viewed as a matrix factorization method. The weighting function $f$ penalizes irrelevant word pairs, either if they are too rare or too frequent. During optimization of $\mathcal{J}$, the authors sample non-zero entries $X_{ij}$ from the co-occurence matrix $X$. This matrix tabulates how often words co-occur with each other and can be obtained by a single pass through the whole corpus.\\
+
+The GloVe embeddings are successfully evaluated on the word analogy task, validating that the vector space contains linear sub-structures. Moreover, it is demonstrated that GloVe embeddings achieve better results on the word similarity task than embeddings from Word2Vec. In general, GloVe is able to consistently outperform Word2Vec in a similar training setting. Moreover, since it can leverage bigger amounts of data it further provides a better representation for rare words than Word2Vec. Finally, during the extrinsic evaluation the performance on a Named entity recognition (NER) task could be improved using GloVe embeddings as features compared to a CBOW embeddings from Word2Vec.
+
+{
+\color{blue}
+	
+static embedding;
+captures global corpus statistics (so it considers global context), based on ratios of probabilities from word-word co-occurence matrix $X_{ij}$;
+these counts are used to define the loss function, which leads to minimization of a sum of squares
+\begin{equation*}
+    J = \sum_{i, j} \frac{X_{ij}}{X_{\textup{max}}}
+    (w_{i} \widetilde{w_{j}}^{T} - \log X_{ij})^{2}
+\end{equation*}
+$w_{i}$ is the word vector and $\widetilde{w_{j}}$ the context vector;
+can add in a weighting function to penalize rare events and not over-weight frequent events, and add in bias terms for each weight vector;
+does not handle out of vocabulary (OOV) words;
+}
+
+\textbf{References:}
+\begin{itemize}
+	\item Original source \cite{pennington-etal-2014-glove},
+	\href{https://nlp.stanford.edu/projects/glove/}{GloVe project page}.
+\end{itemize}
+
+{
+	\color{gray}
+	
+	\noindent \textbf{Acknowledgments:} Nick Rucks, HHU, 2022
+}
+
+
+% % % % % % % % % % % % % % % % % % %
+\subsection{fastText}
+
+FastText~\cite{DBLP:journals/corr/BojanowskiGJM16} is an extension of the Skip-gram model introduced by \cite{DBLP:journals/corr/MikolovSCCD13} and therefore belongs to the family of local context window methods. In contrast to Skip-gram and Continuous Bag-of-Words (CBOW)~\cite{DBLP:journals/corr/MikolovSCCD13} it is able to embed out-of-vocabulary (OOV) words. Furthermore, by considering character level information it improves the representation for rare and compound words which leads to an increased performance, especially for morphologically rich languages like German or Finnish.\\
+
+FastText computes a bag of constituent $n$-grams $\mathcal{G}_w$ for each word $w$ in the corpus, containing the word itself plus all $n$-grams for a predefined range of $n$. Then, the word representation $\textbf{u}_w$ is the sum of $n$-gram embeddings $\textbf{z}_g$ obtained by a pre-trained Skip-gram model, i.e.,
+\begin{equation}
+	\textbf{u}_w = \sum_{g \in \mathcal{G}_w} \textbf{z}_g.
+\end{equation}
+Besides the different representation $\textbf{u}_w$, the training of the objective is adopted from the Word2Vec framework.\\
+
+The authors show in an intrinsic evaluation that the inclusion of character level information enables an improved performance on the word similarity task compared to Word2Vec. This also holds for the syntactic questions of the word analogy task. Moreover, the representations that FastText computes for OOV words always improves the performance on the word similarity task which validates that the representations are reasonable. During further evaluation, the authors showed that the most important $n$-grams in the representation actually correspond to valid morphemes, e.g., prefixes and suffixes. For that, the authors omitted a single $n$-gram from the representation $\textbf{u}_w$ to get a restricted representation $\textbf{u}_{w\setminus g}$. Then, they ranked all $n$-grams by their cosine distance between $\textbf{u}_w$ and $\textbf{u}_{w\setminus g}$, to determine the importance of each $n$-gram for $\textbf{u}_w$. Furthermore, the better usage of subword information enables FastText to obtain better embeddings from smaller datasets than Word2Vec. Additionally, the word representation trained with subword information outperforms plain Skip-gram embeddings on a language modeling task.
+
+{
+\color{blue}
+
+static embedding;
+deals better with unknown words and word sparsity;
+add special boundary symbols < and > to the word,
+example for $n=3$ and the word `where':
+<where> and <wh, whe, her, ere, re>;
+learn skip-gram embedding for each constituent $n$-gram, word is represented by the sum of all the embeddings of the constituent $n$-grams;
+}
+
+\noindent \textbf{References:}
+\begin{itemize}
+	\item Original source \cite{DBLP:journals/corr/BojanowskiGJM16}
+\end{itemize}
+
+{
+\color{gray}
+
+\noindent \textbf{Acknowledgments:} Nick Rucks, HHU, 2022
+}
 
 % % % % % % % % % % % % % % % % % % % % %
 \subsection{Contextual Word Embeddings}
@@ -467,15 +524,11 @@ Here are some general references for background reading on Topological Data Anal
     \item Vidit Nanda's \href{http://people.maths.ox.ac.uk/nanda/cat/TDANotes.pdf}{Computational Algebraic Topology Notes}.
 \end{itemize}
 
+\newpage
 % % % % % % % % % %
 % References
 \printbibliography
 % % % % % % % % % %
-
-% % % % % % % % % %
-% Additional references on multilingual embeddings
-\includepdf[pages=-]{attachments/[Songbo] Multilingual Embeddings References.pdf}
-
 
 \end{document}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

@@ -1,6 +1,11 @@
-# word-embeddings
-Repository for the seminar "Word Embedding Spaces" which is run at HHU in the summer term 2022.
-(This might be developed into a full lecture course with exercises in the next winter term)
+# Lecture: Representations in Natural Language Processing
+
+Material for the lecture "Representations in Natural Language Processing", HHU Düsseldorf, winter term 2022/2023.
+This is based on the seminar "Word Embedding Spaces" which is run at HHU in the summer term 2022.
+
+## Outline
+
+`exercises` for the tutorials, `notes` for additional write-up and lists of references, `presentations` for the slides
 
 ## Syllabus
 
