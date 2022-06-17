@@ -1,0 +1,24 @@
+---
+title: "Hyperbolic word embeddings"
+subtitle: "Negatively curves spaces and their applications"
+author: "Benjamin Ruppik"
+date: "`r Sys.Date()`"
+output:
+  ioslides_presentation:
+    widescreen: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Plan
+
+* Hyperbolic space
+* Comparison: Euclidean versus hyperbolic embeddings
+* Hyperbolic image embeddings
+* Poincaré GloVe
+
+## Hyperbolic space
+
+* TODO

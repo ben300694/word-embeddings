@@ -1,0 +1,482 @@
+\documentclass[11pt, a4paper]{amsart}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{stmaryrd}
+
+% Resume numbering in enumerate
+% https://tex.stackexchange.com/questions/1669/resuming-a-list
+\usepackage{enumitem}
+
+
+% % % % % % % % % % % % %
+% Loading 'commands' file
+\input{commands}
+
+
+\title{Seminar on Word Embedding Spaces}
+
+% % % % % % % % % % % % %
+% Contact information
+% % % % % % % % % % % % %
+
+\author{Ben Ruppik}
+\address{Dialog Systems and Machine Learning Group, HHU D{\"u}sseldorf, Germany}
+\email{\href{mailto:benjamin.ruppik@hhu.de}{benjamin.ruppik@hhu.de}}
+\urladdr{\url{http://ben300694.github.io}}
+
+\keywords{
+    Natural Language Processing, Word embeddings, Dialog Systems, Topological Data Analysis.
+    \hfill
+    Date: \today
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% WATERMARK
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{draftwatermark}
+
+\usepackage[yyyymmdd,hhmmss]{datetime}
+\usepackage[style=iso]{datetime2}
+
+\SetWatermarkText{Compiled on \today\ at \currenttime}
+\SetWatermarkColor[gray]{0.9}
+\SetWatermarkFontSize{1cm}
+\SetWatermarkAngle{90}
+\SetWatermarkHorCenter{20cm}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{pdfpages}
+
+% % % % % % % % % % % % % % % %
+% Conventions:
+%
+% - Use American spelling, in particular:
+% stabilization, realization, canceled, canceling, 
+% labeled, labeling
+%
+% - For inverses of group elements, write it out as
+% ^{-1} instead of using overlines
+%
+
+% LaTeX conventions:
+%
+% - Each sentence should start a new line
+% (this makes comparing different versions easier)
+%
+% - Use \ldots instead of ...
+%
+% - Insert figures directly underneath paragraph in which 
+% main reference is located
+% 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+\begin{abstract}
+    This is the program for the seminar on ``Word Embedding Spaces'', HHU D{\"u}sseldorf, Summer Term 2022.
+\end{abstract}
+
+\maketitle
+
+\begin{itemize}
+    \item \textbf{Time:} Thursdays, 14:30 - 16:00
+    \item \textbf{Location:} Building 25.12 - 2512.02.33;
+    hybrid (live stream on WebEx will be available for registered participants)
+    \item \textbf{Tentative schedule:}
+    \href{https://docs.google.com/spreadsheets/d/1s-pxSBL0pK5RN5ny5IiSsXUL9i8nQM7iIx_j_euDf08/edit?usp=sharing}{Link to Google Sheets}
+    \item \textbf{Requirements for credit points:}
+    \begin{itemize}
+        \item Prepare a 70-min talk on one of the topics below.
+        If there is enough interest, we can assign teams of two students which will share a talk (i.e., 35 min per speaker).
+        The sessions are scheduled for 90 min each, so there will be ample time for questions.
+        \item Please make an appointment with me to discuss your talk, at least a week before the actual date.
+        \item Additionally, please submit the \LaTeX-file of an extended abstract (maximum 2 pages, \href{https://www.overleaf.com/latex/templates/acl-2020-proceedings-template/zsrkcwjptpcd}{ACL Overleaf template}, please include references) for your talk, which we will collect to produce a small summary of this seminar.
+    \end{itemize}
+    \item \textbf{Prerequisites:}
+    Ideally some background in natural language processing; basics in machine learning; linear algebra.
+\end{itemize}
+
+\clearpage
+% % % % % % % % % % % % %
+\section{Introduction}
+\label{sec:intro}
+
+In a \emph{word embedding} we encode language by associating to a word $w$ a point or vector $v_{w} \in \RR^{n}$ in some ambient space, such that words which have similar meaning are close together in the space.
+When words are modelled as vectors or points in an ambient high-dimensional space, this is called an \emph{embedding}.
+
+% Forcing figure placement here by \usepackage{float} and [H] option
+% https://tex.stackexchange.com/questions/8625/force-figure-placement-in-text
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{pictures/fastText_tSNE_screenshot.png}
+    \caption{Some of the word vectors from a 100 dimensional fastText embedding trained on a Wikipedia corpus; projected to 2 dimensions using t-SNE.}
+    \label{fig:fastText_tSNE}
+\end{figure}
+
+Words which are used in similar contexts usually have similar meanings.\footnote{This is not always true, as the words `good' and `bad' demonstrate, more on this below.}
+The \emph{distributional hypothesis} states that words which frequently appear in similar contexts have similar meanings.
+There is \emph{first-order co-occurence}, also called \emph{syntagmatic association}, if the words are typically nearby each other; for example: `wrote' and `book', `wrote' and `poem'.
+We also observe \emph{second order co-occurence}, called \emph{paradigmatic association}, if the words have similar neighbors; for example: `wrote' and `said', `wrote' and `remarked'.
+
+This makes it possible to acquire meaningful representations from unlabeled data -- and there is lots of unlabeled data, e.g., in the form of text from Wikipedia, books, or news headlines.
+Thus, we can make both \emph{distributed} and \emph{distributional representations}:
+Distributional means that it is based on counts of words in context;
+distributed means that the representation is vector based.
+
+The task of finding good word embeddings becomes hard because there are many subtleties in the usage of words in natural language.
+Words (or \emph{lemmas}) like `mole' can have multiple meanings, which are its \emph{word senses}; a word which has multiple meanings is \emph{polysemous}.
+The embedding should also be able to capture concepts such as \emph{synonyms} (words have the same meaning in many or all contexts) and \emph{antonyms} (the word senses are opposites with respect to one feature of the meaning), \emph{similarity}, \emph{relatedness}, \emph{connotation} or \emph{sentiment}.
+There is usually a \emph{super-subordinate} relation (also called \emph{hyperonymy}, \emph{hyponymy} or ISA relation).
+On the other hand, \emph{stop words} like `a', `the', `is', `are', `and' are so commonly used that they carry very little useful information.
+
+There is a big difference between \emph{static} and \emph{contextualized} embeddings:
+In a \emph{static embedding} (\Cref{sec:static_word_embeddings}) there is one fixed embedding for each word in the vocabulary.
+In a \emph{contextual embedding} (\Cref{sec:contextual_word_embeddings}) the vector we associate to a word is different if it is used in a different context.
+
+We will also talk about how one can try to evaluate the quality of a word embedding.
+In \emph{extrinsic evaluation} in a downstream task, we use a word embedding for a specific task and measure whether it increases performance; \emph{intrinsic evaluation} is a harder challenge.
+
+% % % % % % 
+\subsection{General References and Links}
+\label{sec:general_references}
+
+\begin{itemize}
+    \item For a general introduction see the book \cite{jurafsky2009speech}, but take a look at the draft of the 3rd edition available at \url{https://web.stanford.edu/~jurafsky/slp3/}, in particular Chapter 6 on ``Vector Semantics and Embeddings''.
+    There are corresponding \href{https://web.stanford.edu/~jurafsky/slp3/slides/6_Vector_Apr18_2021.pdf}{slides} as well.
+
+    \item \cite[Chp.~14]{eisenstein2019introduction} on ``Distributional and Distributed Semantics'';
+    draft available from \url{https://github.com/jacobeisenstein/gt-nlp-class/blob/master/notes/eisenstein-nlp-notes.pdf}.
+
+    \item \href{https://www.cs.hhu.de/fileadmin/redaktion/Fakultaeten/Mathematisch-Naturwissenschaftliche_Fakultaet/Informatik/Dialog_Systems_and_Machine_Learning/20190705_word_embeddings.pdf}{Michael Heck's slides on the Space of Word Embeddings}.
+    
+    \item \href{https://lena-voita.github.io/nlp_course}{Lena Voita's NLP Course For You}, in particular the lesson on \href{https://lena-voita.github.io/nlp_course/word_embeddings}{Word Embeddings} and the lesson on \href{https://lena-voita.github.io/nlp_course/seq2seq_and_attention.html}{Sequence to Sequence (seq2seq) and Attention}.
+    
+    \item \href{https://youtube.com/playlist?list=PL75e0qA87dlG-za8eLI6t0_Pbxafk-cxb}{Rasa Algorithm Whiteboard} YouTube playlist.
+    
+    \item \href{https://www.youtube.com/c/aicoffeebreak}{AI Coffee Break with Letitia} YouTube channel.
+\end{itemize}
+
+%~~~~~~~~~~~~~~~~~~~~~~~~%
+\section{List of Talks}
+%~~~~~~~~~~~~~~~~~~~~~~~~%
+
+Below is a rough outline of the topics which could be included in each of the talks.
+I personally think it is better to take enough time to explain something well than to rush through too many topics in too little time.
+So please understand this list only as a guideline of what could be included in your presentation, and not as a strict requirement!
+
+% % % % % % % % % % % % % % % % % % % % % % % % % %
+\subsection{Background and Static Word Embeddings}
+\label{sec:static_word_embeddings}
+
+\begin{enumerate}
+    \item \underline{Frequency based methods:}
+    \newline
+    Co-occurence counts;
+    term-document matrix: each document is represented by a vector of word counts;
+    \textbf{t}erm \textbf{f}requency -- \textbf{i}nverse \textbf{d}ocument \textbf{f}requency (tf-idf):
+    sparse vectors, words are represented as a simple function of the counts of neighbors;
+    \textbf{p}ointwise \textbf{p}ositive \textbf{m}utual \textbf{i}nformation (PPMI):
+    $\operatorname{PMI}(w_{1}, w_{2}) = \log \frac{p(w_{1}, w_{2})}{p(w_{1}) \cdot p(w_{2})}$;
+    dense versus sparse embeddings;
+    Latent semantic analysis:
+    singular value decomposition applied to term-document matrix (weighted by log frequency and normalized by entropy);
+    cosine similarity.
+    \newline
+    \textbf{References:}
+    \begin{itemize}
+        \item General references in \Cref{sec:general_references};
+        \item Using ``tricks'' from word2vec to improve count-based models \cite{levy-etal-2015-improving};
+        \item Skip-gram with negative-sampling (SGNS, see word2vec below) implicitly factorizes the shifted pointwise mutual information (PMI) matrix \cite{NIPS2014_feab05aa}.
+    \end{itemize}
+    
+    \item \underline{word2vec:}
+    \newline
+    static embedding;
+    \textbf{s}kip-\textbf{g}ram with \textbf{n}egative \textbf{s}ampling (SGNS);
+    Idea: train a classifier to a prediction task `the word $w$ is likely to show up near the word $c$';
+    self-supervision: can use the next word in a corpus of running text as the supervision signal
+    \begin{itemize}
+        \item get positive examples from taking a target word $w$ and its neighboring context words (have to choose a context window size $L$, these notes \cite{DBLP:journals/corr/Goldberg15c} discuss the effect of the window size).
+        \item randomly sample other words to get negative examples (based on the empirical distribution of words, but usually modified to sample less frequent words more often).
+        \item train a classifier (for example by logistic regression, i.e.\ the probability score is given as the sigmoid of the dot product) to distinguish the two cases;
+        skip-gram makes simplifying assumption that all context words are independent.
+        \item the learned weights of the classifier give the embedding of the word $w$:
+        target embedding in matrix $W$ and context embedding in matrix $C$.
+    \end{itemize}
+    Variations of word2vec training methods:
+    \begin{itemize}
+        \item Skip-Gram:
+        predict context words given the central word.
+        \item \textbf{C}ontinuous \textbf{B}ag-\textbf{o}f-\textbf{W}ords (CBOW):
+        predict the central word from the sum of context words (this sum is called the ``bag of words'').
+        \item Simple, but powerful approach:
+        Represent a sentence with the average of its word embeddings.
+        Hybrid: word embeddings are computed distributionally, and the sentence embedding computed by composition.
+    \end{itemize}
+    \textbf{References:}
+    The original sources are
+    \cite{DBLP:journals/corr/abs-1301-3781},
+    \cite{DBLP:journals/corr/MikolovSCCD13}.
+    The survey \cite{DBLP:journals/corr/Rong14} has a detailed explanation of the parameter update equations in word2vec.
+    \newline
+    \underline{Evaluating word embeddings:}
+    \newline
+    \emph{Intrinsic evaluation} measures how well the word vectors capture meaning, for example by evaluating on word similarity and word analogy tasks;
+    \emph{extrinsic evaluation} is performed by looking at the performance of a downstream task.
+    Linear structure in the embedding space can be observed from word analogies, such as that the vector of
+    \[
+        v_{\textup{king}} - v_{\textup{man}} + v_{\textup{woman}} \text{ is close to } v_{\textup{queen}}.
+    \]
+    \begin{itemize}
+        \item \cite{DBLP:journals/corr/abs-1901-09813} try to find a theoretical explanation for these linear relations.
+        \item Similarities across languages can be detected in the embeddings \cite{DBLP:journals/corr/MikolovLS13}, which allows constructions of mappings between semantic spaces even without having parallel data \cite{DBLP:journals/corr/abs-1710-04087}.
+        \item Such an analysis can lead to ideas for improving the embeddings, as in \cite{DBLP:journals/corr/MuBV17} (they subtract the mean from the word vectors and eliminate top PCA components).
+        \item \href{https://gluebenchmark.com/}{General Language Understanding Evaluation (GLUE) benchmark}, \href{https://super.gluebenchmark.com/}{SuperGLUE}
+    \end{itemize}
+    
+    \item \underline{Further static word embedding methods:}
+    \newline
+    \textbf{Glo}bal \textbf{Ve}ctors (GloVe):
+    \newline
+    static embedding;
+    captures global corpus statistics (so it considers global context), based on ratios of probabilities from word-word co-occurence matrix $X_{ij}$;
+    these counts are used to define the loss function, which leads to minimization of a sum of squares
+    \begin{equation*}
+        J = \sum_{i, j} \frac{X_{ij}}{X_{\textup{max}}}
+        (w_{i} \widetilde{w_{j}}^{T} - \log X_{ij})^{2}
+    \end{equation*}
+    $w_{i}$ is the word vector and $\widetilde{w_{j}}$ the context vector;
+    can add in a weighting function to penalize rare events and not over-weight frequent events, and add in bias terms for each weight vector;
+    does not handle out of vocabulary (OOV) words;
+    \newline
+    \textbf{References:}
+    Original source \cite{pennington-etal-2014-glove},
+    \href{https://nlp.stanford.edu/projects/glove/}{GloVe project page}.
+    \newline
+    fastText:
+    \newline
+    static embedding;
+    deals better with unknown words and word sparsity;
+    uses subword models, where we represent a word by itself plus a bag of constituent $n$-grams, add special boundary symbols < and > to the word,
+    example for $n=3$ and the word `where':
+    <where> and <wh, whe, her, ere, re>;
+    learn skip-gram embedding for each constituent $n$-gram, word is represented by the sum of all the embeddings of the constituent $n$-grams;
+    \newline
+    \textbf{References:}
+    Original source \cite{DBLP:journals/corr/BojanowskiGJM16}.
+\end{enumerate}
+
+% % % % % % % % % % % % % % % % % % % % %
+\subsection{Contextual Word Embeddings}
+\label{sec:contextual_word_embeddings}
+
+\begin{enumerate}[resume]
+    \item \underline{Sequence to sequence tasks, recurrent networks and \textbf{E}mbeddings from \textbf{L}anguage \textbf{Mo}dels (ELMo):}
+    \newline
+    The ElMo architecture is based on earlier ideas using Recurrent Neural Nets (RNNs) to model sequences, such as sentences in natural language.
+    ElMo produces deep contextualized word representations, which are learned functions of internal states of a deep bidirectional language model with Long short-term memory (LSTM) units.
+    ELMo embeddings are context-sensitive, i.e.\ each token representation is a function of the entire input sentence.
+    Here lower layers appear to capture syntactics, while higher layers capture semantics.
+    ELMo is unsupervised, can handle OOV, but is not truly bidirectional.
+    \newline
+    \textbf{References:}
+    \begin{itemize}
+        \item \textbf{Original ELMo research article:} `Deep Contextualized Word Representations' \cite{DBLP:journals/corr/abs-1802-05365}.
+        \item The concept of attention, which lets a model focus on different parts of the input while processing a sequence, was introduced in \cite{garg-etal-2019-jointly}.
+        \item Lecture notes: \href{https://lena-voita.github.io/nlp_course/seq2seq_and_attention.html}{Sequence to Sequence (seq2seq) and Attention}
+    \end{itemize}
+    
+    \item \underline{Transformers:}
+    \newline
+    Encoder and decoder block; self-attention mechanism; query, key and value matrices; multi-head attention (combining multiple self-attention mechanisms); positional embeddings; autoregressive models: predict the next token in a sequence, for this we have to mask the self-attention in the decoder block so that the model can only attend to tokens in the preceding sequence.
+    The original transformer model was trained on machine translation, which is a sequence to sequence task.
+    \newline
+    \textbf{Original research article:} `Attention is all you need' \cite{DBLP:journals/corr/VaswaniSPUJGKP17}.
+    \newline
+    \textbf{Further references:}
+    It is probably a good idea to look at alternative expositions of the Transformer architecture concurrently while going through the original paper, here are some suggestions:
+    \begin{itemize}
+        \item Blog post:
+        \href{https://jalammar.github.io/visualizing-neural-machine-translation-mechanics-of-seq2seq-models-with-attention/}{'Visualizing A Neural Machine Translation Model (Mechanics of Seq2seq Models With Attention)'}
+        \item Blog post:
+        \href{https://jalammar.github.io/illustrated-transformer/}{'The Illustrated Transformer'}
+        \item Blog post:
+        \href{http://peterbloem.nl/blog/transformers}{'Transformers from scratch'}
+        \item PyTorch implementation \href{https://nlp.seas.harvard.edu/2018/04/03/attention.html}{'The Annotated Transformer'}
+        \item Vision transformers \cite{dosovitskiy2021an}
+        \item Visualizations of attention maps:
+        \href{https://github.com/jessevig/bertviz}{BertViz}
+    \end{itemize}
+    
+    \item \underline{\textbf{B}i-directional \textbf{E}ncoder \textbf{R}epresentations from \textbf{T}ransformers (BERT) and its variants:}
+    \newline
+    The objective of the BERT model is a \emph{Masked language modeling task}, in which we randomly mask words in the training text and try to predict the masked words from their context.
+    Additionally, the model is trained on a \emph{next sentence prediction} task.
+    For the input embedding: WordPiece tokenization;
+    special <cls> token for the representation of the entire input sequence.
+    \newline
+    \textbf{Original research article:} \cite{DBLP:journals/corr/abs-1810-04805}.
+    \newline
+    \textbf{Additional references:}
+    \begin{itemize}
+        \item \href{https://lena-voita.github.io/nlp_course/transfer_learning.html}{(Introduction to) Transfer Learning} in the NLP for you course.
+        \item \cite{clark-etal-2019-bert} analyze the role of the different attention heads in the trained BERT model.
+        \item A \textbf{Ro}bustly \textbf{O}ptimized \textbf{BERT} Pretraining \textbf{A}pproach (RoBERTa):
+        The authors observe that BERT was significantly under-trained, and update the model \cite{DBLP:journals/corr/abs-1907-11692}.
+        \item GPT for language generation.
+    \end{itemize}
+    
+    \item \underline{Sentence embeddings:}
+    \newline
+    Sentence-BERT: \cite{DBLP:journals/corr/abs-1908-10084} and \href{https://www.sbert.net/}{SentenceTransformers}
+    find an embedding on the sentence level so that semantically similar sentences are close in the embeddings space;
+    adds a pooling operation to the output of BERT or RoBERTa to derive a fixed sized sentence embedding;
+    siamese and triplet network structures.
+    \newline
+    \emph{Contrastive learning} (pull semantically close neighbors together and push apart non-neighbors) for sentence embeddings:
+    \newline
+    TransEncoder: For pairwise comparison of sentences, \cite{DBLP:journals/corr/abs-2109-13059} alternate between a bi-encoder (which produces fixed-dimensional sentence embeddings) and a cross-encoder (which has attention heads that span the complete sequence of both sentences), so that they learn from each other to train an unsupervised sentence representation model.
+    \newline
+    SimCSE \cite{DBLP:journals/corr/abs-2104-08821}: Uses contrastive learning to improve sentence embeddings, where the positive pairs are created by adding dropout in the encoder as the noise.
+    \newline
+    \textbf{Further references:}
+    \begin{itemize}
+        \item Dialog utterance embeddings via contrastive learning \cite{https://doi.org/10.48550/arxiv.2205.13568}
+        \item Video: \href{https://youtu.be/O3xbVmpdJwU}{Transformer Neural Networks - an Overview!}
+    \end{itemize}
+\end{enumerate}
+
+% % % % % %
+\subsection{Additional Topics}
+
+\begin{enumerate}[resume]
+    \item \underline{Geometry of the word embedding space:}
+    \newline
+    \cite{mimno-thompson-2017-strange} find that in skip-gram with negative sampling the word vectors all point in roughly the same direction, i.e.\ lie in a narrow cone (this is sometimes called \emph{anisotropy}, the opposite of this is \emph{isotropy} where the vectors are directionally uniform);
+    the context vectors point in the other direction (have negative dot product with the mean of the word vectors),
+    in contrast to this for GloVe the word and context vectors point in the same direction;
+    \newline
+    Anisotropy can also be studied in contextualized word embeddings, see \cite{ethayarajh-2019-contextual}, or for sentence embeeddings \cite{li-etal-2020-sentence}.
+    \newline
+    \cite{nakashole-flauger-2018-characterizing} observe that mappings between semantic spaces usually are only locally linear, and not globally linear;
+    \newline
+    Method for finding words which are used differently in two text corpora:
+    train embedding on each corpus, find a (e.g.\ linearly via orthogonal Procrustes) mapping between the embedding spaces, then words which do not match well under this mapping appear to have different meanings.
+    Using historical texts, one can see how the meaning changes through time \cite{hamilton-etal-2016-diachronic};
+    \newline
+    Different method:
+    again train embeddings on two corpora separately, then for each word find the closest vectors in each embedding space, if these differ a lot the embeddings are different \cite{gonen-etal-2020-simple}.
+    
+    \item \underline{Bias in word embeddings and ethics:}
+    \newline
+    A desirable association could be ``a man to a woman is as a king to a queen'', whereas an undesirable association is ``a man to a woman is as a physician to a nurse''.
+    Unfortunately, it appears that word embeddings trained on a corpus of text extracted from books and websites tend to incorporate and amplify the biases contained in our language.
+    When such biased embeddings are used for downstream tasks, this can lead to bias amplification.
+    To investigate gender bias systematically, \cite{DBLP:journals/corr/BolukbasiCZSK16a} take a seed pair $(v_\textup{he}, v_\textup{she})$ and find other pairs of word vectors which have a difference similar to the seed vector.
+    They also provide methods for debiasing the embedding, but they argue that bias ultimately appears to come from the training data.
+    \newline
+    \textbf{Further references:}
+    \begin{itemize}
+        \item Iterative nullspace projection to debias word embeddings \cite{ravfogel-etal-2020-null};
+        \item Visualizations of bias mitigation techniques \cite{DBLP:journals/corr/abs-2104-02797},
+        their \href{https://github.com/tdavislab/verb}{code} for creating interactive demos is available online;
+        \item Gender bias in the contextualized embeddings from ElMo \cite{zhao-etal-2019-gender};
+        \item Bias in BERT embeddings \cite{kurita-etal-2019-measuring};
+        \item Debiasing contextualized embeddings \cite{kaneko-bollegala-2021-debiasing}.
+    \end{itemize}
+    
+    
+
+    \item \underline{Sentiment specific word embeddings:}
+    \newline
+    \emph{Sentiment} is a positive or negative evaluation, and we can enhance our \emph{semantic} specific word embeddings with \emph{sentiment} \cite{yu-etal-2017-refining}.
+    Words with similar vector representations can have an opposite sentiment polarity (e.g., `good' vs `bad' or `happy' vs `sad').
+    To capture this in the embedding one can add a post-processing step to adapt the pre-trained vectors to sentiment applications,
+    where we move the word closer to a set of both semantically and sentimentally similar nearest neighbors (i.e., those with the same polarity) and further away from sentimentally dissimilar neighbors (i.e., those with an opposite polarity).
+    \newline
+    \textbf{Further references:}
+    \begin{itemize}
+        \item Using sentiment aware word embeddings for emotion classification \cite{sentiment-aware-word-embedding-emotion-2019};
+        \item TweetEval dataset, which includes emotion recognition and sentiment analysis tasks \cite{barbieri-etal-2020-tweeteval}, the authors released their \href{https://huggingface.co/cardiffnlp/twitter-roberta-base-sentiment}{pre-trained RoBERTa models};
+        \item German sentiment classification with using fastText and BERT embeddings \cite{guhr-etal-2020-training};
+        \item EmoWOZ \cite{DBLP:journals/corr/abs-2109-04919} is a task-oriented dialogue dataset annotated with emotions.
+    \end{itemize}
+    
+    \item \underline{Multilingual word embeddings:}
+    \newline
+    We want to use a shared embedding space for words across two or more languages, so that words from different languages with different meanings are close in the cross-lingual embedding space;
+    the hope is that this can improve performance because the model can acquire and transfer knowledge from other languages;
+    also look at the references from the `Geometry of the word embedding space'-topic, in particular \cite{DBLP:journals/corr/abs-1710-04087} where they aligned embeddings without having parallel data;
+    \href{https://github.com/facebookresearch/MUSE}{MUSE} is an implementation of both supervised and unsupervised multilingual word embeddings with fastText;
+    \cite{DBLP:journals/corr/abs-1808-08933} train unsupervised MWEs;
+    \cite{DBLP:journals/corr/abs-2007-01852} build language-agnostic BERT Sentence Embedding.
+    \newline
+    \textbf{Further references:}
+    \begin{itemize}
+        \item Video: \href{https://youtu.be/7tAWk_Coj-s}{Language Agnostic BERT}
+        \item Please also take a look at the document in the appendix with further references on multilingual transformer architectures.
+    \end{itemize}
+\end{enumerate}
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+\subsection{Topological Data Analysis and Word Embeddings}
+
+These last two topics are more advanced, in that they require more background knowledge, and it might be more challenging to prepare an accessible presentation.
+
+\begin{enumerate}[resume]
+    \item \underline{$(\ast)$ Hyperbolic embeddings:}
+    \newline
+    Instead of embedding data into an Euclidean vector space, we can associate it to points in a more general ambient manifold.
+    For example, we can use so-called \emph{negatively curved spaces}, which leads to \emph{hyperbolic embeddings}.
+    The geometry of these spaces allows a more efficient representation of tree-like structures and hierarchies, as was observed in \cite{DBLP:journals/corr/NickelK17}; see also this \href{https://bjlkeng.github.io/posts/hyperbolic-geometry-and-poincare-embeddings/}{blog post} discussing the paper, and \href{https://rare-technologies.com/implementing-poincare-embeddings/}{this blog post} with implementation details.
+    In our case, where we associate words to points in a hyperbolic space, these are called \emph{hyperbolic word embeddings} (which can be constructed e.g.\ with Poincar{\'e} GloVe \cite{DBLP:journals/corr/abs-1810-06546}).
+    Further references include an earlier paper on hyperbolic text embeddings \cite{DBLP:journals/corr/abs-1806-04313},
+    these in turn were inspired by hyperbolic image embeddings \cite{DBLP:journals/corr/abs-1904-02239}.
+    There is also a proposed hyperbolic version of fastText \cite{zhu-etal-2020-hypertext}.
+    \newline
+    One can also `probe' the contextualized embeddings of a BERT model by mapping into a hyperbolic space \cite{DBLP:journals/corr/abs-2104-03869}, and analyzing the structure of the projected data.
+    
+    \item \underline{$(\ast)$ Topological Polysemy and singularities in word embeddings:}
+    \newline
+    The paper \cite{jakubowski2020topology} studies singular points in a fixed word embedding trained via fastText.
+    They find that the dimension of the zeroth local homology group of a punctured neighborhood of a word correlates with the number of different meanings of a polysemous word.
+\end{enumerate}
+
+There have been two main developments in Topological Data Analysis (TDA), which might lead to further interesting application of TDA to word embeddings in the future:
+\begin{itemize}
+        \item \emph{Persistent homology} is a description of the topological features of a space at various scales.
+        Usually the data comes with a \emph{filtration}, and we compute the homology of the pieces which assemble into a \emph{persistence module}.
+        These can be encoded into a \emph{bar-code}, which then is used in further machine learning pipelines.
+        For example \cite{reinauer2021persformer} develop a Transformer model which takes persistence diagrams as input. 
+        
+        \item The MAPPER algorithm is a projection technique which also uses clustering to capture more of the global features of the dataset.
+        An interesting projection choice is $t$-Stochastic Neighborhood Embedding ($t$-SNE, \cite{JMLR:v9:vandermaaten08a}).
+\end{itemize}
+
+Here are some general references for background reading on Topological Data Analysis:
+\begin{itemize}
+    \item \cite{murugan2019introduction}: Survey paper with an introduction to ``Topological Data Analysis for Physicists''.
+    
+    \item \cite{dey2021computational}: Book (draft) on Topological Data Analysis.
+    
+    \item Vidit Nanda's \href{http://people.maths.ox.ac.uk/nanda/cat/TDANotes.pdf}{Computational Algebraic Topology Notes}.
+\end{itemize}
+
+% % % % % % % % % %
+% References
+\printbibliography
+% % % % % % % % % %
+
+% % % % % % % % % %
+% Additional references on multilingual embeddings
+\includepdf[pages=-]{attachments/[Songbo] Multilingual Embeddings References.pdf}
+
+
+\end{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

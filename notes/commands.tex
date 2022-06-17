@@ -1,0 +1,433 @@
+% Master commands file
+% Dependencies: none
+
+% Text
+\newcommand{\OneHalf}{{\textstyle\frac{1}{2}}}
+\newcommand{\OneQuart}{{\textstyle\frac{1}{4}}}
+
+% Hyphenation.
+\hyphenation{Thurs-ton}
+\hyphenation{mo-no-poles}
+\hyphenation{sur-ger-y}
+
+%-------------------------------------------------------------------------------
+
+% Pairs of openings and closures
+\newcommand{\set}[1]{\mathchoice%
+  {\left\lbrace #1 \right\rbrace}%
+  {\lbrace #1 \rbrace}%
+  {\lbrace #1 \rbrace}%
+  {\lbrace #1 \rbrace}%
+}
+\newcommand{\setc}[2]{\mathchoice%
+  {\left\lbrace #1 \, \middle\vert \, #2 \right\rbrace}%
+  {\lbrace #1 \, \vert \, #2 \rbrace}%
+  {\lbrace #1 \, \vert \, #2 \rbrace}%
+  {\lbrace #1 \, \vert \, #2 \rbrace}%
+%  {\left\lbrace #1 \, \colon \, #2 \right\rbrace}%
+%  {\lbrace #1 \, \colon \, #2 \rbrace}%
+%  {\lbrace #1 \, \colon \, #2 \rbrace}%
+%  {\lbrace #1 \, \colon \, #2 \rbrace}%
+}
+\newcommand{\paren}[1]{\mathchoice%
+  {\left( #1 \right)}%
+  {( #1 )}%
+  {( #1 )}%
+  {( #1 )}%
+}
+\newcommand{\brac}[1]{\mathchoice%
+  {\left[ #1 \right]}%
+  {[ #1 ]}%
+  {[ #1 ]}%
+  {[ #1 ]}%
+}
+\newcommand{\abs}[1]{\mathchoice%
+  {\left\lvert #1 \right\rvert}%
+  {\lvert #1 \rvert}%
+  {\lvert #1 \rvert}%
+  {\lvert #1 \rvert}%
+}
+\newcommand{\norm}[1]{\mathchoice%
+  {\left\lVert #1 \right\rVert}%
+  {\lVert #1 \rVert}%
+  {\lVert #1 \rVert}%
+  {\lVert #1 \rVert}%
+}
+
+% Synonyms for symbols
+\newcommand{\eps}{\epsilon}                  % mathord
+\newcommand{\veps}{\varepsilon}              % mathord
+%\renewcommand{\phi}{\varphi}                 % mathord
+\newcommand{\vphi}{\varphi}                  % mathord
+\newcommand{\eset}{\varnothing}             % mathord
+%\newcommand{\eset}{\emptyset}                % mathord
+
+\newcommand{\dirsum}{\oplus}                 % mathbin
+\newcommand{\bigdirsum}{\bigoplus}           % mathop
+\newcommand{\tensor}{\otimes}                % mathbin
+\newcommand{\bigtensor}{\bigotimes}          % mathop
+\newcommand{\union}{\cup}                    % mathbin
+\newcommand{\bigunion}{\bigcup}              % mathop
+\newcommand{\intersect}{\cap}                % mathbin
+\newcommand{\bigintersect}{\bigcap}          % mathop
+
+\newcommand{\comp}{\circ}                    % mathbin
+\newcommand{\cross}{\times}                  % mathbin
+
+\newcommand{\isom}{\cong}                    % mathrel
+\newcommand{\qisom}{\simeq}                  % mathrel
+\newcommand{\nisom}{\ncong}                  % mathrel
+\newcommand{\nqisom}{\not\simeq}             % mathrel
+\newcommand{\superset}{\supset}              % mathrel
+\newcommand{\contains}{\ni}                  % mathrel
+
+% Special sets
+\newcommand{\numset}[1]{\mathbb{#1}}
+\newcommand{\N}{\numset{N}}
+\newcommand{\Z}{\numset{Z}}
+\newcommand{\Zpos}{\Z_{\geq 0}}
+\newcommand{\Q}{\numset{Q}}
+\newcommand{\R}{\numset{R}}
+\newcommand{\C}{\numset{C}}
+\newcommand{\F}[1]{\numset{F}_{#1}}
+\newcommand{\cycgrp}[1]{\Z / #1 \Z}
+\newcommand{\field}[1]{\mathbf{#1}}
+\renewcommand{\j}{\field{j}}
+\renewcommand{\k}{\field{k}}
+
+% Punctuation
+%\newcommand{\co}{\colon}
+%\newcommand{\semico}{;\penalty 300}
+\newcommand{\scolon}{; \penalty 300}
+
+% Common operators
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\Id}{Id}
+\DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\Ker}{Ker}
+\DeclareMathOperator{\Coker}{Coker}
+\DeclareMathOperator{\im}{Im} % Image
+\renewcommand{\Im}{\im}
+\DeclareMathOperator{\homgy}{H} % Homology
+\DeclareMathOperator{\Hom}{Hom} % Homomorphism
+\DeclareMathOperator{\Cone}{Cone}
+\DeclareMathOperator{\rk}{rk} % Rank
+\DeclareMathOperator{\Hochsch}{HH} % Hochschild homology
+\newcommand{\MCG}{\mathit{MCG}} % Mapping class group
+\DeclareMathOperator{\Neg}{neg}
+
+
+% Dodecahedral group
+\newcommand{\Dod}{\mathrm{Dod}}
+
+% Matrix groups
+\newcommand{\matrixgrp}[1]{\mathrm{#1}}
+\newcommand{\GL}{\matrixgrp{GL}}
+\newcommand{\SL}{\matrixgrp{SL}}
+\newcommand{\SO}{\matrixgrp{SO}}
+\newcommand{\SU}{\matrixgrp{SU}}
+\newcommand{\Sp}{\matrixgrp{Sp}}
+\newcommand{\ISO}{\matrixgrp{ISO}}
+
+
+% Lie algebras
+\newcommand{\fsl}{\mathfrak{sl}}
+\newcommand{\sltwo}{\fsl_2}
+\newcommand{\fg}{\mathfrak g}
+\newcommand{\fgl}{\mathfrak{gl}}
+\newcommand{\gloneone}{\fgl_{1|1}}
+
+% Basic topology
+\newcommand{\torus}{\mathbb{T}}
+\newcommand{\bdy}{\partial} % mathord
+\newcommand{\connsum}{\mathbin{\#}} % Originally mathord
+\newcommand{\bigconnsum}{\mathop{\mathchoice%
+    {\vcenter{\hbox{\LARGE $\#$}}}
+    {\vcenter{\hbox{\large $\#$}}}
+    {\vcenter{\hbox{\footnotesize $\#$}}}
+    {\vcenter{\hbox{\scriptsize $\#$}}}
+  }}
+\newcommand{\bdysum}{\mathbin{\natural}} % Originally mathord
+\newcommand{\bigbdysum}{\mathop{\mathchoice%
+    {\vcenter{\hbox{\LARGE $\natural$}}}
+    {\vcenter{\hbox{\large $\natural$}}}
+    {\vcenter{\hbox{\footnotesize $\natural$}}}
+    {\vcenter{\hbox{\scriptsize $\natural$}}}
+  }}
+\DeclareMathOperator{\Sym}{Sym}
+\newcommand{\unknot}{\mathord{\bigcirc}} % Originally mathbin
+\newcommand{\quasialt}{\mathcal{Q}} % Quasi-alternating links
+\newcommand{\QHS}{{\Q}\mathit{HS}^3}
+\newcommand{\ZHS}{{\Z}\mathit{HS}^3}
+\newcommand{\nbhd}[1]{\nu (#1)}
+
+% interior of a subspace
+\DeclareMathOperator{\interior}{int}
+
+
+% Spheres, disks, ...
+\newcommand{\sphere}[1]{{S}^{#1}}
+\newcommand{\disk}[1]{{D}^{#1}}
+\newcommand{\ball}[1]{{B}^{#1}}
+\newcommand{\interval}{{I}}
+\newcommand{\RP}[1]{\mathbb{RP}^{#1}}
+\newcommand{\CP}[1]{\mathbb{CP}^{#1}}
+
+% Point
+\newcommand{\point}{\textup{pt}}
+
+\newcommand{\laurent}{\ZZ[t, t^{-1}]}
+% Blanchfield
+\newcommand{\Bl}{\operatorname{Bl}}
+
+% Shortcuts for blackboard letters
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\QQ}{\mathbb{Q}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\CC}{\mathbb{C}}
+\newcommand{\HH}{\mathbb{H}}
+
+% Free groups
+\DeclareMathOperator{\Fr}{Fr}
+
+% (Twist) spinning knots
+\newcommand{\Spin}{\tau}
+
+
+% % % % % % % % % % % %
+% Loading TeX packages
+
+\usepackage[american]{babel}
+\usepackage[babel, final]{microtype}
+\usepackage{amssymb}
+\usepackage[all]{xy}
+
+\usepackage{mathtools}
+
+\usepackage{ifpdf}
+\usepackage{comment}
+\usepackage{multirow}
+
+\usepackage[pdftex, dvipsnames]{xcolor}
+\usepackage[pdftex, final]{graphicx}
+\usepackage{caption}
+\usepackage{pinlabel}
+\usepackage[pdftex,%
+    a4paper,%
+    includehead,%
+    includefoot,%
+    nomarginpar,%
+    lmargin=1.9cm,%
+    rmargin=1.9cm,%
+    tmargin=1in,%
+    bmargin=1in,%
+]{geometry}
+\usepackage[pdftex,%
+    final,%
+    colorlinks=true,%
+    linkcolor={red!45!black},%
+    citecolor=NavyBlue,%
+    filecolor=NavyBlue,%
+    menucolor=NavyBlue,%
+    urlcolor={blue!45!black},%
+    bookmarks=true,%
+    bookmarksdepth=3,%
+    bookmarksnumbered=true,%
+    bookmarksopen=true,%
+    bookmarksopenlevel=2,%
+]{hyperref}
+\hypersetup{
+    pdftitle={Word Embeddings Seminar Program},
+    pdfauthor={Ruppik},
+    pdfsubject={Word embedding},
+    pdfkeywords={Word embeddings, Natural Language Processing}
+}
+
+\usepackage{cleveref}
+
+\usepackage{float}
+
+% Indentation of footnotes
+\usepackage[hang,flushmargin]{footmisc}
+
+
+
+
+%~~~~~~~~~~~~~~~~~~ table of contents (toc)
+
+% Using this ad-hoc solution from
+% https://tex.stackexchange.com/questions/51760/table-of-contents-with-indents-and-dots
+% because most toc packages are not compatible
+% with amsart
+
+\makeatletter
+\def\@tocline#1#2#3#4#5#6#7{\relax
+  \ifnum #1>\c@tocdepth % then omit
+  \else
+    \par \addpenalty\@secpenalty\addvspace{#2}%
+    \begingroup \hyphenpenalty\@M
+    \@ifempty{#4}{%
+      \@tempdima\csname r@tocindent\number#1\endcsname\relax
+    }{%
+      \@tempdima#4\relax
+    }%
+    \parindent\z@ \leftskip#3\relax \advance\leftskip\@tempdima\relax
+    \rightskip\@pnumwidth plus4em \parfillskip-\@pnumwidth
+    #5\leavevmode\hskip-\@tempdima
+      \ifcase #1
+       \or\or \hskip 1em \or \hskip 2em \else \hskip 3em \fi%
+      #6\nobreak\relax
+    \dotfill\hbox to\@pnumwidth{\@tocpagenum{#7}}\par
+    \nobreak
+    \endgroup
+  \fi}
+\makeatother
+
+%~~~~~~~~~~~~~~~~~~
+
+
+
+
+
+%~~~~~~~~~~~~~~~~~~ bibliography
+\usepackage{csquotes}
+\usepackage[
+	backend=biber,
+	style=alphabetic,
+	sorting=nyt,
+	giveninits=true,
+	maxnames=10,
+	%articlein=false,
+	url=false,
+	backref=true
+]{biblatex}
+\DefineBibliographyStrings{english}{
+  backrefpage={$\uparrow$},
+  backrefpages={$\uparrow$}
+}
+
+\addbibresource{references.bib}
+
+\renewcommand*{\bibfont}{\small}
+%\renewbibmacro{in:}{%
+%	\ifentrytype{article}{}{\printtext{\bibstring{in}\intitlepunct}}}
+
+\renewcommand{\mkbibnamegiven}[1]{\textsc{#1}}
+\renewcommand{\mkbibnamefamily}[1]{\textsc{#1}}
+\renewcommand{\mkbibnameprefix}[1]{\textsc{#1}}
+\renewcommand{\mkbibnamesuffix}[1]{\textsc{#1}}
+
+\DeclareFieldFormat[article,incollection,inproceedings]{title}{#1}
+\DeclareFieldFormat[unpublished]{title}{\textit{#1}}
+
+
+
+%~~~~~~~~~~~~~~~~~~
+
+
+\usepackage{tikz}
+\usetikzlibrary{tikzmark}
+\usepackage{tikz-cd}
+
+\makeatletter
+\g@addto@macro\@floatboxreset\centering
+\makeatother
+
+\def\mathcenter#1{%
+  \vcenter{\hbox{$#1$}}%
+}
+
+\allowdisplaybreaks[4]
+
+\addto\extrasamerican{%
+  \def\sectionautorefname{Section}%
+  \def\subsectionautorefname{Section}%
+  \def\subsubsectionautorefname{Section}%
+}
+
+\let\fullref\autoref
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{conjecture}{Conjecture}[section]
+\newtheorem{corollary}{Corollary}[section]
+\newtheorem{proposition}{Proposition}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem*{geometric-theorem}{Geometric Input Theorem}
+
+\theoremstyle{definition}
+\newtheorem*{convention}{Conventions}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{example}{Example}[section]
+\newtheorem{remark}{Remark}[section]
+\newtheorem{question}{Question}[section]
+\newtheorem*{claim}{Claim}
+
+\makeatletter
+\let\c@conjecture=\c@theorem
+\let\c@corollary=\c@theorem
+\let\c@proposition=\c@theorem
+\let\c@lemma=\c@theorem
+\let\c@definition=\c@theorem
+\let\c@example=\c@theorem
+\let\c@remark=\c@theorem
+\let\c@equation\c@theorem
+\makeatother
+
+\def\makeautorefname#1#2{\expandafter\def\csname#1autorefname\endcsname{#2}}
+\makeautorefname{theorem}{Theorem}%
+\makeautorefname{conjecture}{Conjecture}%
+\makeautorefname{corollary}{Corollary}%
+\makeautorefname{proposition}{Proposition}%
+\makeautorefname{lemma}{Lemma}%
+\makeautorefname{definition}{Definition}%
+\makeautorefname{example}{Example}%
+\makeautorefname{remark}{Remark}%
+\makeautorefname{question}{Question}%
+\makeautorefname{claim}{Claim}
+
+\numberwithin{equation}{section}
+
+\newcommand*{\Alphabet}{ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890}
+\newcommand*{\alphabet}{abcdefghijklmnopqrstuvwxyz1234567890}
+\newlength\fcaph
+\newlength\fdesc
+\newlength\factualfontsize
+\settoheight{\fcaph}{\footnotesize \Alphabet}
+\settodepth{\fdesc}{\footnotesize \Alphabet \alphabet}
+\setlength{\factualfontsize}{\dimexpr\fcaph+\fdesc\relax}
+
+% Comments
+\numberwithin{equation}{section}
+\newcounter{commentcounter}
+\newcommand{\commentb}[1]{\stepcounter{commentcounter}
+	\textbf{Comment \arabic{commentcounter} (by B.)}:
+	{\textcolor{blue}{#1}} }
+\newcommand{\commentm}[1]{\stepcounter{commentcounter}
+	\textbf{Comment \arabic{commentcounter} (by M.)}:
+	{\textcolor{ForestGreen}{#1}} }
+\newcommand{\commentr}[1]{\stepcounter{commentcounter}
+	\textbf{Comment \arabic{commentcounter} (by R.)}:
+	{\textcolor{orange}{#1}} }
+\newcommand{\comments}[1]{\stepcounter{commentcounter}
+	\textbf{Comment \arabic{commentcounter} (by S.)}:
+	{\textcolor{BlueGreen}{#1}} }
+\newcommand{\commentv}[1]{\stepcounter{commentcounter}
+	\textbf{Comment \arabic{commentcounter} (by V.)}:
+	{\textcolor{purple}{#1}} }
+	
+
+\newcommand{\missingref}{\textcolor{orange}{[Ref]}}
+
+% Large / for quotients
+\newcommand{\bigslant}[2]{{\raisebox{.2em}{$#1$}\left/\raisebox{-.2em}{$#2$}\right.}}
+
+
+\newcommand{\TODO}{\textcolor{magenta}{TODO }}
+
+
+% Definitions of the algebraic
+% and geometric sets for the 
+% last part of the paper
+\newcommand{\Alg}{\texttt{\textup{Alg}}}
+\newcommand{\Man}{\texttt{\textup{Man}}}
+\newcommand{\Diag}{\texttt{\textup{Diag}}}
