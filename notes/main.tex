@@ -87,11 +87,16 @@
 \begin{itemize}
     \item \textbf{Lecture:} Wednesdays, 12:30 - 14:00, Building 25.22 / 2522.HS 5G
     \item \textbf{Exercise:} Thursdays, 08:30 - 10:00, Building 25.22 / 2522.U1.52
-    \item live stream on WebEx might be available for registered participants
+    \item Live stream on WebEx will probably be available for registered participants.
     \item \textbf{Requirements for credit points:}
     \begin{itemize}
         \item Successful participation in the exercises.
-        \item Submission of a  \LaTeX-file of a final report (2000 words, \href{https://www.overleaf.com/latex/templates/acl-2020-proceedings-template/zsrkcwjptpcd}{ACL Overleaf template}, please include references) 
+        \item Submission of a  \LaTeX-file and compiled PDF of a final report 
+        \begin{itemize}
+        	\item 2000 words
+        	\item \href{https://www.overleaf.com/latex/templates/acl-2020-proceedings-template/zsrkcwjptpcd}{ACL Overleaf template}
+        	\item the report has to include references
+        \end{itemize}
     \end{itemize}
     \item \textbf{Prerequisites:}
     Ideally some background in deep learning,
@@ -245,7 +250,10 @@ Linear structure in the embedding space can be observed from word analogies, suc
 % % % % % % % % % % % % % % % % % % %
 \subsection{GloVe}
 
-GloVe~\cite{pennington-etal-2014-glove} stands for ``global vectors'', which refers to the fact that the model captures the global corpus statistics directly. This is similar to most matrix factorization methods but GloVe additionally provides dense vector representations and has a linear substructure in the vector space. Therefore, it combines the advantages of global factorization methods and local context window methods. On the other hand, it cannot handle OOV words. However, by efficiently training on huge corpora, it can at least decrease the occurence probability for OOV words. \\
+GloVe~\cite{pennington-etal-2014-glove} stands for ``global vectors'', which refers to the fact that the model captures global corpus statistics directly. 
+This is similar to most matrix factorization methods but GloVe additionally provides dense vector representations and has a linear substructure in the vector space. 
+Therefore, it combines the advantages of global factorization methods and local context window methods. 
+On the other hand, it cannot handle OOV words. However, by efficiently training on huge corpora, it can at least decrease the occurrence probability for OOV words. \\
 
 Starting point for learning the GloVe embeddings are the ratios of co-occurrence probabilities
 \begin{equation}
@@ -256,12 +264,12 @@ where $P_{ik}$ is the probability that word $k$ appears in the context of word $
 	P_{ij} = \frac{X_{ij}}{\sum_{k} X_{ik}},
 \end{equation}
 
-where $X_{ij}$ is the frequency that word $j$ occurs in the context of word $i$ while $\sum_{k} X_{ik}$ is the sum of co-occurence frequencies of all words $k$ in the context of word $i$.
+where $X_{ij}$ is the frequency that word $j$ occurs in the context of word $i$ while $\sum_{k} X_{ik}$ is the sum of co-occurrence frequencies of all words $k$ in the context of word $i$.
 The ratios from Equation (2) are able to discriminate relevant from irrelevant words in the corpus. Hence from these ratios, the authors derive a weighted least squares objective to learn the GloVe embeddings, i.e., they optimize
 \begin{equation}
 	\mathcal{J} = \sum_{i,j = 1}^V f(X_{ij})(w_i^\top\widetilde{w}_j + b_i + \widetilde{b}_j - \log X_{ij})^2
 \end{equation}
-where $w_i$ and $\widetilde{w}_j$ are the randomly initialized vector representations for the target word $i$ and context word $j$ while $b_i$ and $\tilde{b}_j$ are bias terms that are learned together with the embeddings. The loss imposes that the inner product of the word vectors $w_i^\top\widetilde{w}_j$ should be approximately equal to their log co-occurrence counts $\log X_{ij}$. Hence, GloVe can be viewed as a matrix factorization method. The weighting function $f$ penalizes irrelevant word pairs, either if they are too rare or too frequent. During optimization of $\mathcal{J}$, the authors sample non-zero entries $X_{ij}$ from the co-occurence matrix $X$. This matrix tabulates how often words co-occur with each other and can be obtained by a single pass through the whole corpus.\\
+where $w_i$ and $\widetilde{w}_j$ are the randomly initialized vector representations for the target word $i$ and context word $j$ while $b_i$ and $\tilde{b}_j$ are bias terms that are learned together with the embeddings. The loss imposes that the inner product of the word vectors $w_i^\top\widetilde{w}_j$ should be approximately equal to their log co-occurrence counts $\log X_{ij}$. Hence, GloVe can be viewed as a matrix factorization method. The weighting function $f$ penalizes irrelevant word pairs, either if they are too rare or too frequent. During optimization of $\mathcal{J}$, the authors sample non-zero entries $X_{ij}$ from the co-occurrence matrix $X$. This matrix tabulates how often words co-occur with each other and can be obtained by a single pass through the whole corpus.\\
 
 The GloVe embeddings are successfully evaluated on the word analogy task, validating that the vector space contains linear sub-structures. Moreover, it is demonstrated that GloVe embeddings achieve better results on the word similarity task than embeddings from Word2Vec. In general, GloVe is able to consistently outperform Word2Vec in a similar training setting. Moreover, since it can leverage bigger amounts of data it further provides a better representation for rare words than Word2Vec. Finally, during the extrinsic evaluation the performance on a Named entity recognition (NER) task could be improved using GloVe embeddings as features compared to a CBOW embeddings from Word2Vec.
 
@@ -269,7 +277,7 @@ The GloVe embeddings are successfully evaluated on the word analogy task, valida
 \color{blue}
 	
 static embedding;
-captures global corpus statistics (so it considers global context), based on ratios of probabilities from word-word co-occurence matrix $X_{ij}$;
+captures global corpus statistics (so it considers global context), based on ratios of probabilities from word-word co-occurrence matrix $X_{ij}$;
 these counts are used to define the loss function, which leads to minimization of a sum of squares
 \begin{equation*}
     J = \sum_{i, j} \frac{X_{ij}}{X_{\textup{max}}}
@@ -315,7 +323,7 @@ add special boundary symbols < and > to the word,
 example for $n=3$ and the word `where':
 <where> and <wh, whe, her, ere, re>;
 learn skip-gram embedding for each constituent $n$-gram, word is represented by the sum of all the embeddings of the constituent $n$-grams;
-}
+} % END color blue
 
 \noindent \textbf{References:}
 \begin{itemize}
@@ -333,22 +341,67 @@ learn skip-gram embedding for each constituent $n$-gram, word is represented by 
 \label{sec:contextual_word_embeddings}
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%
 
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+\subsection{Sequence to sequence tasks and Recurrent networks}
+
+
+\subsubsection{Motivation}
+
+Modeling language using static embeddings like word2vec or Glove, there are a few problems. Different meanings of the same word cannot be accurately captured, as each word has only a single vector embedding. Thus, depending on the training corpus, the embedding will either only capture a single meaning, or the embedding will be the average of different meanings. Furthermore, these embeddings allow for simple arithmetic operation that capture some meaning, but these lack the flexibility to capture the interaction between words that are so essential to language. To tackle more complex tasks like translation we need to rethink language modelling to integrate a source input. One way to do this is by using an Encoder-Decoder architecture \cite{voitseq2seq}. 
+
+\subsubsection{Encoder and Decoder}
+The idea of the Encoder-Decoder architecture, is that the Encoder takes an input and produces a latent representation. The Decoder uses this representation to (re-)create information. More specifically, using translation as an example (throughout this abstract) it looks like this: The Decoder uses the given representation of a source sentence to create a translation. For translations recurrent neural networks (RNNs) have proven to be effective implementation for this.
+
+\subsubsection{Recurrent Neural Networks}
+A RNN is a neural network that is getting repeated throughout time, and at each time step $t$ there can be a new input and output. The crux because RNNs are eligible for NLP task, is that the hidden layer at time step $t-1$ influences the hidden layer at time step $t$. Thus, the problem of lacking the ability to capture language dependencies between words is being tackled. A RNN can then be used both as the Encoder and as the Decoder. RNNs in their basic form, can run into problems during model training because of vanishing or exploding gradients  \cite{sutskever2014sequence}. Furthermore, the information propagation is not ideal for longer sequences and performance suffers. To address this a commonly used modification is using a Long Short-Term Memory (LSTM) RNN. 
+
+\subsubsection{Long Short-Term Memory}
+A LSTM is a different kind of RNN, where the internal structure of each reoccurring unit is different. Besides the hidden state, there is an additional cell state. This cell state gets passed through each unit, with little interference. It helps to keep the gradient in appropriate ranges as well as transfer information through many units \cite{karpathyRNN}. With these LSTMs Peters et al. designed a model named Embeddings from Language Models (ELMo), to tackle the problem of finding embeddings for polysemic words.
+
+\subsubsection{Embeddings from Language Models (ELMo)}
+ELMo produces a different embedding for each word dependent on the sentence it is used in. This is implemented as a multi-layered bidirectional LSTM. Using an LSTM for each direction ensures to capture information of the entire input sequence. The model then combines the hidden state representation of both LSTMs by concatenating them, and them adds up the concatenated states of each layer up with a task-specific weighting \cite{DBLP:conf/naacl/PetersNIGCLZ18}.  The embeddings created by ELMo have the potential to improve the language understanding of many NLP models. Still, using a single vector representation for an entire source sentence is bound to fail at capturing all information. 
+To reduce this dependency Bahdanau et al. added the concept of \emph{attention}.
+\index{attention}
+
+\subsubsection{Attention}
+
+The idea behind attention is that the model learns to take in more specific information from the single source inputs. 
+This can be implemented with a context vector. 
+A context vector is the result of calculating attentions scores between a single hidden state of the decoder and all encoder states. 
+Using a softmax function, these attention scores can be turned into probabilities or weights. 
+Summing up each encoder state weighted by its softmax value, we calculate the context vector \cite{DBLP:journals/corr/BahdanauCB14}.
+The decoder at each time step uses this context and is not solely dependent on the single representation from the Encoder. 
+If implemented with an appropriate attention score, the whole process is differentiable and can be learned task-specific by the model.
+
+{
+\color{blue}
+
+{E}mbeddings from \textbf{L}anguage \textbf{Mo}dels (ELMo):
+The ElMo architecture is based on earlier ideas using Recurrent Neural Nets (RNNs) to model sequences, such as sentences in natural language.
+ElMo produces deep contextualized word representations, which are learned functions of internal states of a deep bidirectional language model with Long short-term memory (LSTM) units.
+ELMo embeddings are context-sensitive, i.e.\ each token representation is a function of the entire input sentence.
+Here lower layers appear to capture syntactics, while higher layers capture semantics.
+ELMo is unsupervised, can handle OOV, but is not truly bidirectional.
+} % END color blue
+
+\noindent \textbf{References:}
+\begin{itemize}
+	\item \textbf{Original ELMo research article:} `Deep Contextualized Word Representations' \cite{DBLP:journals/corr/abs-1802-05365}.
+	\item The concept of attention, which lets a model focus on different parts of the input while processing a sequence, was introduced in \cite{garg-etal-2019-jointly}.
+	\item Lecture notes: \href{https://lena-voita.github.io/nlp_course/seq2seq_and_attention.html}{Sequence to Sequence (seq2seq) and Attention}
+\end{itemize}
+
+{
+\color{gray}
+
+\noindent \textbf{Acknowledgments:} Lukas Rücker, HHU, 2022
+}
+
+
+% ############################################## %
+% TODO Make into subsections
+
 \begin{enumerate}[resume]
-    \item \underline{Sequence to sequence tasks, recurrent networks and \textbf{E}mbeddings from \textbf{L}anguage \textbf{Mo}dels (ELMo):}
-    \newline
-    The ElMo architecture is based on earlier ideas using Recurrent Neural Nets (RNNs) to model sequences, such as sentences in natural language.
-    ElMo produces deep contextualized word representations, which are learned functions of internal states of a deep bidirectional language model with Long short-term memory (LSTM) units.
-    ELMo embeddings are context-sensitive, i.e.\ each token representation is a function of the entire input sentence.
-    Here lower layers appear to capture syntactics, while higher layers capture semantics.
-    ELMo is unsupervised, can handle OOV, but is not truly bidirectional.
-    \newline
-    \textbf{References:}
-    \begin{itemize}
-        \item \textbf{Original ELMo research article:} `Deep Contextualized Word Representations' \cite{DBLP:journals/corr/abs-1802-05365}.
-        \item The concept of attention, which lets a model focus on different parts of the input while processing a sequence, was introduced in \cite{garg-etal-2019-jointly}.
-        \item Lecture notes: \href{https://lena-voita.github.io/nlp_course/seq2seq_and_attention.html}{Sequence to Sequence (seq2seq) and Attention}
-    \end{itemize}
-    
     \item \underline{Transformers:}
     \newline
     Encoder and decoder block; self-attention mechanism; query, key and value matrices; multi-head attention (combining multiple self-attention mechanisms); positional embeddings; autoregressive models: predict the next token in a sequence, for this we have to mask the self-attention in the decoder block so that the model can only attend to tokens in the preceding sequence.
