@@ -886,8 +886,7 @@
 
 @inproceedings{kaneko-bollegala-2021-debiasing,
     title = "Debiasing Pre-trained Contextualised Embeddings",
-    author = "Kaneko, Masahiro  and
-      Bollegala, Danushka",
+    author = "Kaneko, Masahiro and Bollegala, Danushka",
     booktitle = "Proceedings of the 16th Conference of the European Chapter of the Association for Computational Linguistics: Main Volume",
     month = apr,
     year = "2021",
@@ -897,6 +896,22 @@
     doi = "10.18653/v1/2021.eacl-main.107",
     pages = "1256--1266",
     abstract = "In comparison to the numerous debiasing methods proposed for the static non-contextualised word embeddings, the discriminative biases in contextualised embeddings have received relatively little attention. We propose a fine-tuning method that can be applied at token- or sentence-levels to debias pre-trained contextualised embeddings. Our proposed method can be applied to any pre-trained contextualised embedding model, without requiring to retrain those models. Using gender bias as an illustrative example, we then conduct a systematic study using several state-of-the-art (SoTA) contextualised representations on multiple benchmark datasets to evaluate the level of biases encoded in different contextualised embeddings before and after debiasing using the proposed method. We find that applying token-level debiasing for all tokens and across all layers of a contextualised embedding model produces the best performance. Interestingly, we observe that there is a trade-off between creating an accurate vs. unbiased contextualised embedding model, and different contextualised embedding models respond differently to this trade-off.",
+}
+
+@InProceedings{pmlr-v139-schlag21a,
+	title = 	 {Linear Transformers Are Secretly Fast Weight Programmers},
+	author =       {Schlag, Imanol and Irie, Kazuki and Schmidhuber, J{\"u}rgen},
+	booktitle = 	 {Proceedings of the 38th International Conference on Machine Learning},
+	pages = 	 {9355--9366},
+	year = 	 {2021},
+	editor = 	 {Meila, Marina and Zhang, Tong},
+	volume = 	 {139},
+	series = 	 {Proceedings of Machine Learning Research},
+	month = 	 {18--24 Jul},
+	publisher =    {PMLR},
+	pdf = 	 {http://proceedings.mlr.press/v139/schlag21a/schlag21a.pdf},
+	url = 	 {https://proceedings.mlr.press/v139/schlag21a.html},
+	abstract = 	 {We show the formal equivalence of linearised self-attention mechanisms and fast weight controllers from the early ’90s, where a slow neural net learns by gradient descent to program the fast weights of another net through sequences of elementary programming instructions which are additive outer products of self-invented activation patterns (today called keys and values). Such Fast Weight Programmers (FWPs) learn to manipulate the contents of a finite memory and dynamically interact with it. We infer a memory capacity limitation of recent linearised softmax attention variants, and replace the purely additive outer products by a delta rule-like programming instruction, such that the FWP can more easily learn to correct the current mapping from keys to values. The FWP also learns to compute dynamically changing learning rates. We also propose a new kernel function to linearise attention which balances simplicity and effectiveness. We conduct experiments on synthetic retrieval problems as well as standard machine translation and language modelling tasks which demonstrate the benefits of our methods.}
 }
 
 @article{DBLP:journals/corr/abs-2111-07180,

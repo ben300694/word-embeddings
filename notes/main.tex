@@ -105,9 +105,10 @@
 \end{itemize}
 
 \clearpage
-% % % % % % % % % % % % %
+% --------------------------------- %
 \section{Introduction}
 \label{sec:intro}
+% --------------------------------- %
 
 In a \emph{word embedding} we encode language by associating to a word $w$ a point or vector $v_{w} \in \RR^{n}$ in some ambient space, such that words which have similar meaning are close together in the space.
 When words are modelled as vectors or points in an ambient high-dimensional space, this is called an \emph{embedding}.
@@ -169,11 +170,15 @@ In \emph{extrinsic evaluation} in a downstream task, we use a word embedding for
 
 The content of this lecture is based on the seminar ``Word embedding spaces'' run at HHU Düsseldorf in the Summer Term 2022.
 I am grateful for the suggestions and feedback collected during the sessions. \\
-Thank you to Milica Gašić, Chris Geishauser, Michael Heck for additional input. \\
-Sections of this write-up are based on the final reports written by the students after their talks:
+Sections of this write-up are based on the final reports written by the students:
 \begin{itemize}
 	\item Nick Rucks: fastText and GloVe
+	\item Lukas Rücker: Sequence to sequence and Recurrent methods
+	\item Benedikt Prusas, Benedikt Jung: Transformers
 \end{itemize}
+
+Thank you to Milica Gašić, Chris Geishauser, Michael Heck for additional input. \\
+
 
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%
 \section{Background and Static Word Embeddings}
@@ -295,13 +300,6 @@ does not handle out of vocabulary (OOV) words;
 	\href{https://nlp.stanford.edu/projects/glove/}{GloVe project page}.
 \end{itemize}
 
-{
-	\color{gray}
-	
-	\noindent \textbf{Acknowledgments:} Nick Rucks, HHU, 2022
-}
-
-
 % % % % % % % % % % % % % % % % % % %
 \subsection{fastText}
 
@@ -331,11 +329,6 @@ learn skip-gram embedding for each constituent $n$-gram, word is represented by 
 	\item Original source \cite{DBLP:journals/corr/BojanowskiGJM16}
 \end{itemize}
 
-{
-\color{gray}
-
-\noindent \textbf{Acknowledgments:} Nick Rucks, HHU, 2022
-}
 
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%
 \section{Contextual Word Embeddings}
@@ -392,39 +385,46 @@ ELMo is unsupervised, can handle OOV, but is not truly bidirectional.
 	\item Lecture notes: \href{https://lena-voita.github.io/nlp_course/seq2seq_and_attention.html}{Sequence to Sequence (seq2seq) and Attention}
 \end{itemize}
 
-{
-\color{gray}
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+\subsection{Transformers}
 
-\noindent \textbf{Acknowledgments:} Lukas Rücker, HHU, 2022
-}
+The authors in \cite{DBLP:journals/corr/VaswaniSPUJGKP17} introduce a neural network architecture for the task of machine translation without any recurrence. 
+This resolves the problems of recurrent neural networks such as weak long range dependencies, training instability and scale-ability.
+
+We can view a transformer as a ``sequence to sequence'' model and differentiate between stacked encoder and decoder blocks.
+
+Embeddings get contextualized throughout multiple encoder blocks.
+The information flows through the attention mechanism and is processed by basic feed forward layers. 
+
+Ultimately, the blocks can be broken down to matrix operations and the attention formulation is derived from a database analogy \cite{pmlr-v139-schlag21a}.
+
+\noindent \textbf{References:}
+\begin{itemize}
+	\item \textbf{Original research article:} `Attention is all you need' \cite{DBLP:journals/corr/VaswaniSPUJGKP17}.
+	\item Blog post:
+	\href{https://jalammar.github.io/visualizing-neural-machine-translation-mechanics-of-seq2seq-models-with-attention/}{'Visualizing A Neural Machine Translation Model (Mechanics of Seq2seq Models With Attention)'}
+	\item Blog post:
+	\href{https://jalammar.github.io/illustrated-transformer/}{'The Illustrated Transformer'}
+	\item Blog post:
+	\href{http://peterbloem.nl/blog/transformers}{'Transformers from scratch'}
+	\item PyTorch implementation \href{https://nlp.seas.harvard.edu/2018/04/03/attention.html}{'The Annotated Transformer'}
+	\item Vision transformers \cite{dosovitskiy2021an}
+	\item Visualizations of attention maps:
+	\href{https://github.com/jessevig/bertviz}{BertViz}
+\end{itemize}
+
+{
+	\color{blue}
+	
+	Encoder and decoder block; self-attention mechanism; query, key and value matrices; multi-head attention (combining multiple self-attention mechanisms); positional embeddings; autoregressive models: predict the next token in a sequence, for this we have to mask the self-attention in the decoder block so that the model can only attend to tokens in the preceding sequence.
+	The original transformer model was trained on machine translation, which is a sequence to sequence task.
+} % END color blue
 
 
 % ############################################## %
 % TODO Make into subsections
 
 \begin{enumerate}[resume]
-    \item \underline{Transformers:}
-    \newline
-    Encoder and decoder block; self-attention mechanism; query, key and value matrices; multi-head attention (combining multiple self-attention mechanisms); positional embeddings; autoregressive models: predict the next token in a sequence, for this we have to mask the self-attention in the decoder block so that the model can only attend to tokens in the preceding sequence.
-    The original transformer model was trained on machine translation, which is a sequence to sequence task.
-    \newline
-    \textbf{Original research article:} `Attention is all you need' \cite{DBLP:journals/corr/VaswaniSPUJGKP17}.
-    \newline
-    \textbf{Further references:}
-    It is probably a good idea to look at alternative expositions of the Transformer architecture concurrently while going through the original paper, here are some suggestions:
-    \begin{itemize}
-        \item Blog post:
-        \href{https://jalammar.github.io/visualizing-neural-machine-translation-mechanics-of-seq2seq-models-with-attention/}{'Visualizing A Neural Machine Translation Model (Mechanics of Seq2seq Models With Attention)'}
-        \item Blog post:
-        \href{https://jalammar.github.io/illustrated-transformer/}{'The Illustrated Transformer'}
-        \item Blog post:
-        \href{http://peterbloem.nl/blog/transformers}{'Transformers from scratch'}
-        \item PyTorch implementation \href{https://nlp.seas.harvard.edu/2018/04/03/attention.html}{'The Annotated Transformer'}
-        \item Vision transformers \cite{dosovitskiy2021an}
-        \item Visualizations of attention maps:
-        \href{https://github.com/jessevig/bertviz}{BertViz}
-    \end{itemize}
-    
     \item \underline{\textbf{B}i-directional \textbf{E}ncoder \textbf{R}epresentations from \textbf{T}ransformers (BERT) and its variants:}
     \newline
     The objective of the BERT model is a \emph{Masked language modeling task}, in which we randomly mask words in the training text and try to predict the masked words from their context.
@@ -472,7 +472,7 @@ Joint text and image space:
 TODO: Add more references
 
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%
-\section{Additional Topics}
+\section{Structure in Word Embeddings}
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%
 
 \begin{enumerate}[resume]
@@ -551,8 +551,6 @@ TODO
 \section{Topological Data Analysis and Word Embeddings}
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%
 
-These last two topics are more advanced, in that they require more background knowledge, and it might be more challenging to prepare an accessible presentation.
-
 \begin{enumerate}[resume]
     \item \underline{$(\ast)$ Hyperbolic embeddings:}
     \newline
@@ -586,9 +584,7 @@ There have been two main developments in Topological Data Analysis (TDA), which 
 Here are some general references for background reading on Topological Data Analysis:
 \begin{itemize}
     \item \cite{murugan2019introduction}: Survey paper with an introduction to ``Topological Data Analysis for Physicists''.
-    
     \item \cite{dey2021computational}: Book (draft) on Topological Data Analysis.
-    
     \item Vidit Nanda's \href{http://people.maths.ox.ac.uk/nanda/cat/TDANotes.pdf}{Computational Algebraic Topology Notes}.
 \end{itemize}
 
