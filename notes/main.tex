@@ -173,11 +173,12 @@ I am grateful for the suggestions and feedback collected during the sessions. \\
 Sections of this write-up are based on the final reports written by the students:
 \begin{itemize}
 	\item Nick Rucks: fastText and GloVe
-	\item Lukas Rücker: Sequence to sequence and Recurrent methods
+	\item Lukas Rücker: Sequence to Sequence and Recurrent Methods
 	\item Benedikt Prusas, Benedikt Jung: Transformers
+	\item Thanh Nam Le, Michail Angelos Severino Theoktistou: Masked Language Models and BERT
 \end{itemize}
 
-Thank you to Milica Gašić, Chris Geishauser, Michael Heck for additional input. \\
+\noindent Thank you to Milica Gašić, Chris Geishauser, Michael Heck for additional input. \\
 
 
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%
@@ -189,59 +190,36 @@ Thank you to Milica Gašić, Chris Geishauser, Michael Heck for additional input
 % % % % % % % % % % % % % % % % % % %
 \subsection{Frequency based methods}
 
-Co-occurence counts;
-term-document matrix: each document is represented by a vector of word counts;
-\textbf{t}erm \textbf{f}requency -- \textbf{i}nverse \textbf{d}ocument \textbf{f}requency (tf-idf):
-sparse vectors, words are represented as a simple function of the counts of neighbors;
-\textbf{p}ointwise \textbf{p}ositive \textbf{m}utual \textbf{i}nformation (PPMI):
-$\operatorname{PMI}(w_{1}, w_{2}) = \log \frac{p(w_{1}, w_{2})}{p(w_{1}) \cdot p(w_{2})}$;
-dense versus sparse embeddings;
-Latent semantic analysis:
-singular value decomposition applied to term-document matrix (weighted by log frequency and normalized by entropy);
-cosine similarity.
-\newline
-\textbf{References:}
+TODO: Add abstract on frequency based methods
+
+\noindent \textbf{References:}
 \begin{itemize}
     \item General references in \Cref{sec:general_references};
     \item Using ``tricks'' from word2vec to improve count-based models \cite{levy-etal-2015-improving};
     \item Skip-gram with negative-sampling (SGNS, see word2vec below) implicitly factorizes the shifted pointwise mutual information (PMI) matrix \cite{NIPS2014_feab05aa}.
 \end{itemize}
 
+{
+	\color{blue}
+	
+	Co-occurence counts;
+	term-document matrix: each document is represented by a vector of word counts;
+	\textbf{t}erm \textbf{f}requency -- \textbf{i}nverse \textbf{d}ocument \textbf{f}requency (tf-idf):
+	sparse vectors, words are represented as a simple function of the counts of neighbors;
+	\textbf{p}ointwise \textbf{p}ositive \textbf{m}utual \textbf{i}nformation (PPMI):
+	$\operatorname{PMI}(w_{1}, w_{2}) = \log \frac{p(w_{1}, w_{2})}{p(w_{1}) \cdot p(w_{2})}$;
+	dense versus sparse embeddings;
+	Latent semantic analysis:
+	singular value decomposition applied to term-document matrix (weighted by log frequency and normalized by entropy);
+	cosine similarity.
+} % END color blue
+
 % % % % % % % % % % % % % % % % % % %
 \subsection{word2vec}
 
-static embedding;
-\textbf{s}kip-\textbf{g}ram with \textbf{n}egative \textbf{s}ampling (SGNS);
-Idea: train a classifier to a prediction task `the word $w$ is likely to show up near the word $c$';
-self-supervision: can use the next word in a corpus of running text as the supervision signal
-\begin{itemize}
-    \item get positive examples from taking a target word $w$ and its neighboring context words (have to choose a context window size $L$, these notes \cite{DBLP:journals/corr/Goldberg15c} discuss the effect of the window size).
-    \item randomly sample other words to get negative examples (based on the empirical distribution of words, but usually modified to sample less frequent words more often).
-    \item train a classifier (for example by logistic regression, i.e.\ the probability score is given as the sigmoid of the dot product) to distinguish the two cases;
-    skip-gram makes simplifying assumption that all context words are independent.
-    \item the learned weights of the classifier give the embedding of the word $w$:
-    target embedding in matrix $W$ and context embedding in matrix $C$.
-\end{itemize}
-Variations of word2vec training methods:
-\begin{itemize}
-    \item Skip-Gram:
-    predict context words given the central word.
-    \item \textbf{C}ontinuous \textbf{B}ag-\textbf{o}f-\textbf{W}ords (CBOW):
-    predict the central word from the sum of context words (this sum is called the ``bag of words'').
-    \item Simple, but powerful approach:
-    Represent a sentence with the average of its word embeddings.
-    Hybrid: word embeddings are computed distributionally, and the sentence embedding computed by composition.
-\end{itemize}
+TODO: Add abstract on word2vec
 
-Evaluating word embeddings:
-\emph{Intrinsic evaluation} measures how well the word vectors capture meaning, for example by evaluating on word similarity and word analogy tasks;
-\emph{extrinsic evaluation} is performed by looking at the performance of a downstream task.
-Linear structure in the embedding space can be observed from word analogies, such as that the vector of
-\[
-    v_{\textup{king}} - v_{\textup{man}} + v_{\textup{woman}} \text{ is close to } v_{\textup{queen}}.
-\]
-
-\textbf{References:}
+\noindent \textbf{References:}
 \begin{itemize}
 	\item The original sources are
 	\cite{DBLP:journals/corr/abs-1301-3781},
@@ -252,6 +230,41 @@ Linear structure in the embedding space can be observed from word analogies, suc
     \item Such an analysis can lead to ideas for improving the embeddings, as in \cite{DBLP:journals/corr/MuBV17} (they subtract the mean from the word vectors and eliminate top PCA components).
     \item \href{https://gluebenchmark.com/}{General Language Understanding Evaluation (GLUE) benchmark}, \href{https://super.gluebenchmark.com/}{SuperGLUE}
 \end{itemize}
+
+{
+	\color{blue}
+	
+	static embedding;
+	\textbf{s}kip-\textbf{g}ram with \textbf{n}egative \textbf{s}ampling (SGNS);
+	Idea: train a classifier to a prediction task `the word $w$ is likely to show up near the word $c$';
+	self-supervision: can use the next word in a corpus of running text as the supervision signal
+	\begin{itemize}
+		\item get positive examples from taking a target word $w$ and its neighboring context words (have to choose a context window size $L$, these notes \cite{DBLP:journals/corr/Goldberg15c} discuss the effect of the window size).
+		\item randomly sample other words to get negative examples (based on the empirical distribution of words, but usually modified to sample less frequent words more often).
+		\item train a classifier (for example by logistic regression, i.e.\ the probability score is given as the sigmoid of the dot product) to distinguish the two cases;
+		skip-gram makes simplifying assumption that all context words are independent.
+		\item the learned weights of the classifier give the embedding of the word $w$:
+		target embedding in matrix $W$ and context embedding in matrix $C$.
+	\end{itemize}
+	Variations of word2vec training methods:
+	\begin{itemize}
+		\item Skip-Gram:
+		predict context words given the central word.
+		\item \textbf{C}ontinuous \textbf{B}ag-\textbf{o}f-\textbf{W}ords (CBOW):
+		predict the central word from the sum of context words (this sum is called the ``bag of words'').
+		\item Simple, but powerful approach:
+		Represent a sentence with the average of its word embeddings.
+		Hybrid: word embeddings are computed distributionally, and the sentence embedding computed by composition.
+	\end{itemize}
+	
+	Evaluating word embeddings:
+	\emph{Intrinsic evaluation} measures how well the word vectors capture meaning, for example by evaluating on word similarity and word analogy tasks;
+	\emph{extrinsic evaluation} is performed by looking at the performance of a downstream task.
+	Linear structure in the embedding space can be observed from word analogies, such as that the vector of
+	\[
+	v_{\textup{king}} - v_{\textup{man}} + v_{\textup{woman}} \text{ is close to } v_{\textup{queen}}.
+	\]
+} % END color blue
 
 % % % % % % % % % % % % % % % % % % %
 \subsection{GloVe}
@@ -280,21 +293,21 @@ where $w_i$ and $\widetilde{w}_j$ are the randomly initialized vector representa
 The GloVe embeddings are successfully evaluated on the word analogy task, validating that the vector space contains linear sub-structures. Moreover, it is demonstrated that GloVe embeddings achieve better results on the word similarity task than embeddings from Word2Vec. In general, GloVe is able to consistently outperform Word2Vec in a similar training setting. Moreover, since it can leverage bigger amounts of data it further provides a better representation for rare words than Word2Vec. Finally, during the extrinsic evaluation the performance on a Named entity recognition (NER) task could be improved using GloVe embeddings as features compared to a CBOW embeddings from Word2Vec.
 
 {
-\color{blue}
-	
-static embedding;
-captures global corpus statistics (so it considers global context), based on ratios of probabilities from word-word co-occurrence matrix $X_{ij}$;
-these counts are used to define the loss function, which leads to minimization of a sum of squares
-\begin{equation*}
-    J = \sum_{i, j} \frac{X_{ij}}{X_{\textup{max}}}
-    (w_{i} \widetilde{w_{j}}^{T} - \log X_{ij})^{2}
-\end{equation*}
-$w_{i}$ is the word vector and $\widetilde{w_{j}}$ the context vector;
-can add in a weighting function to penalize rare events and not over-weight frequent events, and add in bias terms for each weight vector;
-does not handle out of vocabulary (OOV) words;
+	\color{blue}
+		
+	static embedding;
+	captures global corpus statistics (so it considers global context), based on ratios of probabilities from word-word co-occurrence matrix $X_{ij}$;
+	these counts are used to define the loss function, which leads to minimization of a sum of squares
+	\begin{equation*}
+	    J = \sum_{i, j} \frac{X_{ij}}{X_{\textup{max}}}
+	    (w_{i} \widetilde{w_{j}}^{T} - \log X_{ij})^{2}
+	\end{equation*}
+	$w_{i}$ is the word vector and $\widetilde{w_{j}}$ the context vector;
+	can add in a weighting function to penalize rare events and not over-weight frequent events, and add in bias terms for each weight vector;
+	does not handle out of vocabulary (OOV) words;
 }
 
-\textbf{References:}
+\noindent \textbf{References:}
 \begin{itemize}
 	\item Original source \cite{pennington-etal-2014-glove},
 	\href{https://nlp.stanford.edu/projects/glove/}{GloVe project page}.
@@ -314,14 +327,14 @@ Besides the different representation $\textbf{u}_w$, the training of the objecti
 The authors show in an intrinsic evaluation that the inclusion of character level information enables an improved performance on the word similarity task compared to Word2Vec. This also holds for the syntactic questions of the word analogy task. Moreover, the representations that FastText computes for OOV words always improves the performance on the word similarity task which validates that the representations are reasonable. During further evaluation, the authors showed that the most important $n$-grams in the representation actually correspond to valid morphemes, e.g., prefixes and suffixes. For that, the authors omitted a single $n$-gram from the representation $\textbf{u}_w$ to get a restricted representation $\textbf{u}_{w\setminus g}$. Then, they ranked all $n$-grams by their cosine distance between $\textbf{u}_w$ and $\textbf{u}_{w\setminus g}$, to determine the importance of each $n$-gram for $\textbf{u}_w$. Furthermore, the better usage of subword information enables FastText to obtain better embeddings from smaller datasets than Word2Vec. Additionally, the word representation trained with subword information outperforms plain Skip-gram embeddings on a language modeling task.
 
 {
-\color{blue}
-
-static embedding;
-deals better with unknown words and word sparsity;
-add special boundary symbols < and > to the word,
-example for $n=3$ and the word `where':
-<where> and <wh, whe, her, ere, re>;
-learn skip-gram embedding for each constituent $n$-gram, word is represented by the sum of all the embeddings of the constituent $n$-grams;
+	\color{blue}
+	
+	static embedding;
+	deals better with unknown words and word sparsity;
+	add special boundary symbols < and > to the word,
+	example for $n=3$ and the word `where':
+	<where> and <wh, whe, her, ere, re>;
+	learn skip-gram embedding for each constituent $n$-gram, word is represented by the sum of all the embeddings of the constituent $n$-grams;
 } % END color blue
 
 \noindent \textbf{References:}
@@ -368,14 +381,14 @@ The decoder at each time step uses this context and is not solely dependent on t
 If implemented with an appropriate attention score, the whole process is differentiable and can be learned task-specific by the model.
 
 {
-\color{blue}
-
-{E}mbeddings from \textbf{L}anguage \textbf{Mo}dels (ELMo):
-The ElMo architecture is based on earlier ideas using Recurrent Neural Nets (RNNs) to model sequences, such as sentences in natural language.
-ElMo produces deep contextualized word representations, which are learned functions of internal states of a deep bidirectional language model with Long short-term memory (LSTM) units.
-ELMo embeddings are context-sensitive, i.e.\ each token representation is a function of the entire input sentence.
-Here lower layers appear to capture syntactics, while higher layers capture semantics.
-ELMo is unsupervised, can handle OOV, but is not truly bidirectional.
+	\color{blue}
+	
+	{E}mbeddings from \textbf{L}anguage \textbf{Mo}dels (ELMo):
+	The ElMo architecture is based on earlier ideas using Recurrent Neural Nets (RNNs) to model sequences, such as sentences in natural language.
+	ElMo produces deep contextualized word representations, which are learned functions of internal states of a deep bidirectional language model with Long short-term memory (LSTM) units.
+	ELMo embeddings are context-sensitive, i.e.\ each token representation is a function of the entire input sentence.
+	Here lower layers appear to capture syntactics, while higher layers capture semantics.
+	ELMo is unsupervised, can handle OOV, but is not truly bidirectional.
 } % END color blue
 
 \noindent \textbf{References:}
@@ -421,50 +434,126 @@ Ultimately, the blocks can be broken down to matrix operations and the attention
 } % END color blue
 
 
-% ############################################## %
-% TODO Make into subsections
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+\subsection{Masked Language Models and BERT}
 
-\begin{enumerate}[resume]
-    \item \underline{\textbf{B}i-directional \textbf{E}ncoder \textbf{R}epresentations from \textbf{T}ransformers (BERT) and its variants:}
-    \newline
-    The objective of the BERT model is a \emph{Masked language modeling task}, in which we randomly mask words in the training text and try to predict the masked words from their context.
-    Additionally, the model is trained on a \emph{next sentence prediction} task.
-    For the input embedding: WordPiece tokenization;
-    special <cls> token for the representation of the entire input sequence.
-    \newline
-    \textbf{Original research article:} \cite{DBLP:journals/corr/abs-1810-04805}.
-    \newline
-    \textbf{Additional references:}
-    \begin{itemize}
-        \item \href{https://lena-voita.github.io/nlp_course/transfer_learning.html}{(Introduction to) Transfer Learning} in the NLP for you course.
-        \item \cite{clark-etal-2019-bert} analyze the role of the different attention heads in the trained BERT model.
-        \item A \textbf{Ro}bustly \textbf{O}ptimized \textbf{BERT} Pretraining \textbf{A}pproach (RoBERTa):
-        The authors observe that BERT was significantly under-trained, and update the model \cite{DBLP:journals/corr/abs-1907-11692}.
-        \item GPT for language generation.
-    \end{itemize}
-    
-    \item \underline{Sentence embeddings:}
-    \newline
-    Sentence-BERT: \cite{DBLP:journals/corr/abs-1908-10084} and \href{https://www.sbert.net/}{SentenceTransformers}
-    find an embedding on the sentence level so that semantically similar sentences are close in the embeddings space;
-    adds a pooling operation to the output of BERT or RoBERTa to derive a fixed sized sentence embedding;
-    siamese and triplet network structures.
-    \newline
-    \emph{Contrastive learning} (pull semantically close neighbors together and push apart non-neighbors) for sentence embeddings:
-    \newline
-    TransEncoder: For pairwise comparison of sentences, \cite{DBLP:journals/corr/abs-2109-13059} alternate between a bi-encoder (which produces fixed-dimensional sentence embeddings) and a cross-encoder (which has attention heads that span the complete sequence of both sentences), so that they learn from each other to train an unsupervised sentence representation model.
-    \newline
-    SimCSE \cite{DBLP:journals/corr/abs-2104-08821}: Uses contrastive learning to improve sentence embeddings, where the positive pairs are created by adding dropout in the encoder as the noise.
-    \newline
-    \textbf{Further references:}
-    \begin{itemize}
-        \item Dialog utterance embeddings via contrastive learning \cite{https://doi.org/10.48550/arxiv.2205.13568}
-        \item Video: \href{https://youtu.be/O3xbVmpdJwU}{Transformer Neural Networks - an Overview!}
-    \end{itemize}
+% % % %
+\subsubsection{Introduction}
+
+BERT (\textbf{B}i-directional \textbf{E}ncoder \textbf{R}epresentations from \textbf{T}ransformers) follows the Transformer architecture \cite{DBLP:journals/corr/VaswaniSPUJGKP17}; more concretely the encoder part of it. 
+BERT allows tokens to attend both previous and posterior tokens. 
+This is the main advantage setting BERT apart from previous language representation models. 
+Two BERT versions are trained, BERT-Base to be compared with the Open AI's GPT model and BERT-Large with more blocks, attention heads, and a larger hidden dimension.
+
+% % % % 
+\subsubsection{Model Input}
+
+As input, BERT accepts either single or a pair of sentences, which are simply concatenated with a special token [SEP] in between.
+To enable down-stream tasks, there is also a classification token [CLS] at the beginning.
+To further distinguish the tokens belonging to each sentence, a third segment embedding is used, besides the usual token and positional embeddings known from the standard transformer. 
+Tokenization is generated via WordPiece \cite{wu2016google}. 
+WordPiece uses a 30k token vocabulary, each word is searched in this corpus and if it does not exist it will be decomposed into constituent pieces. 
+This input embedding is static at first but will become contextualized after going through the model.
+
+% % % %
+\subsubsection {BERT Architecture}
+
+BERT uses a multi-layer bidirectional transformer encoder. 
+This encoder is based on the original transformer encoder. 
+Each BERT layer contains two normalization layers, a feed forward layer and a multi-head attention layer. 
+The major difference is that BERT uses bidirectional self-attention, words can see them selves, there is no constrain, while the GPT transformer uses constrained self-attention where every token can only attend to the context to its left. 
+BERT comes in two sizes:
+BERT Base has 12 layers, a hidden size of 768, 12 self-attention heads and 110M parameters to train. 
+BERT Base has the same model size as GPT so their performances are comparable. 
+BERT Large has 24 layers, a hidden size of 1024, 16 self-attention heads and a total of 340M to train. 
+BERT Large is to achieve better results on benchmarks stated in the paper.
+
+% % % % 
+\subsubsection{Pre-training and Fine-tuning}
+
+BERT is pre-trained using BooksCorpus and the English Wikipedia, via two unsupervised tasks as follows:
+
+\begin{enumerate}
+	\item Masked Language Model (MLM). 
+	To avoid mappings between input-output due to a bidirectional context where words can see themselves, 15 percent of the tokens are randomly masked. 
+	The masked tokens are then predicted, as the final hidden vectors corresponding to them are fed into a softmax over the vocabulary. 
+	To mitigate a mismatch between pre-training and fine-tuning as there is no [MASK] token during fine-tuning, only 80 percent of the chosen tokens are replaced by [MASK]; 10 percent are replaced by a random token, and the remaining 10 percent are left unchanged, as illustrated below:
+	\begin{itemize}
+		\item my cat is hungry $\leadsto$ my cat is [MASK]
+		\item my cat is hungry $\leadsto$ my cat is president
+		\item my cat is hungry $\leadsto$ my cat is hungry
+	\end{itemize}
+	
+	\item Next-Sentence-Prediction (NSP).
+	We want to predict if sentence B is the actual sentence that proceeds sentence A or not. 
+	This task is beneficial for downstream tasks that require understanding the relationship between sentences, such as question-answering.
+	To learn this relationship between sentences, a binary classification task is used where sentence B is 50 percent of the time the one that follows sentence A (label = \textit{IsNext}), and 50 percent of the time is chosen randomly (label = \textit{NotIsNext}). 
+	Here are two examples.
+	\begin{itemize}
+		\item [CLS] The man went to [MASK] store [SEP] He bought a gallon [MASK] milk [SEP] $\leadsto$ \textit{IsNext}
+		\item [CLS] The man went to [MASK] store [SEP] Penguins [MASK] flightless birds [SEP] $\leadsto$ \textit{NotIsNext}
+	\end{itemize}
 \end{enumerate}
 
+Fine-tuning is done by initializing the model with the pre-trained weights to adapt for specific tasks. 
+During this process the pre-trained weights change slightly and the tasks specific weights are learned.
+In the paper, BERT is fine-tuned for 12 different NLP tasks.
+The BERT Large model is shown to be the best-performing system across the multi-task GLUE benchmark, the SQuAD benchmark (both version 1.1 and 2.0) as well as the SWAG benchmark.
+
+% % % %
+\subsubsection{Conclusion}
+
+The authors show that Transformers continue to be state-of-the-art in many NLP tasks. 
+They exhibit the benefits of using a true bidirectional structure based on a MLM, which allows to solve more downstream tasks. 
+They also show how BERT can be trained relative faster and in a more efficient way by using the self-attention mechanism from transformers that use parallel training instead of traditional LSTMs that use sequential training.
+
+\noindent \textbf{References:}
+\begin{itemize}
+	\item Original research article:  \cite{DBLP:journals/corr/abs-1810-04805}
+	\item \href{https://lena-voita.github.io/nlp_course/transfer_learning.html}{(Introduction to) Transfer Learning} in the NLP for you course.
+	\item \cite{clark-etal-2019-bert} analyze the role of the different attention heads in the trained BERT model.
+	\item A \textbf{Ro}bustly \textbf{O}ptimized \textbf{BERT} Pretraining \textbf{A}pproach (RoBERTa):
+	The authors observe that BERT was significantly under-trained, and update the model \cite{DBLP:journals/corr/abs-1907-11692}.
+	\item GPT for language generation.
+\end{itemize}
+
+{
+	\color{blue}
+	
+	The objective of the BERT model is a \emph{Masked language modeling task}, in which we randomly mask words in the training text and try to predict the masked words from their context.
+	Additionally, the model is trained on a \emph{next sentence prediction} task.
+	For the input embedding: WordPiece tokenization;
+	special <cls> token for the representation of the entire input sequence.
+} % END color blue
+
+
 % % % % % % % % % % % % % % % % % % %
-\subsection{Multimodal Embeddings}
+\subsection{Sentence Embeddings}
+
+TODO: Add abstract for Sentence Embeddings
+
+
+\noindent \textbf{References:}
+\begin{itemize}
+	\item Sentence-BERT: \cite{DBLP:journals/corr/abs-1908-10084} and \href{https://www.sbert.net/}{SentenceTransformers}
+	find an embedding on the sentence level so that semantically similar sentences are close in the embeddings space;
+	adds a pooling operation to the output of BERT or RoBERTa to derive a fixed sized sentence embedding;
+	siamese and triplet network structures.
+	\item TransEncoder: For pairwise comparison of sentences, \cite{DBLP:journals/corr/abs-2109-13059} alternate between a bi-encoder (which produces fixed-dimensional sentence embeddings) and a cross-encoder (which has attention heads that span the complete sequence of both sentences), so that they learn from each other to train an unsupervised sentence representation model.
+	\item SimCSE \cite{DBLP:journals/corr/abs-2104-08821}: Uses contrastive learning to improve sentence embeddings, where the positive pairs are created by adding dropout in the encoder as the noise.
+	\item Dialog utterance embeddings via contrastive learning \cite{https://doi.org/10.48550/arxiv.2205.13568}
+	\item Video: \href{https://youtu.be/O3xbVmpdJwU}{Transformer Neural Networks - an Overview!}
+\end{itemize}
+
+{
+	\color{blue}
+	
+	\emph{Contrastive learning} (pull semantically close neighbors together and push apart non-neighbors) for sentence embeddings:
+} % END color blue
+
+
+% % % % % % % % % % % % % % % % % % %
+\subsection{Multi-modal Embeddings}
 
 Joint text and image space:
 \cite{DBLP:journals/corr/abs-2111-07180}
@@ -474,6 +563,58 @@ TODO: Add more references
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%
 \section{Structure in Word Embeddings}
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%
+
+% % % % % % % % % % % % % % % % % % % % % % % %
+\subsection{Sentiment specific word embeddings}
+
+TODO Add abstract on sentiment in word embeddings
+
+\noindent \textbf{References:}
+\begin{itemize}
+	\item Using sentiment aware word embeddings for emotion classification \cite{sentiment-aware-word-embedding-emotion-2019};
+	\item TweetEval dataset, which includes emotion recognition and sentiment analysis tasks \cite{barbieri-etal-2020-tweeteval}, the authors released their \href{https://huggingface.co/cardiffnlp/twitter-roberta-base-sentiment}{pre-trained RoBERTa models};
+	\item German sentiment classification with using fastText and BERT embeddings \cite{guhr-etal-2020-training};
+	\item EmoWOZ \cite{DBLP:journals/corr/abs-2109-04919} is a task-oriented dialogue dataset annotated with emotions.
+\end{itemize}
+
+{
+	\color{blue}
+	
+	\emph{Sentiment} is a positive or negative evaluation, and we can enhance our \emph{semantic} specific word embeddings with \emph{sentiment} \cite{yu-etal-2017-refining}.
+	Words with similar vector representations can have an opposite sentiment polarity (e.g., `good' vs `bad' or `happy' vs `sad').
+	To capture this in the embedding one can add a post-processing step to adapt the pre-trained vectors to sentiment applications,
+	where we move the word closer to a set of both semantically and sentimentally similar nearest neighbors (i.e., those with the same polarity) and further away from sentimentally dissimilar neighbors (i.e., those with an opposite polarity).
+} % END color blue
+
+
+
+% % % % % % % % % % % % % % % % % % % % % % % %
+\subsection{Bias in Word Embeddings}
+
+TODO Add abstract on bias in word embeddings
+
+\noindent \textbf{References:}
+\begin{itemize}
+	\item Iterative nullspace projection to debias word embeddings \cite{ravfogel-etal-2020-null};
+	\item Visualizations of bias mitigation techniques \cite{DBLP:journals/corr/abs-2104-02797},
+	their \href{https://github.com/tdavislab/verb}{code} for creating interactive demos is available online;
+	\item Gender bias in the contextualized embeddings from ElMo \cite{zhao-etal-2019-gender};
+	\item Bias in BERT embeddings \cite{kurita-etal-2019-measuring};
+	\item Debiasing contextualized embeddings \cite{kaneko-bollegala-2021-debiasing}.
+\end{itemize}
+
+{
+	\color{blue}
+	
+	A desirable association could be ``a man to a woman is as a king to a queen'', whereas an undesirable association is ``a man to a woman is as a physician to a nurse''.
+	Unfortunately, it appears that word embeddings trained on a corpus of text extracted from books and websites tend to incorporate and amplify the biases contained in our language.
+	When such biased embeddings are used for downstream tasks, this can lead to bias amplification.
+	To investigate gender bias systematically, \cite{DBLP:journals/corr/BolukbasiCZSK16a} take a seed pair $(v_\textup{he}, v_\textup{she})$ and find other pairs of word vectors which have a difference similar to the seed vector.
+	They also provide methods for debiasing the embedding, but they argue that bias ultimately appears to come from the training data.
+} % END color blue
+
+% ############################################## %
+% TODO Make into subsections
 
 \begin{enumerate}[resume]
     \item \underline{Geometry of the word embedding space:}
@@ -493,39 +634,6 @@ TODO: Add more references
     Different method:
     again train embeddings on two corpora separately, then for each word find the closest vectors in each embedding space, if these differ a lot the embeddings are different \cite{gonen-etal-2020-simple}.
     
-    \item \underline{Bias in word embeddings and ethics:}
-    \newline
-    A desirable association could be ``a man to a woman is as a king to a queen'', whereas an undesirable association is ``a man to a woman is as a physician to a nurse''.
-    Unfortunately, it appears that word embeddings trained on a corpus of text extracted from books and websites tend to incorporate and amplify the biases contained in our language.
-    When such biased embeddings are used for downstream tasks, this can lead to bias amplification.
-    To investigate gender bias systematically, \cite{DBLP:journals/corr/BolukbasiCZSK16a} take a seed pair $(v_\textup{he}, v_\textup{she})$ and find other pairs of word vectors which have a difference similar to the seed vector.
-    They also provide methods for debiasing the embedding, but they argue that bias ultimately appears to come from the training data.
-    \newline
-    \textbf{Further references:}
-    \begin{itemize}
-        \item Iterative nullspace projection to debias word embeddings \cite{ravfogel-etal-2020-null};
-        \item Visualizations of bias mitigation techniques \cite{DBLP:journals/corr/abs-2104-02797},
-        their \href{https://github.com/tdavislab/verb}{code} for creating interactive demos is available online;
-        \item Gender bias in the contextualized embeddings from ElMo \cite{zhao-etal-2019-gender};
-        \item Bias in BERT embeddings \cite{kurita-etal-2019-measuring};
-        \item Debiasing contextualized embeddings \cite{kaneko-bollegala-2021-debiasing}.
-    \end{itemize}
-    
-    \item \underline{Sentiment specific word embeddings:}
-    \newline
-    \emph{Sentiment} is a positive or negative evaluation, and we can enhance our \emph{semantic} specific word embeddings with \emph{sentiment} \cite{yu-etal-2017-refining}.
-    Words with similar vector representations can have an opposite sentiment polarity (e.g., `good' vs `bad' or `happy' vs `sad').
-    To capture this in the embedding one can add a post-processing step to adapt the pre-trained vectors to sentiment applications,
-    where we move the word closer to a set of both semantically and sentimentally similar nearest neighbors (i.e., those with the same polarity) and further away from sentimentally dissimilar neighbors (i.e., those with an opposite polarity).
-    \newline
-    \textbf{Further references:}
-    \begin{itemize}
-        \item Using sentiment aware word embeddings for emotion classification \cite{sentiment-aware-word-embedding-emotion-2019};
-        \item TweetEval dataset, which includes emotion recognition and sentiment analysis tasks \cite{barbieri-etal-2020-tweeteval}, the authors released their \href{https://huggingface.co/cardiffnlp/twitter-roberta-base-sentiment}{pre-trained RoBERTa models};
-        \item German sentiment classification with using fastText and BERT embeddings \cite{guhr-etal-2020-training};
-        \item EmoWOZ \cite{DBLP:journals/corr/abs-2109-04919} is a task-oriented dialogue dataset annotated with emotions.
-    \end{itemize}
-    
     \item \underline{Multilingual word embeddings:}
     \newline
     We want to use a shared embedding space for words across two or more languages, so that words from different languages with different meanings are close in the cross-lingual embedding space;
@@ -543,7 +651,7 @@ TODO: Add more references
 \end{enumerate}
 
 % % % % % % % % % % % % % % % % % % % % % % %
-\subsection{Word Embeddings in Dialog Systems}
+\subsection{Applications of Word Embeddings in Dialog Systems}
 
 TODO
 
