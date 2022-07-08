@@ -591,7 +591,7 @@ TODO Add abstract on sentiment in word embeddings
 % % % % % % % % % % % % % % % % % % % % % % % %
 \subsection{Bias in Word Embeddings}
 
-TODO Add abstract on bias in word embeddings
+\textcolor{red}{TODO} Add abstract on bias in word embeddings
 
 \noindent \textbf{References:}
 \begin{itemize}
@@ -617,23 +617,6 @@ TODO Add abstract on bias in word embeddings
 % TODO Make into subsections
 
 \begin{enumerate}[resume]
-    \item \underline{Geometry of the word embedding space:}
-    \newline
-    \cite{mimno-thompson-2017-strange} find that in skip-gram with negative sampling the word vectors all point in roughly the same direction, i.e.\ lie in a narrow cone (this is sometimes called \emph{anisotropy}, the opposite of this is \emph{isotropy} where the vectors are directionally uniform);
-    the context vectors point in the other direction (have negative dot product with the mean of the word vectors),
-    in contrast to this for GloVe the word and context vectors point in the same direction;
-    \newline
-    Anisotropy can also be studied in contextualized word embeddings, see \cite{ethayarajh-2019-contextual}, or for sentence embeeddings \cite{li-etal-2020-sentence}.
-    \newline
-    \cite{nakashole-flauger-2018-characterizing} observe that mappings between semantic spaces usually are only locally linear, and not globally linear;
-    \newline
-    Method for finding words which are used differently in two text corpora:
-    train embedding on each corpus, find a (e.g.\ linearly via orthogonal Procrustes) mapping between the embedding spaces, then words which do not match well under this mapping appear to have different meanings.
-    Using historical texts, one can see how the meaning changes through time \cite{hamilton-etal-2016-diachronic};
-    \newline
-    Different method:
-    again train embeddings on two corpora separately, then for each word find the closest vectors in each embedding space, if these differ a lot the embeddings are different \cite{gonen-etal-2020-simple}.
-    
     \item \underline{Multilingual word embeddings:}
     \newline
     We want to use a shared embedding space for words across two or more languages, so that words from different languages with different meanings are close in the cross-lingual embedding space;
@@ -650,33 +633,92 @@ TODO Add abstract on bias in word embeddings
     \end{itemize}
 \end{enumerate}
 
-% % % % % % % % % % % % % % % % % % % % % % %
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % %
 \subsection{Applications of Word Embeddings in Dialog Systems}
 
-TODO
+Components of a dialogue system:
+\begin{itemize}
+	\item Natural Language Understanding (NLU)
+	\item Dialogue State Tracking (DST)
+	\item Policy
+	\item Natural Language Generation (NLG)
+\end{itemize}
+
+\textcolor{red}{TODO}
 
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%
 \section{Topological Data Analysis and Word Embeddings}
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%
 
-\begin{enumerate}[resume]
-    \item \underline{$(\ast)$ Hyperbolic embeddings:}
-    \newline
-    Instead of embedding data into an Euclidean vector space, we can associate it to points in a more general ambient manifold.
-    For example, we can use so-called \emph{negatively curved spaces}, which leads to \emph{hyperbolic embeddings}.
-    The geometry of these spaces allows a more efficient representation of tree-like structures and hierarchies, as was observed in \cite{DBLP:journals/corr/NickelK17}; see also this \href{https://bjlkeng.github.io/posts/hyperbolic-geometry-and-poincare-embeddings/}{blog post} discussing the paper, and \href{https://rare-technologies.com/implementing-poincare-embeddings/}{this blog post} with implementation details.
-    In our case, where we associate words to points in a hyperbolic space, these are called \emph{hyperbolic word embeddings} (which can be constructed e.g.\ with Poincar{\'e} GloVe \cite{DBLP:journals/corr/abs-1810-06546}).
-    Further references include an earlier paper on hyperbolic text embeddings \cite{DBLP:journals/corr/abs-1806-04313},
-    these in turn were inspired by hyperbolic image embeddings \cite{DBLP:journals/corr/abs-1904-02239}.
-    There is also a proposed hyperbolic version of fastText \cite{zhu-etal-2020-hypertext}.
-    \newline
-    One can also `probe' the contextualized embeddings of a BERT model by mapping into a hyperbolic space \cite{DBLP:journals/corr/abs-2104-03869}, and analyzing the structure of the projected data.
-    
-    \item \underline{$(\ast)$ Topological Polysemy and singularities in word embeddings:}
-    \newline
-    The paper \cite{jakubowski2020topology} studies singular points in a fixed word embedding trained via fastText.
-    They find that the dimension of the zeroth local homology group of a punctured neighborhood of a word correlates with the number of different meanings of a polysemous word.
-\end{enumerate}
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+\subsection{Geometry of the word embedding space}
+
+\textcolor{red}{TODO: Edit this section}
+
+\cite{mimno-thompson-2017-strange} find that in skip-gram with negative sampling the word vectors all point in roughly the same direction, i.e.\ lie in a narrow cone (this is sometimes called \emph{anisotropy}, the opposite of this is \emph{isotropy} where the vectors are directionally uniform);
+the context vectors point in the other direction (have negative dot product with the mean of the word vectors),
+in contrast to this for GloVe the word and context vectors point in the same direction;
+
+
+\noindent \textbf{References:}
+\begin{itemize}
+	\item Anisotropy can also be studied in contextualized word embeddings, see \cite{ethayarajh-2019-contextual}, or for sentence embeeddings \cite{li-etal-2020-sentence}
+	\item \cite{nakashole-flauger-2018-characterizing} observe that mappings between semantic spaces usually are only locally linear, and not globally linear;
+	\item Method for finding words which are used differently in two text corpora:
+	train embedding on each corpus, find a (e.g.\ linearly via orthogonal Procrustes) mapping between the embedding spaces, then words which do not match well under this mapping appear to have different meanings.
+	Using historical texts, one can see how the meaning changes through time \cite{hamilton-etal-2016-diachronic};
+	\item Different method:
+	again train embeddings on two corpora separately, then for each word find the closest vectors in each embedding space, if these differ a lot the embeddings are different \cite{gonen-etal-2020-simple}.
+\end{itemize}
+
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+\subsection{Embeddings in Curved Geometries}
+
+ Instead of embedding data into an Euclidean vector space, we can associate it to points in a more general ambient manifold.
+
+\textcolor{red}{TODO} 
+\begin{itemize}
+	\item Manifolds
+	\item Geodesics
+	\item Riemannian optimization
+\end{itemize}
+
+% % % % % %
+\subsubsection{Positively Curved Spaces: Spherical Embeddings}
+
+Spherical Word Embeddings \cite{Meng2019SphericalTE}
+
+\textcolor{red}{TODO}
+
+
+% % % % % %
+\subsubsection{Negatively Curved Spaces: Hyperbolic Embeddings}
+
+For example, we can use so-called \emph{negatively curved spaces}, which leads to \emph{hyperbolic embeddings}.
+The geometry of these spaces allows a more efficient representation of tree-like structures and hierarchies, as was observed in \cite{DBLP:journals/corr/NickelK17}
+See also this \href{https://bjlkeng.github.io/posts/hyperbolic-geometry-and-poincare-embeddings/}{blog post} discussing the paper, and \href{https://rare-technologies.com/implementing-poincare-embeddings/}{this blog post} with implementation details.
+In our case, where we associate words to points in a hyperbolic space, these are called \emph{hyperbolic word embeddings} (which can be constructed e.g.\ with Poincar{\'e} GloVe \cite{DBLP:journals/corr/abs-1810-06546}).
+Further references include an earlier paper on hyperbolic text embeddings \cite{DBLP:journals/corr/abs-1806-04313},
+these in turn were inspired by hyperbolic image embeddings \cite{DBLP:journals/corr/abs-1904-02239}.
+There is also a proposed hyperbolic version of fastText \cite{zhu-etal-2020-hypertext}.
+One can also `probe' the contextualized embeddings of a BERT model by mapping into a hyperbolic space \cite{DBLP:journals/corr/abs-2104-03869}, and analyzing the structure of the projected data.
+
+\textcolor{red}{TODO}
+
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+\subsection{Manifold Hypothesis and Singularities}
+
+\textcolor{red}{TODO}
+
+% % % % % %
+\subsubsection{Topological Polysemy and singularities in word embeddings}
+
+The paper \cite{jakubowski2020topology} studies singular points in a fixed word embedding trained via fastText.
+They find that the dimension of the zeroth local homology group of a punctured neighborhood of a word correlates with the number of different meanings of a polysemous word.
+
+\textcolor{red}{TODO}
 
 There have been two main developments in Topological Data Analysis (TDA), which might lead to further interesting application of TDA to word embeddings in the future:
 \begin{itemize}
