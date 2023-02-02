@@ -16,13 +16,13 @@
 \input{commands}
 
 
-\title{Representations in Natural Language Processing}
+\title{Word Embedding Spaces}
 
 % % % % % % % % % % % % %
 % Contact information
 % % % % % % % % % % % % %
 
-\author{Ben Ruppik}
+\author{Benjamin Matthias Ruppik}
 \address{Dialog Systems and Machine Learning Group, HHU D{\"u}sseldorf, Germany}
 \email{\href{mailto:benjamin.ruppik@hhu.de}{benjamin.ruppik@hhu.de}}
 \urladdr{\url{http://ben300694.github.io}}
@@ -79,30 +79,44 @@
 \begin{document}
 
 \begin{abstract}
-    Extended notes for the lecture ``Representations in Natural Language Processing'', HHU D{\"u}sseldorf, Winter Term 2022/2023.
+    Extended notes for the Seminar ``Word Embedding Spaces'', Heinrich-Heine-University D{\"u}sseldorf, Summer Term 2023.
 \end{abstract}
 
 \maketitle
 
+% --------------------------------- %
+\section*{Organizational Notes}
+% --------------------------------- %
+
 \begin{itemize}
-    \item \textbf{Lecture:} Wednesdays, 12:30 - 14:00, Building 25.22 / 2522.HS 5G
-    \item \textbf{Exercise:} Thursdays, 08:30 - 10:00, Building 25.22 / 2522.U1.52
+    \item \textbf{Seminar:} TBA
     \item Lecture course repository: \url{https://github.com/ben300694/word-embeddings}
     \item Live stream on WebEx will probably be available for registered participants.
     \item \textbf{Requirements for credit points:}
     \begin{itemize}
-        \item Successful participation in the exercises.
-        \item Submission of a  \LaTeX-file and compiled PDF of a final report 
+        \item Successful participation in the seminar sessions.
+        \item Preparation of one talk.
+        \item Submission of a  \LaTeX-file and compiled PDF of an extended abstract
         \begin{itemize}
-        	\item 2000 words
+        	\item Maximum 2 pages
         	\item \href{https://www.overleaf.com/latex/templates/acl-2020-proceedings-template/zsrkcwjptpcd}{ACL Overleaf template}
         	\item has to include references
         \end{itemize}
     \end{itemize}
-    \item \textbf{Prerequisites:}
-    Some background in deep learning,
+    \item \textbf{Formal Prerequisites:} None
+    \item \textbf{Recommended Prerequisites:}
+    Background in deep learning,
     linear algebra.
 \end{itemize}
+
+% % % % % % % % % % % % % % % % % % %
+\subsection*{Policy on AI writing assistants}
+
+AI writing assistants, such as chatbots or language models like ChatGPT \cite{ChatGPT}, may be used as a tool to enhance writing skills and productivity.
+However, it is important to note that the final product submitted must be original work and properly cited if using any direct quotes or paraphrased material.
+Plagiarism, including use of AI writing assistance without proper citation, will not be tolerated and is a violation of academic honesty.
+
+Please have a look at the overview collected on the website \href{https://platform.openai.com/docs/chatgpt-education}{Educator considerations for ChatGPT}.
 
 \clearpage
 % --------------------------------- %
@@ -168,7 +182,7 @@ In \emph{extrinsic evaluation} in a downstream task, we use a word embedding for
 % % % % % % % % % % % % % % % %
 \subsubsection{Acknowledgments}
 
-The content of this lecture is based on the seminar ``Word embedding spaces'' run at HHU Düsseldorf in the Summer Term 2022.
+The content of this document is based on the seminar ``Word embedding spaces'' run at HHU Düsseldorf in the Summer Term 2022.
 I am grateful for the suggestions and feedback collected during the sessions. \\
 Sections of this write-up are based on the final reports written by the students:
 \begin{itemize}
@@ -179,7 +193,7 @@ Sections of this write-up are based on the final reports written by the students
 \end{itemize}
 
 \noindent Thank you to Milica Gašić, Chris Geishauser, Michael Heck for additional input. \\
-
+AI writing assistants such as ChatGPT and GitHub Copilot where used in generating these learning materials. \\
 
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%
 \section{Background and Static Word Embeddings}
@@ -523,7 +537,7 @@ They also show how BERT can be trained relative faster and in a more efficient w
 	The objective of the BERT model is a \emph{Masked language modeling task}, in which we randomly mask words in the training text and try to predict the masked words from their context.
 	Additionally, the model is trained on a \emph{next sentence prediction} task.
 	For the input embedding: WordPiece tokenization;
-	special <cls> token for the representation of the entire input sequence.
+	special \texttt{[CLS]} token for the representation of the entire input sequence.
 } % END color blue
 
 
@@ -555,8 +569,15 @@ TODO: Add abstract for Sentence Embeddings
 % % % % % % % % % % % % % % % % % % %
 \subsection{Multi-modal Embeddings}
 
-Joint text and image space:
-\cite{DBLP:journals/corr/abs-2111-07180}
+\begin{itemize}
+	\item Joint text and image space:
+	\cite{DBLP:journals/corr/abs-2111-07180}
+	
+	\item \href{https://openai.com/blog/clip/}{CLIP: Connecting Text and Images};
+	\cite{radford2021learning}
+\end{itemize}
+
+
 
 TODO: Add more references
 
@@ -591,8 +612,6 @@ TODO Add abstract on sentiment in word embeddings
 % % % % % % % % % % % % % % % % % % % % % % % %
 \subsection{Bias in Word Embeddings}
 
-\textcolor{red}{TODO} Add abstract on bias in word embeddings
-
 \noindent \textbf{References:}
 \begin{itemize}
 	\item Iterative nullspace projection to debias word embeddings \cite{ravfogel-etal-2020-null};
@@ -613,25 +632,21 @@ TODO Add abstract on sentiment in word embeddings
 	They also provide methods for debiasing the embedding, but they argue that bias ultimately appears to come from the training data.
 } % END color blue
 
-% ############################################## %
-% TODO Make into subsections
+% % % % % % % % % % % % % % % % % % % % % % % %
+\subsection{Multilingual word embeddings}
 
-\begin{enumerate}[resume]
-    \item \underline{Multilingual word embeddings:}
-    \newline
-    We want to use a shared embedding space for words across two or more languages, so that words from different languages with different meanings are close in the cross-lingual embedding space;
-    the hope is that this can improve performance because the model can acquire and transfer knowledge from other languages;
-    also look at the references from the `Geometry of the word embedding space'-topic, in particular \cite{DBLP:journals/corr/abs-1710-04087} where they aligned embeddings without having parallel data;
-    \href{https://github.com/facebookresearch/MUSE}{MUSE} is an implementation of both supervised and unsupervised multilingual word embeddings with fastText;
-    \cite{DBLP:journals/corr/abs-1808-08933} train unsupervised MWEs;
-    \cite{DBLP:journals/corr/abs-2007-01852} build language-agnostic BERT Sentence Embedding.
-    \newline
-    \textbf{Further references:}
-    \begin{itemize}
-        \item Video: \href{https://youtu.be/7tAWk_Coj-s}{Language Agnostic BERT}
-        \item Please also take a look at the document in the appendix with further references on multilingual transformer architectures.
-    \end{itemize}
-\end{enumerate}
+We want to use a shared embedding space for words across two or more languages, so that words from different languages with different meanings are close in the cross-lingual embedding space;
+the hope is that this can improve performance because the model can acquire and transfer knowledge from other languages;
+also look at the references from the `Geometry of the word embedding space'-topic, in particular \cite{DBLP:journals/corr/abs-1710-04087} where they aligned embeddings without having parallel data.
+
+\textbf{Further references:}
+\begin{itemize}
+	\item \href{https://github.com/facebookresearch/MUSE}{MUSE} is an implementation of both supervised and unsupervised multilingual word embeddings with fastText
+	\item \cite{DBLP:journals/corr/abs-1808-08933} train unsupervised MWEs;
+	\item \cite{DBLP:journals/corr/abs-2007-01852} build language-agnostic BERT Sentence Embedding
+    \item Video: \href{https://youtu.be/7tAWk_Coj-s}{Language Agnostic BERT}
+    \item Please also take a look at the document in the appendix with further references on multilingual transformer architectures.
+\end{itemize}
 
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
 \subsection{Applications of Word Embeddings in Dialog Systems}
@@ -642,6 +657,18 @@ Components of a dialogue system:
 	\item Dialogue State Tracking (DST)
 	\item Policy
 	\item Natural Language Generation (NLG)
+\end{itemize}
+
+\textcolor{red}{TODO}
+
+
+% % % % % %
+\subsubsection{Aligning Language Models}
+
+\begin{itemize}
+	\item InstructGPT  \cite{ouyang2022training}
+	\item Sparrow
+	\item ChatGPT
 \end{itemize}
 
 \textcolor{red}{TODO}
@@ -689,7 +716,6 @@ in contrast to this for GloVe the word and context vectors point in the same dir
 
 Spherical Word Embeddings \cite{Meng2019SphericalTE}
 
-\textcolor{red}{TODO}
 
 
 % % % % % %
