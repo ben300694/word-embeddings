@@ -14,31 +14,39 @@ This seminar took place at HHU:
 
 ## Syllabus
 
-- Static word embeddings
-  - Frequency based methods, word2vec, GloVe, fastText
-- Contextual word embeddings
-  - ELMo, attention and Transformers, Masked Language Models and BERT, contrastive learning, sentence embeddings
+- Static Word Embeddings
+  - Frequency-based Methods
+  - word2vec, GloVe, fastText
+- Contextual Word Embeddings
+  - RNNs, LSTMs (e.g., ElMo)
+  - Attention and Transformers
+  - Masked Language Models (e.g., BERT, RoBERTa)
+  - Autoregressive Language Models (e.g., GPT, GPT-2, GPT-3)
+  - Contrastive Learning, Sentence Embeddings
 - Additional topics
-  - Evaluation, geometry of the embedding space
-  - bias, sentiment
-  - multilingual embeddings
-  - multimodal embeddings (for instance, a common embedding space of words and images in CLIP)
+  - Evaluation, Geometry of the Embedding Space
+  - Bias, Sentiment
+  - Multilingual Embeddings
+  - Multimodal Embeddings
+    - CLIP: a common embedding space for words and images
 - Dialogue Systems
-  - Task-oriented dialogue system components
-  - InstructGPT and ChatGPT
-- Topological data analysis
-  - Hyperbolic embeddings, singularities and topological polysemy
-  - Topologically motivated dimensionality reduction
+  - Task-oriented Dialogue System Components
+  - Aligned Language Models: InstructGPT, ChatGPT, Sparrow
+- Representation Learning, Geometric Deep Learning, Topological Data Analysis
+  - Hyperbolic Embeddings
+  - Singularities and Topological Polysemy
+  - Riemannian Manifold Learning
+  - (Topologically motivated) Dimensionality Reduction
 
-## Schedule for Summer term 2023
+## Schedule 
 
-| Date          	| Plan         |
-| ------------- 	| ------------- |
-| 2023-04-05     	| First Meeting: Motivation and Introduction |
-| 2022-04-12		| Static word embeddings  |
-| 2022-04-19		| TBD  |
+### Summer term 2023
 
 Seminar dates: 
 05.04.2023 12.04.2023 19.04.2023 26.04.2023 03.05.2023 10.05.2023 17.05.2023 24.05.2023 31.05.2023 07.06.2023 14.06.2023 21.06.2023 28.06.2023 05.07.2023 12.07.2023
 
-[Schedule on Google Sheets](https://docs.google.com/spreadsheets/d/1V-d-QuJIUniPq9q-Xviu_TdLZHlW_xzBTqhDX_lIG9w/edit?usp=sharing)
+[Summer term 2023 Schedule on Google Sheets](https://docs.google.com/spreadsheets/d/1V-d-QuJIUniPq9q-Xviu_TdLZHlW_xzBTqhDX_lIG9w/edit?usp=sharing)
+
+### Summer term 2022
+
+<strike>[Summer term 2022 Schedule on Google Sheets](https://docs.google.com/spreadsheets/d/1s-pxSBL0pK5RN5ny5IiSsXUL9i8nQM7iIx_j_euDf08/edit#gid=0)</strike>
