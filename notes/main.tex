@@ -102,10 +102,22 @@ This document contains extended notes for the Seminar ``Word Embedding Spaces'',
     \item \href{https://docs.google.com/spreadsheets/d/1V-d-QuJIUniPq9q-Xviu_TdLZHlW_xzBTqhDX_lIG9w/edit?usp=sharing}{Schedule on Google Sheets}
     \item Lecture course repository: \url{https://github.com/ben300694/word-embeddings}
     \item Live stream on WebEx will probably be available for registered participants.
-    \item \textbf{Requirements for credit points:}
+    \item \textbf{Requirements for receiving credit points:}
     \begin{itemize}
         \item Active participation in the seminar sessions. 
+        \begin{itemize}
+        	\item Active participation in the seminar sessions means that students are expected to attend all the sessions, read the assigned materials in advance, and engage in constructive discussions with their peers and the instructor.
+        	\item Active participation also means that students should ask relevant questions, share their opinions and insights, and provide constructive feedback to their classmates’ presentations.
+        \end{itemize}
         \item Delivery of one scientific presentation.
+        \begin{itemize}
+        	\item The topics will be assigned by me at the beginning of the semester.
+        	Students should contact me as soon as possible to choose their preferred topic from the available list.
+        	\item Before giving their presentation in class, students must schedule a meeting with me to show a draft of their slides and receive feedback and suggestions for improvement.
+        	\item The presentations should be clear, concise and well-structured.
+        	They should include an introduction, a literature review, a main argument, and a conclusion.
+        	They should also cite relevant sources and use appropriate visual aids.
+        \end{itemize}
         \item Submission of a  \LaTeX-file and compiled PDF of an extended abstract:
         \begin{itemize}
         	\item No more than 2 pages.
@@ -168,8 +180,9 @@ There is a big difference between \emph{static} and \emph{contextualized} embedd
 In a \emph{static embedding} (\Cref{sec:static_word_embeddings}) there is one fixed embedding for each word in the vocabulary.
 In a \emph{contextual embedding} (\Cref{sec:contextual_word_embeddings}) the vector we associate to a word is different if it is used in a different context.
 
-We will also talk about how one can try to evaluate the quality of a word embedding.
-In \emph{extrinsic evaluation} in a downstream task, we use a word embedding for a specific task and measure whether it increases performance; \emph{intrinsic evaluation} is a harder challenge.
+We will also talk about how one can systematically evaluate the quality of a word embedding.
+In \emph{extrinsic evaluation}, we use a word embedding for a specific downstream task and measure whether it increases performance.
+\emph{Intrinsic evaluation} is a harder challenge.
 
 % % % % % % % % % % % % % % % % % % %
 \subsection{General References and Links}
@@ -224,7 +237,7 @@ Here are a few key-words and terminology that you should know about:
 \begin{itemize}
 	\item Co-occurence counts;
 	\item Term-document matrix: each document is represented by a vector of word counts;
-	\item \textbf{t}erm \textbf{f}requency -- \textbf{i}nverse \textbf{d}ocument \textbf{f}requency (tf-idf):
+	\item \textbf{T}erm \textbf{F}requency -- \textbf{I}nverse \textbf{D}ocument \textbf{F}requency (TF-IDF):
 	sparse vectors, words are represented as a simple function of the counts of neighbors;
 	\item \textbf{P}ointwise \textbf{P}ositive \textbf{M}utual \textbf{I}nformation (PPMI):
 	$\operatorname{PMI}(w_{1}, w_{2}) = \log \frac{p(w_{1}, w_{2})}{p(w_{1}) \cdot p(w_{2})}$;
@@ -761,8 +774,19 @@ Nowadays, word embeddings are essential for building effective and robust task-o
 \textcolor{magenta}{TODO} Add references
 
 
-% % % % % %
-\subsubsection{Aligning Language Models}
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+\subsection{Aligning Language Models}
+
+The \emph{GPT model family} is a family of language models that use deep learning techniques to generate natural language text.
+They are built using several decoder blocks of the transformer architecture, which enables them to learn from large amounts of text data and produce coherent and diverse texts in an autoregressive manner.
+
+\emph{Aligning language models} means training them to follow instructions given by humans, such as generating summaries, answering questions, or writing stories.
+This can be done by using reinforcement learning from human feedback (RLHF), a method that rewards the model for producing outputs that match the user’s preferences
+Alternatively, it can be done by self-instructing, a framework that generates instruction, input, and output samples from a language model itself and uses them to finetune the original model.
+
+InstructGPT and ChatGPT are two examples of aligned language models that can follow instructions given by users. 
+InstructGPT can generate texts for various tasks such as summarization, translation, or sentiment analysis.
+ChatGPT can generate engaging and natural conversations for different domains such as gaming, sports, or movies.
 
 \begin{itemize}
 	\item InstructGPT  \cite{ouyang2022training}
@@ -770,7 +794,20 @@ Nowadays, word embeddings are essential for building effective and robust task-o
 	\item ChatGPT
 \end{itemize}
 
-\textcolor{magenta}{TODO}
+\textcolor{magenta}{TODO} Add references
+
+\begin{itemize}
+	\item \emph{Zero-shot learning} is a problem setup in machine learning where, at test time, a learner observes samples from classes which were not observed during training, and needs to predict the class that they belong to.
+	For example, a zero-shot model can classify an image of a zebra without having seen any images of zebras during training.
+	
+	\item \emph{Few-shot learning} is a problem setup in machine learning where a learner needs to learn a new task from a very small number of labeled examples (typically less than 10 per class).
+	For example, a few-shot learning model can recognize handwritten characters from different alphabets after seeing only one or few examples of each character.
+	
+	\item \emph{In-context learning (ICL)} is a problem setup in natural language understanding where a large pre-trained language model observes a test instance and a few training examples as its input, and directly decodes the output without any update to its parameters.
+	For example, an in-context learning model can perform sentiment analysis by conditioning on some input-output pairs that demonstrate the task.
+\end{itemize}
+
+\textcolor{magenta}{TODO} Add references and examples
 
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%
 \section{Topological Data Analysis and Geometric Deep Learning}
