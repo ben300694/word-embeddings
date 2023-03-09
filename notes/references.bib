@@ -1042,6 +1042,21 @@
 	primaryClass={cs.CL}
 }
 
+@article{10.1162/tacl_a_00257,
+	author = {Jawanpuria, Pratik and Balgovind, Arjun and Kunchukuttan, Anoop and Mishra, Bamdev},
+	title = "{Learning Multilingual Word Embeddings in Latent Metric Space: A Geometric Approach}",
+	journal = {Transactions of the Association for Computational Linguistics},
+	volume = {7},
+	pages = {107-120},
+	year = {2019},
+	month = {04},
+	abstract = "{We propose a novel geometric approach for learning bilingual mappings given monolingual embeddings and a bilingual dictionary. Our approach decouples the source-to-target language transformation into (a) language-specific rotations on the original embeddings to align them in a common, latent space, and (b) a language-independent similarity metric in this common space to better model the similarity between the embeddings. Overall, we pose the bilingual mapping problem as a classification problem on smooth Riemannian manifolds. Empirically, our approach outperforms previous approaches on the bilingual lexicon induction and cross-lingual word similarity tasks.We next generalize our framework to represent multiple languages in a common latent space. Language-specific rotations for all the languages and a common similarity metric in the latent space are learned jointly from bilingual dictionaries for multiple language pairs. We illustrate the effectiveness of joint learning for multiple languages in an indirect word translation setting.}",
+	issn = {2307-387X},
+	doi = {10.1162/tacl_a_00257},
+	url = {https://doi.org/10.1162/tacl\_a\_00257},
+	eprint = {https://direct.mit.edu/tacl/article-pdf/doi/10.1162/tacl\_a\_00257/1923013/tacl\_a\_00257.pdf},
+}
+
 @inproceedings{radford2021learning,
 	title={Learning transferable visual models from natural language supervision},
 	author={Radford, Alec and Kim, Jong Wook and Hallacy, Chris and Ramesh, Aditya and Goh, Gabriel and Agarwal, Sandhini and Sastry, Girish and Askell, Amanda and Mishkin, Pamela and Clark, Jack and others},
@@ -1052,6 +1067,43 @@
 	eprint={2103.00020},
 	archivePrefix={arXiv},
 	primaryClass={cs.CV}
+}
+
+@inproceedings{cai2021isotropy,
+	title={Isotropy in the Contextual Embedding Space: Clusters and Manifolds},
+	author={Xingyu Cai and Jiaji Huang and Yuchen Bian and Kenneth Church},
+	booktitle={International Conference on Learning Representations},
+	year={2021},
+	url={https://openreview.net/forum?id=xYGNO86OWDH}
+}
+
+
+@inproceedings{rajaee-pilehvar-2021-cluster,
+	title = "A Cluster-based Approach for Improving Isotropy in Contextual Embedding Space",
+	author = "Rajaee, Sara  and
+	Pilehvar, Mohammad Taher",
+	booktitle = "Proceedings of the 59th Annual Meeting of the Association for Computational Linguistics and the 11th International Joint Conference on Natural Language Processing (Volume 2: Short Papers)",
+	month = aug,
+	year = "2021",
+	address = "Online",
+	publisher = "Association for Computational Linguistics",
+	url = "https://aclanthology.org/2021.acl-short.73",
+	doi = "10.18653/v1/2021.acl-short.73",
+	pages = "575--584",
+	abstract = "The representation degeneration problem in Contextual Word Representations (CWRs) hurts the expressiveness of the embedding space by forming an anisotropic cone where even unrelated words have excessively positive correlations. Existing techniques for tackling this issue require a learning process to re-train models with additional objectives and mostly employ a global assessment to study isotropy. Our quantitative analysis over isotropy shows that a local assessment could be more accurate due to the clustered structure of CWRs. Based on this observation, we propose a local cluster-based method to address the degeneration issue in contextual embedding spaces. We show that in clusters including punctuations and stop words, local dominant directions encode structural information, removing which can improve CWRs performance on semantic tasks. Moreover, we find that tense information in verb representations dominates sense semantics. We show that removing dominant directions of verb representations can transform the space to better suit semantic applications. Our experiments demonstrate that the proposed cluster-based method can mitigate the degeneration problem on multiple tasks.",
+}
+
+@book {carlsson2022topologicaldataanalysis,
+	AUTHOR = {Carlsson, Gunnar and Vejdemo-Johansson, Mikael},
+	TITLE = {Topological data analysis with applications},
+	PUBLISHER = {Cambridge University Press, Cambridge},
+	YEAR = {2022},
+	PAGES = {xi+220},
+	ISBN = {978-1-108-83865-8},
+	MRCLASS = {55N31 (62H30)},
+	MRNUMBER = {4346385},
+	DOI = {10.1017/9781108975704},
+	URL = {https://doi.org/10.1017/9781108975704},
 }
 
 @misc{ouyang2022training,
