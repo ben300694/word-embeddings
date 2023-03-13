@@ -263,9 +263,51 @@ Word2vec can also detect synonymous words or suggest additional words for a part
 Word2vec consists of two main models: skip-gram and CBOW, which use different ways of predicting words based on their contexts.
 Word2vec also uses two optimization techniques: hierarchical softmax and negative sampling, which speed up the training process and improve the quality of the embeddings.
 
+% % % %
+\subsubsection{SGNS}
+
+Skip-Gram:
+predict context words given the central word.
+
+\textbf{s}kip-\textbf{g}ram with \textbf{n}egative \textbf{s}ampling (SGNS);
+Idea: train a classifier to a prediction task `the word $w$ is likely to show up near the word $c$';
+self-supervision: can use the next word in a corpus of running text as the supervision signal
+\begin{itemize}
+	\item get positive examples from taking a target word $w$ and its neighboring context words (have to choose a context window size $L$, these notes \cite{DBLP:journals/corr/Goldberg15c} discuss the effect of the window size).
+	\item randomly sample other words to get negative examples (based on the empirical distribution of words, but usually modified to sample less frequent words more often).
+	\item train a classifier (for example by logistic regression, i.e.\ the probability score is given as the sigmoid of the dot product) to distinguish the two cases;
+	skip-gram makes simplifying assumption that all context words are independent.
+	\item the learned weights of the classifier give the embedding of the word $w$:
+	target embedding in matrix $W$ and context embedding in matrix $C$.
+\end{itemize}
+
+
+% % % %
+\subsubsection{CBOW}
+
+\begin{itemize}
+	\item Variation of word2vec training methods
+	\item \textbf{C}ontinuous \textbf{B}ag-\textbf{o}f-\textbf{W}ords (CBOW):
+	predict the central word from the sum of context words (this sum is called the ``bag of words'').
+	\item Simple, but powerful approach:
+	Represent a sentence with the average of its word embeddings.
+	Hybrid: word embeddings are computed distributionally, and the sentence embedding computed by composition.
+\end{itemize}
+
+% % % %
+\subsubsection{Evaluating Word Embeddings}
+
+\emph{Intrinsic evaluation} measures how well the word vectors capture meaning, for example by evaluating on word similarity and word analogy tasks;
+\emph{extrinsic evaluation} is performed by looking at the performance of a downstream task.
+Linear structure in the embedding space can be observed from word analogies, such as that the vector of
+\[
+v_{\textup{king}} - v_{\textup{man}} + v_{\textup{woman}} \text{ is close to } v_{\textup{queen}}.
+\]
+
+
 \noindent \textbf{References:}
 \begin{itemize}
-	\item The original sources are
+	\item Original sources for word2vec
 	\cite{DBLP:journals/corr/abs-1301-3781},
 	\cite{DBLP:journals/corr/MikolovSCCD13}.
 	\item The survey \cite{DBLP:journals/corr/Rong14} has a detailed explanation of the parameter update equations in word2vec.
@@ -275,40 +317,6 @@ Word2vec also uses two optimization techniques: hierarchical softmax and negativ
     \item \href{https://gluebenchmark.com/}{General Language Understanding Evaluation (GLUE) benchmark}, \href{https://super.gluebenchmark.com/}{SuperGLUE}
 \end{itemize}
 
-{
-	\color{blue}
-	
-	static embedding;
-	\textbf{s}kip-\textbf{g}ram with \textbf{n}egative \textbf{s}ampling (SGNS);
-	Idea: train a classifier to a prediction task `the word $w$ is likely to show up near the word $c$';
-	self-supervision: can use the next word in a corpus of running text as the supervision signal
-	\begin{itemize}
-		\item get positive examples from taking a target word $w$ and its neighboring context words (have to choose a context window size $L$, these notes \cite{DBLP:journals/corr/Goldberg15c} discuss the effect of the window size).
-		\item randomly sample other words to get negative examples (based on the empirical distribution of words, but usually modified to sample less frequent words more often).
-		\item train a classifier (for example by logistic regression, i.e.\ the probability score is given as the sigmoid of the dot product) to distinguish the two cases;
-		skip-gram makes simplifying assumption that all context words are independent.
-		\item the learned weights of the classifier give the embedding of the word $w$:
-		target embedding in matrix $W$ and context embedding in matrix $C$.
-	\end{itemize}
-	Variations of word2vec training methods:
-	\begin{itemize}
-		\item Skip-Gram:
-		predict context words given the central word.
-		\item \textbf{C}ontinuous \textbf{B}ag-\textbf{o}f-\textbf{W}ords (CBOW):
-		predict the central word from the sum of context words (this sum is called the ``bag of words'').
-		\item Simple, but powerful approach:
-		Represent a sentence with the average of its word embeddings.
-		Hybrid: word embeddings are computed distributionally, and the sentence embedding computed by composition.
-	\end{itemize}
-	
-	Evaluating word embeddings:
-	\emph{Intrinsic evaluation} measures how well the word vectors capture meaning, for example by evaluating on word similarity and word analogy tasks;
-	\emph{extrinsic evaluation} is performed by looking at the performance of a downstream task.
-	Linear structure in the embedding space can be observed from word analogies, such as that the vector of
-	\[
-	v_{\textup{king}} - v_{\textup{man}} + v_{\textup{woman}} \text{ is close to } v_{\textup{queen}}.
-	\]
-} % END color blue
 
 % % % % % % % % % % % % % % % % % % %
 \subsection{GloVe}
@@ -353,8 +361,8 @@ The GloVe embeddings are successfully evaluated on the word analogy task, valida
 
 \noindent \textbf{References:}
 \begin{itemize}
-	\item Original source \cite{pennington-etal-2014-glove},
-	\href{https://nlp.stanford.edu/projects/glove/}{GloVe project page}.
+	\item GloVe paper \cite{pennington-etal-2014-glove}.
+	\item \href{https://nlp.stanford.edu/projects/glove/}{GloVe project page}.
 \end{itemize}
 
 % % % % % % % % % % % % % % % % % % %
@@ -688,49 +696,42 @@ For examples of image generations with its sucessor, the diffusion model DALL-E 
 % % % % % % % % % % % % % % % % % % % % % % % %
 \subsection{Sentiment specific word embeddings}
 
-\textcolor{magenta}{TODO} Add abstract on sentiment in word embeddings
+Sentiment analysis is a challenging task that aims to extract the subjective attitude or emotion of a text.
+Word embeddings, which can capture the semantic and syntactic information of words in a low-dimensional vector space, are not inherently designed to encode sentiment information.
+They may fail to distinguish between words with similar meanings but different polarities.
+For example, the words \texttt{good} and \texttt{bad} may have similar embeddings because they are both adjectives that describe quality, but they have opposite sentiments \cite{yu-etal-2017-refining}.
+Therefore, researchers have proposed various methods to refine word embeddings based on sentiment lexicon, sentiment concepts \cite{wang2021sentimentconcept}, or sentiment labels to improve their performance on sentiment analysis tasks.
 
 \noindent \textbf{References:}
 \begin{itemize}
-	\item Using sentiment aware word embeddings for emotion classification \cite{sentiment-aware-word-embedding-emotion-2019};
-	\item TweetEval dataset, which includes emotion recognition and sentiment analysis tasks \cite{barbieri-etal-2020-tweeteval}, the authors released their \href{https://huggingface.co/cardiffnlp/twitter-roberta-base-sentiment}{pre-trained RoBERTa models};
-	\item German sentiment classification with using fastText and BERT embeddings \cite{guhr-etal-2020-training};
+	\item Using sentiment aware word embeddings for emotion classification \cite{sentiment-aware-word-embedding-emotion-2019}.
+	\item TweetEval dataset, which includes emotion recognition and sentiment analysis tasks \cite{barbieri-etal-2020-tweeteval}, the authors released their \href{https://huggingface.co/cardiffnlp/twitter-roberta-base-sentiment}{pre-trained RoBERTa models}.
+	\item German sentiment classification with fastText and BERT embeddings \cite{guhr-etal-2020-training}.
 	\item EmoWOZ \cite{DBLP:journals/corr/abs-2109-04919} is a task-oriented dialogue dataset annotated with emotions.
 \end{itemize}
-
-{
-	\color{blue}
-	
-	\emph{Sentiment} is a positive or negative evaluation, and we can enhance our \emph{semantic} specific word embeddings with \emph{sentiment} \cite{yu-etal-2017-refining}.
-	Words with similar vector representations can have an opposite sentiment polarity (e.g., `good' vs `bad' or `happy' vs `sad').
-	To capture this in the embedding one can add a post-processing step to adapt the pre-trained vectors to sentiment applications,
-	where we move the word closer to a set of both semantically and sentimentally similar nearest neighbors (i.e., those with the same polarity) and further away from sentimentally dissimilar neighbors (i.e., those with an opposite polarity).
-} % END color blue
-
 
 
 % % % % % % % % % % % % % % % % % % % % % % % %
 \subsection{Bias in Word Embeddings}
 
-\textcolor{magenta}{TODO} Add abstract for bias in word embedding spaces
+Machine learning models inherit and amplify biases present in data, such as stereotypes and prejudice.
+For example, word embeddings may associate certain occupations or attributes with specific genders, \cite{DBLP:journals/corr/BolukbasiCZSK16a}, such as \texttt{man : computer programmer :: woman : homemaker}, or \texttt{he : brilliant :: she : lovely}.
+In other cases, they might rank different ethnic groups differently according to some sentiment.
 
-{
-	\color{blue}
-	
-	A desirable association could be ``a man to a woman is as a king to a queen'', whereas an undesirable association is ``a man to a woman is as a physician to a nurse''.
-	Unfortunately, it appears that word embeddings trained on a corpus of text extracted from books and websites tend to incorporate and amplify the biases contained in our language.
-	When such biased embeddings are used for downstream tasks, this can lead to bias amplification.
-	To investigate gender bias systematically, \cite{DBLP:journals/corr/BolukbasiCZSK16a} take a seed pair $(v_\textup{he}, v_\textup{she})$ and find other pairs of word vectors which have a difference similar to the seed vector.
-	They also provide methods for debiasing the embedding, but they argue that bias ultimately appears to come from the training data.
-} % END color blue
+Such biases can have negative impacts on downstream applications that rely on word embeddings, such as machine translation, sentiment analysis, information retrieval, etc.
+Therefore, it is important to identify and mitigate bias in word embeddings before using them for natural language processing tasks.
+Several methods have been proposed to debias word embeddings at different levels: by modifying the data sources, by applying post-processing techniques, or by incorporating bias-aware objectives into the learning process.
+
+In a first attempt, to investigate gender bias systematically, \cite{DBLP:journals/corr/BolukbasiCZSK16a} take the seed pair $(v_\textup{he}, v_\textup{she})$ and find other couples of word vectors which have a difference vector that is similar to the seed vector.
+The authors also provide methods for debiasing the embedding, but they argue that bias ultimately appears to come from the training data.
 
 \noindent \textbf{References:}
 \begin{itemize}
-	\item Iterative nullspace projection to debias word embeddings \cite{ravfogel-etal-2020-null};
+	\item Iterative nullspace projection to debias word embeddings \cite{ravfogel-etal-2020-null}.
 	\item Visualizations of bias mitigation techniques \cite{DBLP:journals/corr/abs-2104-02797},
-	their \href{https://github.com/tdavislab/verb}{code} for creating interactive demos is available online;
-	\item Gender bias in the contextualized embeddings from ElMo \cite{zhao-etal-2019-gender};
-	\item Bias in BERT embeddings \cite{kurita-etal-2019-measuring};
+	their \href{https://github.com/tdavislab/verb}{code} for creating interactive demos is available on GitHub.
+	\item Gender bias in the contextualized embeddings from ElMo \cite{zhao-etal-2019-gender}.
+	\item Bias in BERT embeddings \cite{kurita-etal-2019-measuring}.
 	\item Debiasing contextualized embeddings \cite{kaneko-bollegala-2021-debiasing}.
 \end{itemize}
 
@@ -836,8 +837,8 @@ again train embeddings on two corpora separately, then for each word find the cl
 	\item Anisotropy can also be studied in contextualized word embeddings, see \cite{ethayarajh-2019-contextual}, where Ethayarajh defines measures of isotropy and compares those between the embedding models ELMo, BERT and GPT-2.
 	\item \cite{cai2021isotropy} argue while contextual embeddings might appear anisotropic on first sight, they contain clusters and manifolds that reflect isotropy.
 	\item \cite{rajaee-pilehvar-2021-cluster} present clustering based approaches for mitigating the anisotropy in contextual word embedding spaces.
-	\item For isotropy in sentence embeeddings see \cite{li-etal-2020-sentence}
-	\item \cite{nakashole-flauger-2018-characterizing} observe that mappings between semantic spaces usually are only locally linear, and not globally linear;
+	\item For isotropy in sentence embeeddings see \cite{li-etal-2020-sentence}.
+	\item \cite{nakashole-flauger-2018-characterizing} observe that mappings between semantic spaces usually are only locally linear, and not globally linear.
 \end{itemize}
 
 
@@ -1116,12 +1117,25 @@ They find that the dimension of the zeroth local homology group of a punctured n
 \end{figure}
 
 
-
 \newpage
 % % % % % % % % % %
 % References
 \printbibliography
 % % % % % % % % % %
+
+
+\newpage
+% % % % % % % % % %
+\appendix
+% % % % % % % % % %
+
+
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%
+\section{Prompts used in drafting the current notes}
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%
+
+
+``{I am preparing lecture notes for a university class on word embedding spaces and representation learning in natural language processing with deep learning. Please write a short motivational paragraph in concise, scientific language, which explains the challenges behind capturing sentiment in word embeddings.}''
 
 \end{document}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
