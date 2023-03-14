@@ -15,6 +15,19 @@
 % Loading 'commands' file
 \input{commands}
 
+% booktabs package for the \toprule, \midrule, \bottomrule commands in tables
+\usepackage{booktabs}
+
+\usepackage[htt]{hyphenat}
+
+\usepackage{tabularx}
+
+% Text formatted as language model generation
+% https://tex.stackexchange.com/questions/36030/how-to-make-a-single-word-look-as-some-code
+% \usepackage{xcolor} % xcolor package is already imported in the commands.tex file
+\definecolor{light-gray}{gray}{0.95}
+\newcommand{\generatedtext}[1]{\colorbox{light-gray}{{#1}}} % Text formatted as code
+
 
 \title{Word Embedding Spaces}
 
@@ -189,13 +202,15 @@ In \emph{extrinsic evaluation}, we use a word embedding for a specific downstrea
 \label{sec:general_references}
 
 \begin{itemize}
-    \item For a general introduction see the book \cite{jurafsky2009speech}, but take a look at the \href{https://web.stanford.edu/~jurafsky/slp3/}{draft of the 3rd edition}, in particular Chapter 6 on ``Vector Semantics and Embeddings''.
+    \item For a general introduction to NLP see the book \cite{jurafsky2009speech}.
+    A \href{https://web.stanford.edu/~jurafsky/slp3/}{draft of the 3rd edition} is available on the authors' website.
+    For the topic of word embeddings, Chapter 6 on ``Vector Semantics and Embeddings'' is particularly relevant.
     There are corresponding \href{https://web.stanford.edu/~jurafsky/slp3/slides/6_Vector_Apr18_2021.pdf}{slides} as well.
 
     \item \cite[Chp.~14]{eisenstein2019introduction} on ``Distributional and Distributed Semantics'';
     draft available \href{https://github.com/jacobeisenstein/gt-nlp-class/blob/master/notes/eisenstein-nlp-notes.pdf}{here}.
 
-    \item \href{https://www.cs.hhu.de/fileadmin/redaktion/Fakultaeten/Mathematisch-Naturwissenschaftliche_Fakultaet/Informatik/Dialog_Systems_and_Machine_Learning/20190705_word_embeddings.pdf}{Michael Heck's slides on the Space of Word Embeddings}.
+    \item \href{https://www.cs.hhu.de/fileadmin/redaktion/Fakultaeten/Mathematisch-Naturwissenschaftliche_Fakultaet/Informatik/Dialog_Systems_and_Machine_Learning/20190705_word_embeddings.pdf}{Michael Heck's slides (2019)} on the Space of Word Embeddings.
     
     \item \href{https://lena-voita.github.io/nlp_course}{Lena Voita's NLP Course For You}, in particular the lesson on \href{https://lena-voita.github.io/nlp_course/word_embeddings}{Word Embeddings} and the lesson on \href{https://lena-voita.github.io/nlp_course/seq2seq_and_attention.html}{Sequence to Sequence (seq2seq) and Attention}.
     
@@ -217,7 +232,9 @@ Parts of the current notes are based on the final reports written by the followi
 	\item Thanh Nam Le, Michail Angelos Severino Theoktistou: Masked Language Models and BERT
 \end{itemize}
 
-A small portion of these learning materials was drafted with the help of AI writing assistants such as ChatGPT, GitHub Copilot and Microsoft Bing Search Chat Mode. The majority of the content was written by human experts and all content has been manually edited and fact checked for accuracy. \\
+A small portion of these learning materials was drafted with the help of AI writing assistants such as ChatGPT, GitHub Copilot and Microsoft Bing Search Chat Mode.
+The majority of the content was written by human experts and all content has been manually edited and fact checked for accuracy.
+Please see \Cref{appendix:prompts} for further details on how generative AI was used in our writing and editing process. \\
 
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%
 \section{Background and Static Word Embeddings}
@@ -415,15 +432,24 @@ The idea of the Encoder-Decoder architecture, is that the Encoder takes an input
 A RNN is a neural network that is getting repeated throughout time, and at each time step $t$ there can be a new input and output. The crux because RNNs are eligible for NLP task, is that the hidden layer at time step $t-1$ influences the hidden layer at time step $t$. Thus, the problem of lacking the ability to capture language dependencies between words is being tackled. A RNN can then be used both as the Encoder and as the Decoder. RNNs in their basic form, can run into problems during model training because of vanishing or exploding gradients  \cite{sutskever2014sequence}. Furthermore, the information propagation is not ideal for longer sequences and performance suffers. To address this a commonly used modification is using a Long Short-Term Memory (LSTM) RNN. 
 
 \subsubsection{Long Short-Term Memory}
+
 A LSTM is a different kind of RNN, where the internal structure of each reoccurring unit is different. Besides the hidden state, there is an additional cell state. This cell state gets passed through each unit, with little interference. It helps to keep the gradient in appropriate ranges as well as transfer information through many units \cite{karpathyRNN}. With these LSTMs Peters et al. designed a model named Embeddings from Language Models (ELMo), to tackle the problem of finding embeddings for polysemic words.
 
+% % % %
 \subsubsection{Embeddings from Language Models (ELMo)}
-ELMo produces a different embedding for each word dependent on the sentence it is used in. This is implemented as a multi-layered bidirectional LSTM. Using an LSTM for each direction ensures to capture information of the entire input sequence. The model then combines the hidden state representation of both LSTMs by concatenating them, and them adds up the concatenated states of each layer up with a task-specific weighting \cite{DBLP:conf/naacl/PetersNIGCLZ18}.  The embeddings created by ELMo have the potential to improve the language understanding of many NLP models. Still, using a single vector representation for an entire source sentence is bound to fail at capturing all information. 
-To reduce this dependency Bahdanau et al. added the concept of \emph{attention}.
-\index{attention}
+
+ELMo produces deep contextualized word representations, which are learned functions of internal states of a deep bidirectional language model with Long short-term memory (LSTM) units.
+Using an LSTM for each direction ensures to capture information of the entire input sequence. 
+The model then combines the hidden state representation of both LSTMs by concatenating them, and them adds up the concatenated states of each layer up with a task-specific weighting \cite{DBLP:conf/naacl/PetersNIGCLZ18}.  
+Here lower layers appear to capture syntactics, while higher layers capture semantics.
+The embeddings created by ELMo have the potential to improve the language understanding of many NLP models, as  ELMo embeddings are context-sensitive, i.e.\ each token representation is a function of the entire input sentence.
+Still, using a single vector representation for an entire source sentence is bound to fail at capturing all information.
+ELMo is unsupervised, can handle OOV, but is not truly bidirectional.
 
 \subsubsection{Attention}
 
+To reduce the dependency on single vector representations, Bahdanau et al. added the concept of \emph{attention}.
+\index{attention}
 The idea behind attention is that the model learns to take in more specific information from the single source inputs. 
 This can be implemented with a context vector. 
 A context vector is the result of calculating attentions scores between a single hidden state of the decoder and all encoder states. 
@@ -431,17 +457,6 @@ Using a softmax function, these attention scores can be turned into probabilitie
 Summing up each encoder state weighted by its softmax value, we calculate the context vector \cite{DBLP:journals/corr/BahdanauCB14}.
 The decoder at each time step uses this context and is not solely dependent on the single representation from the Encoder. 
 If implemented with an appropriate attention score, the whole process is differentiable and can be learned task-specific by the model.
-
-{
-	\color{blue}
-	
-	{E}mbeddings from \textbf{L}anguage \textbf{Mo}dels (ELMo):
-	The ELMo architecture is based on earlier ideas using Recurrent Neural Nets (RNNs) to model sequences, such as sentences in natural language.
-	ELMo produces deep contextualized word representations, which are learned functions of internal states of a deep bidirectional language model with Long short-term memory (LSTM) units.
-	ELMo embeddings are context-sensitive, i.e.\ each token representation is a function of the entire input sentence.
-	Here lower layers appear to capture syntactics, while higher layers capture semantics.
-	ELMo is unsupervised, can handle OOV, but is not truly bidirectional.
-} % END color blue
 
 \noindent \textbf{References:}
 \begin{itemize}
@@ -493,18 +508,20 @@ Ultimately, the blocks can be broken down to matrix operations and the attention
 \subsubsection{Introduction}
 
 BERT (\textbf{B}i-directional \textbf{E}ncoder \textbf{R}epresentations from \textbf{T}ransformers) follows the Transformer architecture \cite{DBLP:journals/corr/VaswaniSPUJGKP17}; more concretely the encoder part of it. 
-BERT allows tokens to attend both previous and posterior tokens. 
-This is the main advantage setting BERT apart from previous language representation models. 
+The objective of the BERT model is a \emph{Masked language modeling task}, in which we randomly mask words in the training text and try to predict the masked words from their context.
+Additionally, the model is trained on a \emph{next sentence prediction} task.
+
+BERT allows tokens to attend both previous and posterior tokens; this is the main advantage setting BERT apart from previous autoregressive language representation models. 
 Two BERT versions are trained, BERT-Base to be compared with the Open AI's GPT model and BERT-Large with more blocks, attention heads, and a larger hidden dimension.
 
 % % % % 
 \subsubsection{Model Input}
 
-As input, BERT accepts either single or a pair of sentences, which are simply concatenated with a special token [SEP] in between.
-To enable down-stream tasks, there is also a classification token [CLS] at the beginning.
+As input, BERT accepts either single or a pair of sentences, which are concatenated with a special token \texttt{[SEP]} in between.
+To enable down-stream tasks that depend on representing an entire sequence, a special classification token \texttt{[CLS]} is added to the beginning of the sequence.
 To further distinguish the tokens belonging to each sentence, a third segment embedding is used, besides the usual token and positional embeddings known from the standard transformer. 
 Tokenization is generated via WordPiece \cite{wu2016google}, which uses a byte-pair encoding scheme. 
-WordPiece is composed of a 30k token vocabulary, each word is searched in this corpus and if it does not exist it will be decomposed into constituent pieces. 
+The WordPiece vocabulary is composed of 30k tokens, each word is searched in this corpus and if it does not exist it will be decomposed into constituent pieces. 
 This input embedding is static at first but will become contextualized after going through the model.
 
 % % % %
@@ -529,9 +546,9 @@ BERT is pre-trained using BooksCorpus and the English Wikipedia, via two unsuper
 	\item Masked Language Model (MLM). 
 	To avoid mappings between input-output due to a bidirectional context where words can see themselves, 15 percent of the tokens are randomly masked. 
 	The masked tokens are then predicted, as the final hidden vectors corresponding to them are fed into a softmax over the vocabulary. 
-	To mitigate a mismatch between pre-training and fine-tuning as there is no [MASK] token during fine-tuning, only 80 percent of the chosen tokens are replaced by [MASK]; 10 percent are replaced by a random token, and the remaining 10 percent are left unchanged, as illustrated below:
+	To mitigate a mismatch between pre-training and fine-tuning as there is no \texttt{ \texttt{[MASK]}} token during fine-tuning, only 80 percent of the chosen tokens are replaced by \texttt{[MASK]}; 10 percent are replaced by a random token, and the remaining 10 percent are left unchanged, as illustrated below:
 	\begin{itemize}
-		\item my cat is hungry $\leadsto$ my cat is [MASK]
+		\item my cat is hungry $\leadsto$ my cat is \texttt{[MASK]}
 		\item my cat is hungry $\leadsto$ my cat is president
 		\item my cat is hungry $\leadsto$ my cat is hungry
 	\end{itemize}
@@ -542,8 +559,8 @@ BERT is pre-trained using BooksCorpus and the English Wikipedia, via two unsuper
 	To learn this relationship between sentences, a binary classification task is used where sentence B is 50 percent of the time the one that follows sentence A (label = \textit{IsNext}), and 50 percent of the time is chosen randomly (label = \textit{NotIsNext}). 
 	Here are two examples.
 	\begin{itemize}
-		\item [CLS] The man went to [MASK] store [SEP] He bought a gallon [MASK] milk [SEP] $\leadsto$ \textit{IsNext}
-		\item [CLS] The man went to [MASK] store [SEP] Penguins [MASK] flightless birds [SEP] $\leadsto$ \textit{NotIsNext}
+		\item The man went to \texttt{[MASK]} store \texttt{[SEP]} He bought a gallon \texttt{[MASK]} milk \texttt{[SEP]} $\leadsto$ \textit{IsNext}
+		\item \texttt{[CLS]} The man went to  \texttt{[MASK]} store \texttt{[SEP]} Penguins \texttt{[MASK]} flightless birds \texttt{[SEP]} $\leadsto$ \textit{NotIsNext}
 	\end{itemize}
 \end{enumerate}
 
@@ -561,23 +578,13 @@ They also show how BERT can be trained relative faster and in a more efficient w
 
 \noindent \textbf{References:}
 \begin{itemize}
-	\item Original research article:  \cite{DBLP:journals/corr/abs-1810-04805}
+	\item Original BERT research article:  \cite{DBLP:journals/corr/abs-1810-04805}
 	\item \href{https://lena-voita.github.io/nlp_course/transfer_learning.html}{(Introduction to) Transfer Learning} in the NLP for you course.
 	\item \cite{clark-etal-2019-bert} analyze the role of the different attention heads in the trained BERT model.
 	\item A \textbf{Ro}bustly \textbf{O}ptimized \textbf{BERT} Pretraining \textbf{A}pproach (RoBERTa):
 	The authors observe that BERT was significantly under-trained, and update the model \cite{DBLP:journals/corr/abs-1907-11692}.
 	\item GPT for language generation.
 \end{itemize}
-
-{
-	\color{blue}
-	
-	The objective of the BERT model is a \emph{Masked language modeling task}, in which we randomly mask words in the training text and try to predict the masked words from their context.
-	Additionally, the model is trained on a \emph{next sentence prediction} task.
-	For the input embedding: WordPiece tokenization;
-	special \texttt{[CLS]} token for the representation of the entire input sequence.
-} % END color blue
-
 
 % % % % % % % % % % % % % % % % % % %
 \subsection{Sentence Embeddings}
@@ -757,7 +764,7 @@ A task-oriented dialogue system typically consists of four main components:
 	\item \emph{Dialogue State Tracking (DST):}
 	This component is responsible for keeping track of the current state of the dialogue, such as what information has been provided by the user and what information is still missing.
 	For example, if the user has specified their destination but not their departure date, the DST component should store this information and update it accordingly.
-	Word embeddings enhance the dialogue state tracking component by allowing it to compare user inputs and system outputs based on their semantic similarity
+	Word embeddings enhance the dialogue state tracking component by allowing it to compare user inputs and system outputs based on their semantic similarity.
 	\item \emph{Policy:}
 	This component is responsible for deciding what action to take next based on the current state of the dialogue.
 	For example, if some information is missing from the user’s request, the policy component should decide to ask a clarifying question.
@@ -772,7 +779,61 @@ A task-oriented dialogue system typically consists of four main components:
 
 Nowadays, word embeddings are essential for building effective and robust task-oriented dialogue systems that can handle complex and dynamic user requests across different languages and domains.
 
-\textcolor{magenta}{TODO} Add references
+Additionally, all of these components interface with an \emph{ontology}.
+The ontology in a task-oriented dialogue system is a formal representation of the domain knowledge, concepts, and relations that are relevant for the task.
+It defines the possible dialogue states, user intents, system actions, and slot values that can occur in the dialogue.
+Ontologies can be either static or dynamic, depending on whether it is fixed or can change over time.
+
+\begin{itemize}
+	\item Domain: a general category of tasks or goals that the dialogue system can handle, such as restaurant booking, flight reservation, or weather information
+	\item Slots: specific attribute or parameter that is relevant for the domain, such as cuisine type, departure date, or location
+	\item Values: a possible filling for a slot, such as Italian, 15th of March, or London
+\end{itemize}
+
+For example, in the restaurant booking domain, the user may have the following dialogue with the system:
+
+User: I want to book a table for two. System: What cuisine type do you prefer? User: Italian. System: When do you want to go? User: Tomorrow evening.
+
+In this dialogue, the domain is restaurant booking, the slots are cuisine type and date, and the values are Italian and tomorrow evening.
+
+\noindent \textbf{References:}
+\begin{itemize}
+	\item TripPy dialogue state tracker \cite{heck-etal-2020-trippy}
+	\item \textcolor{magenta}{TODO} Add references
+\end{itemize}
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+\subsection{Spoken Dialogue Systems and Automatic Speech Recognition}
+
+Speech is a natural and efficient way for humans to communicate with each other and with machines.
+However, speech alone is not enough to achieve effective communication; it also requires understanding of the meaning, context, and goals of the conversation.
+
+Speech recognition and text-to-speech are essential components of a spoken dialogue system that enable the system to interact with the user using natural speech.
+Speech recognition is the process of converting speech signals into text that can be processed by the system.
+Speech recognition systems might use acoustic models, pronunciation dictionaries, and language models to decode speech inputs.
+
+Text-to-speech is the process of converting text into speech signals that can be synthesized by the system.
+Text-to-speech systems might use natural language generation, prosody modeling, and speech synthesis techniques to produce natural and expressive speech outputs.
+
+These components need to be robust and adaptable to different domains, languages, accents, and environments.
+They also need to handle out-of-vocabulary words, such as proper nouns and new words, that may not be recognized by the system ontology.
+
+% % % %
+\subsubsection{Whisper}
+
+Whisper is a general-purpose speech recognition model developed by OpenAI \cite{radford2022robust}.
+It is trained on a large dataset of diverse audio and is also a multitasking model that can perform multilingual speech recognition, speech translation, and language identification.
+
+Whisper uses a Transformer sequence-to-sequence architecture that consists of an encoder and a decoder.
+The encoder takes input audio that is split into 30-second chunks and converted into a log-Mel spectrogram.
+The decoder predicts a sequence of tokens that represent various speech processing tasks, such as transcribing in the original language or translating to English.
+These tasks are jointly represented by using special tokens that serve as task specifiers or classification targets.
+
+\noindent \textbf{References:}
+\begin{itemize}
+	\item \href{https://openai.com/research/whisper}{OpenAI Whisper Blog post}
+	\item OpenAI Whisper research paper \cite{radford2022robust}
+\end{itemize}
 
 
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
@@ -790,14 +851,6 @@ InstructGPT can generate texts for various tasks such as summarization, translat
 ChatGPT can generate engaging and natural conversations for different domains such as gaming, sports, or movies.
 
 \begin{itemize}
-	\item InstructGPT  \cite{ouyang2022training}
-	\item Sparrow
-	\item ChatGPT
-\end{itemize}
-
-\textcolor{magenta}{TODO} Add references
-
-\begin{itemize}
 	\item \emph{Zero-shot learning} is a problem setup in machine learning where, at test time, a learner observes samples from classes which were not observed during training, and needs to predict the class that they belong to.
 	For example, a zero-shot model can classify an image of a zebra without having seen any images of zebras during training.
 	
@@ -808,7 +861,14 @@ ChatGPT can generate engaging and natural conversations for different domains su
 	For example, an in-context learning model can perform sentiment analysis by conditioning on some input-output pairs that demonstrate the task.
 \end{itemize}
 
-\textcolor{magenta}{TODO} Add references and examples
+\noindent \textbf{References:}
+\begin{itemize}
+	\item InstructGPT  \cite{ouyang2022training}
+	\item Sparrow \cite{glaese2022improving}
+	\item \href{https://openai.com/blog/chatgpt}{OpenAI ChatGPT blog post}
+\end{itemize}
+
+\textcolor{magenta}{TODO} Add references and examples for in-context learning
 
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%
 \section{Topological Data Analysis and Geometric Deep Learning}
@@ -828,9 +888,9 @@ train embedding on each corpus, find a mapping between the embedding spaces that
 Then words which do not match well under this mapping appear to have different meanings.
 Using historical texts, one can see how the meaning changes through time \cite{hamilton-etal-2016-diachronic}.
 
-Different method:
-again train embeddings on two corpora separately, then for each word find the closest vectors in each embedding space, if these differ a lot the embeddings are different \cite{gonen-etal-2020-simple}.
-
+Different method for investigating alignment between different embedding spaces:
+Train embeddings on two corpora separately, then for each word find the closest vectors in each embedding space.
+If these differ a lot the embeddings are different \cite{gonen-etal-2020-simple}.
 
 \noindent \textbf{References:}
 \begin{itemize}
@@ -893,38 +953,41 @@ One can probe the contextualized embeddings of a BERT model by mapping into a hy
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
 \subsection{Topological Data Analysis}
 
+In \emph{Representation learning} we try to find a compact and dense representation of the data that captures its underlying structure, patterns, and relationships.
+\emph{Point clouds} $X \subset \mathbb{R}^{N}$ are often the outcome of this process, as they allow for representing unordered collections of data units.
+
+\emph{Topological Data Analysis (TDA)} \cite{carlsson2022topologicaldataanalysis} is a recently developed mathematical framework for understanding and simplifying complex data point clouds by capturing their essential \emph{shape}.
+Some characteristic shapes of point clouds are illustrated in \Cref{fig:topological_data_analysis_collection}.
+The \emph{shape of data} can mean the global structure or patterns of data that are invariant to transformations such as scaling, rotation, translation, or noise.
+For example, a circle and an ellipse have the same shape because they can be transformed into each other by stretching or shrinking. 
+Similarly, a spiral and a helix have the same shape because they can be transformed into each other by bending or twisting.
+
+\emph{Topology} is a branch of mathematics that studies the properties of shapes that are preserved under continuous deformations.
+TDA can provide insight into the shape of data by extracting features such as loops, holes, clusters, etc. that are robust to noise and occur in different dimensionality.
+
 \textcolor{magenta}{TODO} Edit
 
-\emph{Representation learning}:
-Find a compact and dense representation of the data that captures its underlying structure, patterns, and relationships
-$\leadsto$
-\textbf{Point cloud} $X \subset \mathbb{R}^{N}$.
+\begin{itemize}
+	\item Regression:
+	Identify the relationship between a dependent variable and one or multiple independent variables.
+	Applications include linear \emph{dimensionality reduction techniques} such as PCA.
+	\item Clustering:
+	Identify groups of similar data points.
+	For instance, \emph{Single Linkage Clustering} groups data points based on the minimum distance between two points in a cluster.
+	\item Periodic data:
+	Cyclic patterns can appear in time series (daily patterns of human behavior, seasonal fluctuations in the stock market, annual changes in weather patterns, ...).
+	Expressing the data in terms of a circular coordinate, it becomes easier to see patterns in the data that may not be immediately apparent otherwise.
+	See \Cref{fig:coil_20,fig:coil_20_tsne}
+\end{itemize}
 
 \begin{figure}
 	\centering
 	\includegraphics[width=0.8\linewidth]{figures/topological_data_analysis/topological_data_analysis_collection}
 	\caption{
 		Collection of various shapes of point clouds.
+		\label{fig:topological_data_analysis_collection}
 	}
-	\label{fig:topological_data_analysis_collection}
 \end{figure}
-
-\emph{Topological Data Analysis} \cite{carlsson2022topologicaldataanalysis}:
-Mathematical framework for understanding and simplifying complex data structures by capturing their essential \emph{shape}.
-\Cref{fig:topological_data_analysis_collection}
-
-Regression:
-Identify the relationship between a dependent variable and one or multiple independent variables.
-Linear \emph{dimensionality reduction techniques} such as PCA.
-
-Clustering:
-Identify groups of similar data points.
-For instance, \emph{Single Linkage Clustering} groups data points based on the minimum distance between two points in a cluster.
-
-Periodic data:
-Cyclic patterns can appear in time series (daily patterns of human behavior, seasonal fluctuations in the stock market, annual changes in weather patterns, ...).
-Expressing the data in terms of a circular coordinate, it becomes easier to see patterns in the data that may not be immediately apparent otherwise.
-See \Cref{fig:coil_20,fig:coil_20_tsne}
 
 \begin{figure}[ht]
 	\begin{minipage}[b]{0.55\linewidth}
@@ -951,7 +1014,7 @@ See \Cref{fig:coil_20,fig:coil_20_tsne}
 \end{figure}
 
 Topological Data Analysis is particularly useful in the analysis of high-dimensional data, where traditional regression methods may struggle because \emph{the best approximating shape might not be known a priory.}
-\Cref{fig:topological_data_analysis_collection_with_shapes}
+For an illustration of the types of shapes underlying the data clouds in \Cref{fig:topological_data_analysis_collection}, have a look at \Cref{fig:topological_data_analysis_collection_with_shapes}.
 
 \begin{figure}
 	\centering
@@ -1132,10 +1195,46 @@ They find that the dimension of the zeroth local homology group of a punctured n
 
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%
 \section{Prompts used in drafting the current notes}
+\label{appendix:prompts}
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%
 
+Some of the generative AI tools that were used to create these notes are ChatGPT and Bing Chat.
+ChatGPT is a conversational model based on GPT-3.5, a large-scale language model that can generate coherent and diverse texts on various topics.
+Bing Chat is a chat mode of Microsoft Bing search that can understand and communicate fluently in different languages, perform web searches, and generate creative content.
 
-``{I am preparing lecture notes for a university class on word embedding spaces and representation learning in natural language processing with deep learning. Please write a short motivational paragraph in concise, scientific language, which explains the challenges behind capturing sentiment in word embeddings.}''
+The \emph{prompts} are short sentences or questions that are typed into the chat box of these tools to elicit responses from them. 
+Responses were then edited and integrated into the lecture notes as appropriate. 
+The purpose of using these prompts is to enhance the quality and diversity of the lecture notes, as well as to demonstrate some of the capabilities and limitations of generative AI in natural language processing.
+Prompts collected in this appendix are not meant to be comprehensive or exhaustive, but rather illustrative examples of how one can interact with these tools.
+
+\Cref{table:examples_of_prompts} lists some of the prompts that were used, along with the corresponding tool name and response.
+% The responses are marked with \generatedtext{code font} to indicate that they are generated by the tool and not by the authors of this document.
+
+\begin{table}[h]
+	\centering
+	\begin{tabularx}{\textwidth}{ p{0.25\linewidth} p{1.5cm} X }
+		\toprule
+		Prompt & Tool & Example Response \\
+		\midrule
+		I am preparing lecture notes for a university class on word embedding spaces and representation learning in natural language processing with deep learning. Please write a short motivational paragraph in concise, scientific language, which explains the challenges behind capturing sentiment in word embeddings. 
+		& Bing Chat (Mar 14 2023)
+		& Here is a possible motivational paragraph for your lecture notes:
+			Word embeddings are numerical representations of words that capture their semantic and syntactic information from contexts. They have been widely used for various natural language processing tasks, such as sentiment analysis. Sentiment analysis is the task of judging the tone or attitude of a document, such as a tweet, a song lyric, or a movie review. However, learning word embeddings that can capture sentiment information is challenging for several reasons [1][2][3][4]:
+			Word embeddings are typically learned from large corpora of general texts, which may not reflect the specific domain or genre of the documents to be analyzed. For example, the word “sick” may have a negative connotation in a health-related corpus, but a positive one in a slang corpus.
+			Word embeddings are usually context-independent, meaning that they assign the same vector to a word regardless of its surrounding words. However, the sentiment of a word may depend on its context. For example, the word “not” may reverse or modify the sentiment of the following word, such as “not bad” or “not good”.
+			Word embeddings are often based on co-occurrence statistics, which may not capture subtle nuances or implicit meanings of words. For example, the word “fine” may have different sentiments depending on how it is used or pronounced, such as “I’m fine” or “Fine!”.
+			Therefore, developing word embeddings that can effectively encode sentiment information is an important and active research area in natural language processing with deep learning. \\
+		I am preparing lecture notes for a university class on word embedding spaces and representation learning in natural language processing with deep learning. Please write a short motivational paragraph in concise, scientific language, which explains the challenges behind capturing sentiment in word embeddings.
+		& ChatGPT (Feb 13 2023)
+		& Capturing sentiment in word embeddings is a complex task due to the inherent subjectivity and context-dependence of human emotions. The challenge lies in accurately capturing the nuances and variability of sentiment across different domains, languages, and cultural contexts, while avoiding bias and preserving semantic coherence. Additionally, the absence of explicit labeling of sentiment in training data and the trade-off between the dimensionality of the embedding space and its expressiveness further complicates the task. Despite these challenges, recent advances in representation learning with deep neural networks have shown promising results in capturing sentiment and related affective dimensions in word embeddings, enabling applications in sentiment analysis, emotion recognition, and natural language understanding.     \\ 
+		G    & H      & I     \\ 
+		\bottomrule
+	\end{tabularx}
+	\caption{Examples of prompts}
+	\label{table:examples_of_prompts}
+\end{table}
+
+
 
 \end{document}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
