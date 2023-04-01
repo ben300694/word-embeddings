@@ -21,6 +21,7 @@
 \usepackage[htt]{hyphenat}
 
 \usepackage{tabularx}
+\usepackage{listings}
 
 % Text formatted as language model generation
 % https://tex.stackexchange.com/questions/36030/how-to-make-a-single-word-look-as-some-code
@@ -856,10 +857,24 @@ ChatGPT can generate engaging and natural conversations for different domains su
 	
 	\item \emph{Few-shot learning} is a problem setup in machine learning where a learner needs to learn a new task from a very small number of labeled examples (typically less than 10 per class).
 	For example, a few-shot learning model can recognize handwritten characters from different alphabets after seeing only one or few examples of each character.
-	
-	\item \emph{In-context learning (ICL)} is a problem setup in natural language understanding where a large pre-trained language model observes a test instance and a few training examples as its input, and directly decodes the output without any update to its parameters.
-	For example, an in-context learning model can perform sentiment analysis by conditioning on some input-output pairs that demonstrate the task.
 \end{itemize}
+
+\subsubsection{In-context learning (ICL)}
+
+\emph{In-context learning (ICL)} is a problem setup in natural language understanding where a large pre-trained language model observes a test instance and a few training examples as its input, and directly decodes the output without any update to its parameters.
+For example, an in-context learning model can perform sentiment analysis by conditioning on some input-output pairs that demonstrate the task.
+
+\begin{lstlisting}
+I love this movie. It's so funny and heartwarming. [positive]
+This book is boring and poorly written. I don't recommend it. [negative]
+The food was delicious and the service was excellent. [positive]
+I don't like this song. It's too loud and annoying.
+\end{lstlisting}
+
+
+\textcolor{magenta}{TODO} Add references for in-context learning
+
+
 
 \noindent \textbf{References:}
 \begin{itemize}
@@ -868,11 +883,21 @@ ChatGPT can generate engaging and natural conversations for different domains su
 	\item \href{https://openai.com/blog/chatgpt}{OpenAI ChatGPT blog post}
 \end{itemize}
 
-\textcolor{magenta}{TODO} Add references and examples for in-context learning
+GPT-4 references:
+\begin{itemize}
+	\item GPT-4 technical report \cite{openai2023gpt4}
+	\item The paper \cite{bubeck2023sparks} explores an early version of GPT-4, a large language model that can perform various tasks across domains without special prompting. The paper claims that GPT-4 exhibits more general intelligence than previous models and discusses its limitations and implications for artificial general intelligence.
+\end{itemize}
 
-%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%
+
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%
 \section{Topological Data Analysis and Geometric Deep Learning}
-%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%
+
+Geometric Deep Learning: Grids, Groups, Graphs, Geodesics, and Gauges is a book project \cite{bronstein2021geometric} that explores the geometric foundations of neural network architectures and their applications.
+The book demonstrates how geometry can reveal the essential features and structure of the data and how it can inform the construction and improvement of neural architectures.
+This perspective applies to various data domains such as images, sequences, graphs, and text, and various neural architectures such as CNNs, RNNs, GNNs, and Transformers.
+
 
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
 \subsection{Geometry of the word embedding space}
@@ -1083,6 +1108,10 @@ Incorporate topological structures and insights into deep learning algorithms to
 \begin{itemize}
 	\item Understanding of geometric and topological properties of data
 	\item Insights into inner working of deep learning models
+	\begin{itemize}
+		\item The paper \cite{perez2022topological} presents a topological data analysis approach to text classification that uses BERT’s attention graphs as input, achieves comparable or better results than BERT on various tasks, and shows higher robustness and efficiency against adversarial attacks and attention head pruning.
+		
+	\end{itemize}
 \end{itemize}
 
 \begin{figure}
@@ -1199,7 +1228,7 @@ They find that the dimension of the zeroth local homology group of a punctured n
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%
 
 Some of the generative AI tools that were used to create these notes are ChatGPT and Bing Chat.
-ChatGPT is a conversational model based on GPT-3.5, a large-scale language model that can generate coherent and diverse texts on various topics.
+ChatGPT is a conversational model based on GPT-3.5 and GPT-4, which are large-scale language model that can generate coherent and diverse texts on various topics.
 Bing Chat is a chat mode of Microsoft Bing search that can understand and communicate fluently in different languages, perform web searches, and generate creative content.
 
 The \emph{prompts} are short sentences or questions that are typed into the chat box of these tools to elicit responses from them. 
