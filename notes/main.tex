@@ -1168,13 +1168,17 @@ See \Cref{fig:manifold_hypothesis} for an illustration.
 \begin{itemize}
 	\item \cite{moor2021topological} propose a novel method for learning latent representations of data that preserve the topological features of the input space.
 	They use persistent homology to measure the topological similarity between the input and latent spaces and optimize a topological loss term along with the reconstruction loss of an autoencoder.
+	\item \cite{barannikov2022representation} introduces a new method called Representation Topology Divergence (RTD) that measures how different the topological structures of two data representations are. 
+	The authors demonstrate the usefulness of RTD for analyzing and comparing neural network representations in various machine learning tasks and domains.
+	\item \cite{trofimov2023learning} use RTD to enforce topological similarity between the original data and the latent representation, and apply it as a loss term for an autoencoder.
 \end{itemize}
 
 
 % % % % % %
 \subsubsection{Potential problems with the manifold hypothesis}
 
-Situations where the data \textbf{does not} have a low-dimensional structure and cannot be effectively mapped onto a lower-dimensional space:
+Situations where the data \textbf{does not} have a low-dimensional structure and cannot be effectively mapped onto a lower-dimensional space are illustrated in \Cref{fig:manifold_hypothesis_problems}.
+
 \begin{itemize}
 	\item Noise
 	\item Few samples:
@@ -1184,8 +1188,6 @@ Situations where the data \textbf{does not} have a low-dimensional structure and
 	\item Singularities
 \end{itemize}
 
-\Cref{fig:manifold_hypothesis_problems}
-
 \begin{figure}
 	\centering
 	\includegraphics[width=0.35\linewidth]{figures/topological_data_analysis/manifold_hypothesis_problems.pdf}
@@ -1194,8 +1196,6 @@ Situations where the data \textbf{does not} have a low-dimensional structure and
 		\label{fig:manifold_hypothesis_problems}
 	}
 \end{figure}
-
-\textcolor{magenta}{TODO}
 
 % % % % % %
 \subsubsection{Singularities in embedding spaces}
