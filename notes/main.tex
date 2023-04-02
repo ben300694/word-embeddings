@@ -879,14 +879,20 @@ I don't like this song. It's too loud and annoying.
 \noindent \textbf{References:}
 \begin{itemize}
 	\item InstructGPT  \cite{ouyang2022training}
+	\item Proximal Policy Optimization (PPO) \cite{schulman2017proximal} is a family of reinforcement learning algorithms that use multiple epochs of stochastic gradient ascent to optimize a surrogate objective function.
 	\item Sparrow \cite{glaese2022improving}
 	\item \href{https://openai.com/blog/chatgpt}{OpenAI ChatGPT blog post}
 \end{itemize}
 
-GPT-4 references:
+% % % % % %
+\subsubsection{GPT-4}
+
+GPT-4 is a large language model that can perform various tasks across domains without special prompting.
+
 \begin{itemize}
 	\item GPT-4 technical report \cite{openai2023gpt4}
-	\item The paper \cite{bubeck2023sparks} explores an early version of GPT-4, a large language model that can perform various tasks across domains without special prompting. The paper claims that GPT-4 exhibits more general intelligence than previous models and discusses its limitations and implications for artificial general intelligence.
+	\item The paper \cite{bubeck2023sparks} explores an early version of GPT-4.
+	The paper claims that GPT-4 exhibits more general intelligence than previous models and discusses its limitations and implications for artificial general intelligence.
 \end{itemize}
 
 
@@ -953,7 +959,6 @@ Important keyword in this context include:
 	Riemannian optimization can be used to solve problems such as matrix factorization, low-rank approximation, principal component analysis and more on manifolds.
 \end{itemize}
 
-\textcolor{magenta}{TODO} Add references for Riemannian manifold learning
 
 % % % % % %
 \subsubsection{Positively Curved Spaces: Spherical Embeddings}
@@ -989,8 +994,6 @@ Similarly, a spiral and a helix have the same shape because they can be transfor
 
 \emph{Topology} is a branch of mathematics that studies the properties of shapes that are preserved under continuous deformations.
 TDA can provide insight into the shape of data by extracting features such as loops, holes, clusters, etc. that are robust to noise and occur in different dimensionality.
-
-\textcolor{magenta}{TODO} Edit
 
 \begin{itemize}
 	\item Regression:
@@ -1053,8 +1056,15 @@ For an illustration of the types of shapes underlying the data clouds in \Cref{f
 % % % % % %
 \subsubsection{Persistent Homology}
 
-\emph{Vietoris-Rips complex:} \Cref{fig:vietoris_rips_complex}
-Combinatorial description of the space via a \emph{simplicial complex}
+\emph{Persistent homology} is a description of the topological features of a space at various scales.
+Usually the data comes with a \emph{filtration}, and we compute the homology of the pieces which assemble into a \emph{persistence module}.
+These can be encoded into a \emph{bar-code}, which then is used in further machine learning pipelines.
+
+The \emph{Vietoris-Rips complex}, illustrated in \Cref{fig:vietoris_rips_complex} gives a combinatorial description of the discrete space space via a \emph{simplicial complex}.
+The idea of persistent homology is capturing the evolution of topological features over \emph{different size scales} $\varepsilon_{i}$, to obtain insight into the intrinsic geometry of the data.
+Persistence diagrams, as shown in \Cref{fig:persistence_diagram}, are visual representations of the topological features and their \emph{lifespan} in a filtered simplicial complex.
+
+In \emph{Topological Deep Learning} we incorporate topological structures and insights into deep learning algorithms to improve their ability to capture and analyze complex relationships between data points. See \Cref{fig:topological_deep_learning} for a typical topological deep learning pipeline.
 
 \begin{center}
 	\begin{figure}
@@ -1073,9 +1083,6 @@ Combinatorial description of the space via a \emph{simplicial complex}
 		}
 	\end{figure}
 \end{center}
-
-Idea of Persistent Homology:
-Capture the evolution of topological features over \emph{different size scales} $\varepsilon_{i}$, to obtain insight into the intrinsic geometry of the data.
 
 \begin{figure}
 	\centering
@@ -1099,21 +1106,6 @@ Capture the evolution of topological features over \emph{different size scales} 
 	}
 \end{figure}
 
-Persistence diagrams: \Cref{fig:persistence_diagram}
-Visual representations of the topological features and their \emph{lifespan} in a filtered simplicial complex.
-
-Topological Deep Learning: \Cref{fig:topological_deep_learning}
-Incorporate topological structures and insights into deep learning algorithms to improve their ability to capture and analyze complex relationships between data points.
-
-\begin{itemize}
-	\item Understanding of geometric and topological properties of data
-	\item Insights into inner working of deep learning models
-	\begin{itemize}
-		\item The paper \cite{perez2022topological} presents a topological data analysis approach to text classification that uses BERT’s attention graphs as input, achieves comparable or better results than BERT on various tasks, and shows higher robustness and efficiency against adversarial attacks and attention head pruning.
-		
-	\end{itemize}
-\end{itemize}
-
 \begin{figure}
 	\centering
 	\includegraphics[width=0.2\linewidth]{figures/topological_data_analysis/topological_deep_learning}
@@ -1121,28 +1113,29 @@ Incorporate topological structures and insights into deep learning algorithms to
 		Topological Deep Learning Pipeline.
 		\label{fig:topological_deep_learning}
 	}
-\end{figure}       
+\end{figure}  
+
+% % % % % %
+\subsubsection{Insights into inner working of deep learning models}
+
+\begin{itemize}
+	\item \cite{kushnareva-etal-2021-artificial} introduces new topological features based on Topological Data Analysis for detecting artificial texts generated by models like GPT.
+	\item The paper \cite{perez2022topological} presents a topological data analysis approach to text classification that uses BERT’s attention graphs as input, achieves comparable or better results than BERT on various tasks, and shows higher robustness and efficiency against adversarial attacks and attention head pruning.
+	\item \cite{reinauer2021persformer} develop a transformer model which takes persistence diagrams as input and trains a vectorization based on a supervised task.
+\end{itemize}
+     
 
 
 % % % % % %
 \subsubsection{References for TDA}
-
-There have been two main developments in Topological Data Analysis (TDA), which might lead to further interesting application of TDA to word embeddings in the future:
-\begin{itemize}
-	\item \emph{Persistent homology} is a description of the topological features of a space at various scales.
-	Usually the data comes with a \emph{filtration}, and we compute the homology of the pieces which assemble into a \emph{persistence module}.
-	These can be encoded into a \emph{bar-code}, which then is used in further machine learning pipelines.
-	For example \cite{reinauer2021persformer} develop a Transformer model which takes persistence diagrams as input. 
-	
-	\item The MAPPER algorithm is a projection technique which also uses clustering to capture more of the global features of the dataset.
-	An interesting projection choice is $t$-Stochastic Neighborhood Embedding ($t$-SNE, \cite{JMLR:v9:vandermaaten08a}).
-\end{itemize}
 
 Here are some general references for background reading on Topological Data Analysis:
 \begin{itemize}
 	\item \cite{murugan2019introduction}: Survey paper with an introduction to ``Topological Data Analysis for Physicists''.
 	\item \cite{dey2021computational}: Book (draft) on Topological Data Analysis.
 	\item Vidit Nanda's \href{http://people.maths.ox.ac.uk/nanda/cat/TDANotes.pdf}{Computational Algebraic Topology Notes}.
+	\item The MAPPER algorithm is a projection technique which also uses clustering to capture more of the global features of the dataset.
+	An interesting projection choice is $t$-Stochastic Neighborhood Embedding ($t$-SNE, \cite{JMLR:v9:vandermaaten08a}).
 \end{itemize}
 
 
@@ -1150,7 +1143,7 @@ Here are some general references for background reading on Topological Data Anal
 \subsection{Manifold Hypothesis and Singularities}
 
 The \emph{Data Manifold Hypothesis} states that high-dimensional data lies on or near a low-dimensional structure called a manifold.\footnote{Manifold: Locally Euclidean topological space (plus some extra conditions)}
-\Cref{fig:manifold_hypothesis}
+See \Cref{fig:manifold_hypothesis} for an illustration.
 
 \begin{itemize}
 	\item \textbf{Consequence:} Most variation in the data can be captured by a small number of dimensions
@@ -1168,6 +1161,19 @@ The \emph{Data Manifold Hypothesis} states that high-dimensional data lies on or
 	}
 \end{figure}
 
+
+% % % % % %
+\subsubsection{Autoencoders}
+
+\begin{itemize}
+	\item \cite{moor2021topological} propose a novel method for learning latent representations of data that preserve the topological features of the input space.
+	They use persistent homology to measure the topological similarity between the input and latent spaces and optimize a topological loss term along with the reconstruction loss of an autoencoder.
+\end{itemize}
+
+
+% % % % % %
+\subsubsection{Potential problems with the manifold hypothesis}
+
 Situations where the data \textbf{does not} have a low-dimensional structure and cannot be effectively mapped onto a lower-dimensional space:
 \begin{itemize}
 	\item Noise
@@ -1175,7 +1181,7 @@ Situations where the data \textbf{does not} have a low-dimensional structure and
 	it may not be possible to accurately estimate the underlying structure of the data due to the limited number of samples
 	\item Multiple manifolds:
 	If the data has multiple underlying structures, it may not lie on a single low-dimensional manifold, making it difficult to map onto a single reduced space.
-	\item {\textbf{Singularities}}
+	\item Singularities
 \end{itemize}
 
 \Cref{fig:manifold_hypothesis_problems}
@@ -1192,7 +1198,7 @@ Situations where the data \textbf{does not} have a low-dimensional structure and
 \textcolor{magenta}{TODO}
 
 % % % % % %
-\subsubsection{Topological Polysemy and singularities in word embeddings}
+\subsubsection{Singularities in embedding spaces}
 
 The paper \cite{jakubowski2020topology} studies singular points in a fixed word embedding trained via fastText, see \Cref{fig:TPS_paper_screenshot} for an illustration.
 They find that the dimension of the zeroth local homology group of a punctured neighborhood of a word correlates with the number of different meanings of a polysemous word.
