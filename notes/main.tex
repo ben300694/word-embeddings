@@ -112,10 +112,10 @@ This document contains extended notes for the Seminar ``Word Embedding Spaces'',
 \begin{itemize}
     \item \textbf{Summer Term 2023 at HHU:} 
      ``Master's Seminar on Word Embedding Spaces''
-    \item Wednesday; 12:30 -- 14:00; from 05.04.2023 to 12.07.2023; Location: Gebäude 25.22 - 2522.U1.72
+    \item Wednesday; 12:30 -- 14:00; from 05.04.2023 to 12.07.2023; Location: 25.22.U1.72
     \item \href{https://docs.google.com/spreadsheets/d/1V-d-QuJIUniPq9q-Xviu_TdLZHlW_xzBTqhDX_lIG9w/edit?usp=sharing}{Schedule on Google Sheets}
     \item Lecture course repository: \url{https://github.com/ben300694/word-embeddings}
-    \item Live stream on WebEx will probably be available for registered participants.
+    \item Live stream on WebEx will be available for registered participants.
     \item \textbf{Requirements for receiving credit points:}
     \begin{itemize}
         \item Active participation in the seminar sessions. 
@@ -871,17 +871,15 @@ The food was delicious and the service was excellent. [positive]
 I don't like this song. It's too loud and annoying.
 \end{lstlisting}
 
-
-\textcolor{magenta}{TODO} Add references for in-context learning
-
-
-
 \noindent \textbf{References:}
 \begin{itemize}
-	\item InstructGPT  \cite{ouyang2022training}
-	\item Proximal Policy Optimization (PPO) \cite{schulman2017proximal} is a family of reinforcement learning algorithms that use multiple epochs of stochastic gradient ascent to optimize a surrogate objective function.
-	\item Sparrow \cite{glaese2022improving}
+	\item InstructGPT research paper \cite{ouyang2022training}
 	\item \href{https://openai.com/blog/chatgpt}{OpenAI ChatGPT blog post}
+	\item Proximal Policy Optimization (PPO) \cite{schulman2017proximal} is a family of reinforcement learning algorithms that use multiple epochs of stochastic gradient ascent to optimize a surrogate objective function.
+	\item PPO in the \href{https://spinningup.openai.com/en/latest/algorithms/ppo.html}{OpenAI Spinning Up in Deep Reinforcement Learning course}
+	\item Huggingface Deep Reinforcement Learning Course: \href{https://huggingface.co/deep-rl-course/unit8/introduction?fw=pt}{Proximal Policy Optimization}
+	\item Blog post: \href{https://huggingface.co/blog/rlhf}{Illustrating Reinforcement Learning from Human Feedback (RLHF)}
+	\item DeepMind Sparrow \cite{glaese2022improving}
 \end{itemize}
 
 % % % % % %
@@ -1202,8 +1200,6 @@ Situations where the data \textbf{does not} have a low-dimensional structure and
 
 The paper \cite{jakubowski2020topology} studies singular points in a fixed word embedding trained via fastText, see \Cref{fig:TPS_paper_screenshot} for an illustration.
 They find that the dimension of the zeroth local homology group of a punctured neighborhood of a word correlates with the number of different meanings of a polysemous word.
-
-\textcolor{magenta}{TODO}
 
 \begin{figure}
 	\centering
