@@ -800,7 +800,10 @@ In this dialogue, the domain is restaurant booking, the slots are cuisine type a
 \noindent \textbf{References:}
 \begin{itemize}
 	\item TripPy dialogue state tracker \cite{heck-etal-2020-trippy}
-	\item \textcolor{magenta}{TODO} Add references
+	\item The paper \cite{budzianowski-etal-2018-multiwoz} introduces MultiWOZ, a large-scale dataset of human-human dialogues in multiple domains and topics for task-oriented dialogue modelling.
+	It also describes the data collection method, which uses crowd-sourcing, and reports some baseline results for belief tracking, dialogue act and response generation using the dataset.
+	\item The Schema-Guided Dialogue (SGD) dataset \cite{rastogi2020towards} is introduced to address the challenges of building large-scale virtual assistants, offering over 16k multi-domain conversations across 16 domains.
+	The schema-guided paradigm presented enables a single dialogue system to support numerous services and easily integrate new ones without additional training data, while also providing a model for dialogue state tracking with zero-shot generalization to new APIs.
 \end{itemize}
 
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
@@ -878,8 +881,9 @@ I don't like this song. It's too loud and annoying.
 	\item Proximal Policy Optimization (PPO) \cite{schulman2017proximal} is a family of reinforcement learning algorithms that use multiple epochs of stochastic gradient ascent to optimize a surrogate objective function.
 	\item PPO in the \href{https://spinningup.openai.com/en/latest/algorithms/ppo.html}{OpenAI Spinning Up in Deep Reinforcement Learning course}
 	\item Huggingface Deep Reinforcement Learning Course: \href{https://huggingface.co/deep-rl-course/unit8/introduction?fw=pt}{Proximal Policy Optimization}
-	\item Blog post: \href{https://huggingface.co/blog/rlhf}{Illustrating Reinforcement Learning from Human Feedback (RLHF)}
+	\item Blog post: \href{https://huggingface.co/blog/rlhf}{Illustrating Reinforcement Learning from Human Feedback (RLHF)}; \cite{lambert2022illustrating}
 	\item DeepMind Sparrow \cite{glaese2022improving}
+	\item Iterated Online RLHF \cite{bai2022training}
 \end{itemize}
 
 % % % % % %
