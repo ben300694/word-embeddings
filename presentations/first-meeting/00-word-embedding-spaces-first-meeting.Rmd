@@ -351,9 +351,23 @@ Sentence-BERT [@DBLP:journals/corr/abs-1908-10084]
 
 </center>
 
+## Task-oriented Dialogues
+
+<center>
+
+![](multiwoz_example_dialogue_trippy.png){width=100%}
+
+Example dialogue from MultiWOZ dataset [@heck-etal-2020-trippy]
+
+</center>
+
 ## Task-oriented Dialogue Systems
 
-TODO
+<center>
+
+![](task-oriented_dialogue_system_schematic.png){width=100%}
+
+</center>
 
 ## Multimodal Embeddings
 
@@ -368,11 +382,17 @@ TODO
 
 ## Aligning AI Models
 
+* InstructGPT [@ouyang2022training]
+
+<center>
+
+![](InstructGPT_example_responses.png){width=95%}
+
+</center>
+
 * Reinforcement Learning from Human Feedback (RLHF)
 * Proximal Policy Optimization (PPO)
-* InstructGPT, ChatGPT, GPT-4
-
-TODO
+* ChatGPT, GPT-4
 
 ## Geometry of Embedding Spaces
 
