@@ -442,7 +442,13 @@ TODO
 
 ## Geometric Deep Learning
 
-TODO
+<center>
+
+![](inductive_bias_projection_geometric_deep_learning.png){width=70%}
+
+[@bronstein2021geometric]
+
+</center>
 
 ## Hyperbolic Embeddings
 
