@@ -1,0 +1,72 @@
+%
+% File acl2020.tex
+%
+%% Based on the style files for ACL 2020, which were
+%% Based on the style files for ACL 2018, NAACL 2018/19, which were
+%% Based on the style files for ACL-2015, with some improvements
+%%  taken from the NAACL-2016 style
+%% Based on the style files for ACL-2014, which were, in turn,
+%% based on ACL-2013, ACL-2012, ACL-2011, ACL-2010, ACL-IJCNLP-2009,
+%% EACL-2009, IJCNLP-2008...
+%% Based on the style files for EACL 2006 by 
+%%e.agirre@ehu.es or Sergi.Balari@uab.es
+%% and that of ACL 08 by Joakim Nivre and Noah Smith
+
+\documentclass[11pt,a4paper]{article}
+\usepackage[hyperref]{acl2020}
+\usepackage{times}
+\usepackage{latexsym}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\renewcommand{\UrlFont}{\ttfamily\small}
+
+\usepackage{microtype}
+
+\aclfinalcopy % Uncomment this line for the final submission #TODO 
+%\def\aclpaperid{***} %  Enter the acl Paper ID here
+
+
+\newcommand\BibTeX{B\textsc{ib}\TeX}
+
+\title{Multimodal Embeddings} 
+
+\author{Jan Kels \\
+  Heinrich Heine Universität \\
+  Düsseldorf, Germany \\
+  \texttt{Jan.Kels@hhu.de} \\\and
+  Omar Hassan\\
+  Heinrich Heine Universität \\
+  Düsseldorf, Germany \\
+  \texttt{Omar.Hassan@hhu.de}
+  }
+
+\date{24.05.2023}
+
+\begin{document}
+\maketitle
+\begin{abstract} %do we even need this part?
+  we present the concept of multimodal embedding and highlight the CLIP model architecture.
+\end{abstract}
+
+\section{Introduction} %seem repetitive
+multimodal embeddings combine different modalities such as text(language), audio and images.
+
+\section{CLIP} %maybe not the first section, text in progress
+The CLIP \cite{radford2021learning} architecutre uses contrastive loss to learn a common embedding space for image, text pairs.
+It's based on consine similarity and can be used with a variety of text encoder as well as image encoders. 
+The main task for CLIP models is zero shot image embeddings, where you construct a classifier by crafting a prompt.
+A single pretrained model can outperform task specific fine tuned models on various benchmarks. Not all.
+The blog post provides a great overview.
+
+\subsection{Applications} %I will look for a reference on those saliency maps
+CLIP is the backbone for many text to image generation models such as DALL-E 2 \cite{ramesh2022hierarchical} ("unclip").
+Academic use such in the Visual Word Sense Disambiguation \cite{raganato-etal-2023-semeval} task.
+
+\subsection{following research} %better title needed
+BLIP, BLIP2, cross attention from prompt2prompt paper, dino robustness?
+
+\bibliography{acl2020}
+\bibliographystyle{acl_natbib}
+
+\appendix
+\end{document}
