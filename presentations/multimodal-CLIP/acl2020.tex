@@ -30,10 +30,11 @@
 
 \title{Multimodal Embeddings} 
 
-\author{Jan Kels \\
+\author{
+  \textbf{Jan Kels} \\
   Heinrich Heine Universität \\
   Düsseldorf, Germany \\
-  \texttt{Jan.Kels@hhu.de} \\ \\
+  \texttt{Jan.Kels@hhu.de} \\ \\\And
   \textbf{Omar Hassan}\\
   Heinrich Heine Universität \\
   Düsseldorf, Germany \\
@@ -69,21 +70,19 @@ On the other hand, models that were introduced for Text2Image tasks, have shown 
 \section{CLIP} %maybe not the first section, text in progress
 The CLIP \cite{radford2021learning} architecutre uses contrastive loss to learn a common embedding space for image, text pairs.
 It's based on consine similarity and can be used with a variety of text encoder as well as image encoders. 
-The main task for CLIP models is zero shot image embeddings, where you construct a classifier by crafting a prompt.
-A single pretrained model can outperform task specific fine tuned models on various benchmarks. Not all.
-The blog post provides a great overview.
+The main task for CLIP models is zero shot image classification, the classifier is constructed by a prompt.
+A single pretrained model can outperform task specific fine tuned models on various benchmarks.
 
-\subsection{Applications} %I will look for a reference on those saliency maps
+
+\subsection{Applications} %I will look for a reference on those saliency maps -found none
 CLIP is the backbone for many text to image generation models such as DALL-E 2 \cite{ramesh2022hierarchical} ("unclip").
-Academic use such in the Visual Word Sense Disambiguation \cite{raganato-etal-2023-semeval} task.
+Most submission to the Visual Word Sense Disambiguation \cite{raganato-etal-2023-semeval} shared task used CLIP or derivatives.
 
 \subsection{following research} %better title needed
-BLIP, BLIP2, cross attention from prompt2prompt paper, dino robustness?
+Building upon the idea of CLIP is models like BLIP\cite{li2022blip} which focus to sovle visual question answering by using a generative text decoder.
 
 
-
-
-\clearpage
+% \clearpage % trying to fit it all on the two pages.
 \bibliography{acl2020}
 \bibliographystyle{acl_natbib}
 
