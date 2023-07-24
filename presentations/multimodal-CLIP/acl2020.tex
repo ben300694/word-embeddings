@@ -41,7 +41,7 @@
   \texttt{Omar.Hassan@hhu.de}
   }
 
-\date{24.05.2023}
+\date{24.05.2023}  % won't actually show
 
 \begin{document}
 \maketitle
@@ -67,20 +67,27 @@ Models that were introduced for Image2Text tasks used templates based on object 
 
 On the other hand, models that were introduced for Text2Image tasks, have shown great success recently, Dall-E \cite{ramesh2021zeroshot} is one of those models. Essentially, it is training a Discrete Variational Autoencoders (dVAE) to compress 256x256 images into a 32x32 grid of tokens. Then the model learns the prior distribution of text-image pairs. The text is byte-pair (Sennrich et al., 2015a) encoded into a maximum of 256 tokens. And the image representation encoded by previously trained dVAE is unrolled (from 32x32 grid to 1024 tokens) and concatenated to the text tokens. This sequence (of 256+1024 tokens) is used as an input for a huge transformer-like architecture. Its goal is to autoregressively model the next token prediction. During inference time, the text caption is again encoded into 256 tokens at most. The generation process starts with predicting all of the next 1024 image-related tokens. They are later decoded with the dVAE decoder that was trained in the first step. Its output represents the final image.
 
+\begin{figure*}[t]
+  \centering
+  \includegraphics[width=0.95\textwidth]{CLIP.png}
+  \caption{on the left an overview of the pretaining objective, on the right the zero shot classification task}
+  \label{fig:clip}
+\end{figure*}
+
 \section{CLIP} %maybe not the first section, text in progress
 The CLIP \cite{radford2021learning} architecutre uses contrastive loss to learn a common embedding space for image, text pairs.
-It's based on consine similarity and can be used with a variety of text encoder as well as image encoders. 
-The main task for CLIP models is zero shot image classification, the classifier is constructed by a prompt.
-A single pretrained model can outperform task specific fine tuned models on various benchmarks.
+It's based on consine similarity and can be used with a variety of text encoder as well as image encoders.
+Figure \ref*{fig:clip} details the main task for CLIP, zero shot image calssifcation.
+A single pretrained model can outperform task specific and finetuned models on various benchmarks.
 
 
 \subsection{Applications} %I will look for a reference on those saliency maps -found none
 CLIP is the backbone for many text to image generation models such as DALL-E 2 \cite{ramesh2022hierarchical} ("unclip").
-Most submission to the Visual Word Sense Disambiguation \cite{raganato-etal-2023-semeval} shared task used CLIP or derivatives.
+The similary of a generated image to the provided input prompt gives the model feedback to learn from.
+On the academic side, a shared task like Visual Word Sense Disambiguation \cite{raganato-etal-2023-semeval} has been approached by CLIP and drivates by most submissions.
 
 \subsection{following research} %better title needed
 Building upon the idea of CLIP is models like BLIP\cite{li2022blip} which focus to sovle visual question answering by using a generative text decoder.
-
 
 % \clearpage % trying to fit it all on the two pages.
 \bibliography{acl2020}
