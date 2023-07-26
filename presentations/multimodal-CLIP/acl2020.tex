@@ -62,32 +62,36 @@ Images representation research started with a long race to solve the task of ima
 Another approach used is contrastive learning in the latent space, it has shown promise, focusing on reducing the distance between representations of augmented views from the same image (positive pairs) while increasing the distance between representations of augmented views from different images (negative pairs) \cite{oord2019representation}.
 Inspired by their success in NLP, researchers have attempted to combine CNN-like architectures with self-attention, sometimes replacing convolutions entirely.
 
+\begin{figure*}[t]
+  \centering
+  \includegraphics[width=\textwidth]{CLIP.png}
+  \caption{on the left an overview of the pretaining objective, on the right the zero shot classification task}
+  \label{fig:clip}
+\end{figure*}
+
 \section{Multimodal Embeddings}
 Models that were introduced for Image2Text tasks used templates based on object detection or attribute prediction \cite{inproceedings}. Then RNNs and their variants, like LSTMs, were commonly used for sequence generation, with visual information encoded in the output of Convolutional Neural Networks (CNNs) \cite{yao2018exploring}. Also, Graph convolutional neural networks and attention mechanisms have been proposed to model relationships between image regions and words. Fully-attentive models, based on the Transformer architecture or BERT, have emerged as alternatives to RNN-based models. Other variations include combining transformers with LSTMs or incorporating geometric relations and context-based gating mechanisms.
 
 On the other hand, models that were introduced for Text2Image tasks, have shown great success recently, Dall-E \cite{ramesh2021zeroshot} is one of those models. Essentially, it is training a Discrete Variational Autoencoders (dVAE) to compress 256x256 images into a 32x32 grid of tokens. Then the model learns the prior distribution of text-image pairs. The text is byte-pair (Sennrich et al., 2015a) encoded into a maximum of 256 tokens. And the image representation encoded by previously trained dVAE is unrolled (from 32x32 grid to 1024 tokens) and concatenated to the text tokens. This sequence (of 256+1024 tokens) is used as an input for a huge transformer-like architecture. Its goal is to autoregressively model the next token prediction. During inference time, the text caption is again encoded into 256 tokens at most. The generation process starts with predicting all of the next 1024 image-related tokens. They are later decoded with the dVAE decoder that was trained in the first step. Its output represents the final image.
 
-\begin{figure*}[t]
-  \centering
-  \includegraphics[width=0.95\textwidth]{CLIP.png}
-  \caption{on the left an overview of the pretaining objective, on the right the zero shot classification task}
-  \label{fig:clip}
-\end{figure*}
-
-\section{CLIP} %maybe not the first section, text in progress
+\section{CLIP} 
 The CLIP \cite{radford2021learning} architecutre uses contrastive loss to learn a common embedding space for image, text pairs.
-It's based on consine similarity and can be used with a variety of text encoder as well as image encoders.
-Figure \ref*{fig:clip} details the main task for CLIP, zero shot image calssifcation.
-A single pretrained model can outperform task specific and finetuned models on various benchmarks.
-
-
-\subsection{Applications} %I will look for a reference on those saliency maps -found none
-CLIP is the backbone for many text to image generation models such as DALL-E 2 \cite{ramesh2022hierarchical} ("unclip").
-The similary of a generated image to the provided input prompt gives the model feedback to learn from.
-On the academic side, a shared task like Visual Word Sense Disambiguation \cite{raganato-etal-2023-semeval} has been approached by CLIP and drivates by most submissions.
+It's based on consine similarity and can be used with a variety of text encoder as well as image encoders. % such as ResNet, ViT for image and BERT for text?
+% the sequence lenght is 76 tokens.
+If needed, a projection layer ensures common dimensionality.
+Figure \ref{fig:clip} details the main task for CLIP, zero shot image calssifcation.
+By constructing the classes using various prompts or ensembles, a single pretrained model can act as a image classifier for a variety of datasets.
+It outperforms several state of the art models that were fine tuned on the specific task.
+CLIP models do underperform in tasks such as statellite image classification.
+The other way around is also an option, having a caption and multiple images to rank which has the higehst similarity.
+Such an approach was use by several submissions to the Visual Word Sense Diambiguation \cite{raganato-etal-2023-semeval} shared task.
+Models can be found on Huggingface \footnote[1]{\url{https://hf.co/tasks/zero-shot-image-classification}} under the \emph{Zero-Shot Image Classification} task.
 
 \subsection{following research} %better title needed
-Building upon the idea of CLIP is models like BLIP\cite{li2022blip} which focus to sovle visual question answering by using a generative text decoder.
+CLIP provides image-caption similarities and has therefore enabled text conditional image generation such as DALL-E 2 \cite{ramesh2022hierarchical}, by providing feedback to the model of how well a generation matches the input prompt.
+Building upon the idea of CLIP are models like BLIP\cite{li2022blip} which focus to sovle visual question answering by using a generative text decoder.
+% Dingo v2?
+% Flamingo?
 
 % \clearpage % trying to fit it all on the two pages.
 \bibliography{acl2020}
