@@ -50,3 +50,12 @@ Seminar dates:
 ### Summer term 2022
 
 <strike>[Summer term 2022 Schedule on Google Sheets](https://docs.google.com/spreadsheets/d/1s-pxSBL0pK5RN5ny5IiSsXUL9i8nQM7iIx_j_euDf08/edit#gid=0)</strike>
+
+## Repository mirrors
+
+- Public GitHub source: <https://github.com/ben300694/word-embeddings>
+- Private HHU DSML teaching archive:
+  <https://gitlab.cs.uni-duesseldorf.de/dsml/teaching/word-embedding-spaces-seminar-2022-2023>
+
+The GitLab copy is a completed archive of this finished seminar. See
+[`docs/repository-remotes.md`](docs/repository-remotes.md) for the remote roles and synchronization procedure.
