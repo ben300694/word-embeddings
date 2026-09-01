@@ -40,13 +40,15 @@ git ls-remote --heads origin
 git ls-remote --tags --refs origin
 git ls-remote --heads gitlab
 git ls-remote --tags --refs gitlab
-git push gitlab refs/remotes/origin/main:refs/heads/main
+git push gitlab ORIGIN_MAIN_OBJECT_ID:refs/heads/main
 # Repeat for each reviewed live GitHub tag, using its exact object ID:
 git push gitlab ORIGIN_TAG_OBJECT_ID:refs/tags/TAG_NAME
 git ls-remote origin refs/heads/main
 git ls-remote gitlab refs/heads/main
 ```
 
-Replace the uppercase placeholders rather than running them literally. Push any additional intended branch with an
+Replace the uppercase placeholders rather than running them literally. For a tag, use the first-column object ID from
+the exact `refs/tags/TAG_NAME` line produced by `git ls-remote --tags --refs origin`; do not use a peeled `^{}` commit
+ID, because that would turn an annotated tag into a lightweight tag. Push any additional intended branch with an
 explicit reviewed object-ID mapping. Avoid `git push --all`, a broad `git push --tags`, and `git push --mirror`: they
 can copy implementation refs or delete archival refs without an individual review.
