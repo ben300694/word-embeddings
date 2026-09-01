@@ -1,6 +1,6 @@
 # Repository remotes and HHU teaching archive
 
-Last verified: 2026-08-31.
+Last verified: 2026-09-01 from the maintained checkout, both live remotes, and the authenticated HHU GitLab page.
 
 This repository deliberately uses two independent Git hosts:
 
@@ -28,15 +28,25 @@ The archived Git content consists of the single `main` branch and its complete h
 copy. GitHub issues, pull-request discussions, releases, Actions history, and repository settings are not transferred
 by a Git push.
 
+The completed snapshot was reverified on 2026-09-01. GitHub and GitLab `main` both resolved to
+`9779c55974c3aeeced99dbf617593f1886e862df`, neither host had a tag, and the private GitLab project reported 54.6 MiB
+project storage.
+
 If a later update is intentionally made, verify and synchronize it explicitly:
 
 ```sh
 git fetch origin --prune --tags
+git ls-remote --heads origin
+git ls-remote --tags --refs origin
+git ls-remote --heads gitlab
+git ls-remote --tags --refs gitlab
 git push gitlab refs/remotes/origin/main:refs/heads/main
-git push gitlab --tags
+# Repeat for each reviewed live GitHub tag, using its exact object ID:
+git push gitlab ORIGIN_TAG_OBJECT_ID:refs/tags/TAG_NAME
 git ls-remote origin refs/heads/main
 git ls-remote gitlab refs/heads/main
 ```
 
-Avoid `git push --mirror`: it can copy implementation refs or delete archival refs that are absent locally.
-
+Replace the uppercase placeholders rather than running them literally. Push any additional intended branch with an
+explicit reviewed object-ID mapping. Avoid `git push --all`, a broad `git push --tags`, and `git push --mirror`: they
+can copy implementation refs or delete archival refs without an individual review.
