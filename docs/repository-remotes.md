@@ -21,9 +21,9 @@ access from the `dsml/teaching` subgroup. GitHub remains public.
 
 ## Synchronization model
 
-The remotes are not automatically mirrored. The seminar is complete, so the GitLab synchronization performed on
-2026-08-31 is intended as the final archive snapshot. No routine September synchronization is needed unless a later
-commit changes the GitHub repository.
+The remotes are not automatically mirrored. The seminar is complete, so the synchronized GitLab state is intended as
+the final archive snapshot. No routine September synchronization is needed unless a later commit changes the GitHub
+repository.
 
 The archived Git content consists of the single `main` branch and its complete history. There were no Git tags to
 copy. GitHub issues, pull-request discussions, releases, Actions history, and repository settings are not transferred
