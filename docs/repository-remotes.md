@@ -42,11 +42,11 @@ git ls-remote --heads gitlab
 git ls-remote --tags --refs gitlab
 origin_main_object_id="$(git rev-parse refs/remotes/origin/main)"
 test "$origin_main_object_id" = "$(git ls-remote origin refs/heads/main | awk '{print $1}')" &&
-    git push gitlab "$origin_main_object_id:refs/heads/main"
+    git push gitlab "${origin_main_object_id}:refs/heads/main"
 # Repeat for each reviewed live GitHub tag after replacing TAG_NAME:
 origin_tag_object_id="$(git rev-parse refs/tags/TAG_NAME)"
 test "$origin_tag_object_id" = "$(git ls-remote --tags --refs origin refs/tags/TAG_NAME | awk '{print $1}')" &&
-    git push gitlab "$origin_tag_object_id:refs/tags/TAG_NAME"
+    git push gitlab "${origin_tag_object_id}:refs/tags/TAG_NAME"
 git ls-remote origin refs/heads/main
 git ls-remote gitlab refs/heads/main
 ```
