@@ -1,6 +1,7 @@
 # Repository remotes and HHU teaching archive
 
-Last verified: 2026-09-01 from the maintained checkout, both live remotes, and the authenticated HHU GitLab page.
+Procedure reviewed: 2026-09-01. This page intentionally contains durable workflow rather than a moving archive
+snapshot.
 
 This repository deliberately uses two independent Git hosts:
 
@@ -28,9 +29,8 @@ The archived Git content consists of the single `main` branch and its complete h
 copy. GitHub issues, pull-request discussions, releases, Actions history, and repository settings are not transferred
 by a Git push.
 
-The completed snapshot was reverified on 2026-09-01. GitHub and GitLab `main` both resolved to
-`9779c55974c3aeeced99dbf617593f1886e862df`, neither host had a tag, and the private GitLab project reported 54.6 MiB
-project storage.
+Changing commit IDs, storage figures, and membership snapshots are tracked in the current maintainer's Housekeeping
+dashboard rather than duplicated here. Re-read both live remotes and the GitLab project before any later update.
 
 If a later update is intentionally made, verify and synchronize it explicitly:
 
